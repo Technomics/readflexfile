@@ -1,0 +1,19 @@
+Package: readflexfile
+Title: Read FlexFile data
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Adam H.",
+             family = "James",
+             role = c("cre", "aut"),
+             email = "ajames@technomics.net"),
+      person(given = "Technomics, Inc",
+             role = "cph"))
+Description: Read the FlexFile native data into R.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+Imports: 
+    lifecycle
+RdMacros: lifecycle
