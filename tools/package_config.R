@@ -40,6 +40,18 @@ description <- list(Description = "Read the FlexFile native data into R.",
 desc::desc_add_author(given = "Technomics, Inc", role = "cph")
 
 # Package dependencies
+usethis::use_pipe()
+usethis::use_package("dplyr", min_version = "0.8.3")
+usethis::use_package("rio")
+usethis::use_package("jsonlite")
+usethis::use_package("janitor")
+usethis::use_package("tidyr", min_version = "1.0.0")
+usethis::use_package("tibble", min_version = "2.0.0")
+usethis::use_package("purrr", min_version = "0.3.3")
+usethis::use_package("rlang", min_version = "0.4.2")
+usethis::use_package("costmisc", min_version = "0.1.0.9000")
+usethis::use_package("stringr", min_version = "1.4.0")
+usethis::use_package("lifecycle")
 
 
 ## ===== README & NEWS =====

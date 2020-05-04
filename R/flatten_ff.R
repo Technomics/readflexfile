@@ -79,9 +79,6 @@ flatten_actuals <- function(flexfile) {
                                      contract_number,
                                      approved_plan_number,
                                      reporting_organization_organization_name,
-                                     reporting_organization_division_name,
-                                     submission_event_number,
-                                     submission_event_name,
                                      ff_id)),
                      by = c(ff_id = "ff_id")) %>%
     dplyr::left_join(dplyr::select(flexfile$accounts,
