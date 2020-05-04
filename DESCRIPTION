@@ -17,3 +17,5 @@ RoxygenNote: 7.1.0
 Imports: 
     lifecycle
 RdMacros: lifecycle
+Depends: 
+    R (>= 2.10)

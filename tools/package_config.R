@@ -13,6 +13,9 @@ usethis::use_lifecycle()
 # License
 usethis::use_gpl3_license("Technomics, Inc.")
 
+# Data folders
+usethis::use_data_raw(name = "sfc_mapping")
+
 # Package site
 usethis::use_pkgdown()
 
