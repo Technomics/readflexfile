@@ -52,7 +52,8 @@ usethis::use_package("rlang", min_version = "0.4.2")
 usethis::use_package("costmisc", min_version = "0.1.0.9000")
 usethis::use_package("stringr", min_version = "1.4.0")
 usethis::use_package("lifecycle")
-
+usethis::use_package("magrittr")
+usethis::use_package("lubridate")
 
 ## ===== README & NEWS =====
 

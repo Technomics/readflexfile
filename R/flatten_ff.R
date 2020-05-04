@@ -30,7 +30,7 @@ NULL
 #'
 #' @examples
 #' # read a sample flex file
-#' file <- system.file("extdata", "Sample File_FF.zip", package = "csdrtools")
+#' file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
 #'
 #' flat_flex_file <- read_ff(file) %>%
 #'   costmisc::add_id_col() %>%
@@ -207,7 +207,7 @@ flexfile_order_columns <- function(flexfile) {
 #'
 #' @examples
 #' # read a sample quantity report
-#' file <- system.file("extdata", "Sample File_Q.zip", package = "csdrtools")
+#' file <- system.file("extdata", "Sample File_Q.zip", package = "readflexfile")
 #'
 #' flat_flex_file <- read_ff(file) %>%
 #'   costmisc::add_id_col() %>%

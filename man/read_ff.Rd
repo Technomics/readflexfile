@@ -20,7 +20,7 @@ A list of tibbles for the \code{file}.
 Each tibble corresponds to its respective JSON table.
 }
 \examples{
-file <- system.file("extdata", "Sample File_FF.zip", package = "csdrtools")
+file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
 
 flexfile <- read_ff(file)
 

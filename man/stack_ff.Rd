@@ -17,10 +17,10 @@ A list of stacked tibbles of multiple dataframes
 Thin wrapper around \code{\link{unnest_df}()}.
 }
 \examples{
-files <- system.file("extdata/multiple-flexfiles", package = "csdrtools")
+files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
 
 flexfiles <- costmisc::read_folder(files, read_ff) \%>\%
-listindex_to_col() \%>\%
+costmisc::listindex_to_col() \%>\%
 stack_ff()
 
 }

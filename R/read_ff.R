@@ -16,7 +16,7 @@
 #' @return A list of tibbles for the \code{file}.
 #'
 #' @examples
-#' file <- system.file("extdata", "Sample File_FF.zip", package = "csdrtools")
+#' file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
 #'
 #' flexfile <- read_ff(file)
 #'
@@ -62,10 +62,10 @@ read_ff <- function(file, .clean_names = TRUE) {
 #' @return A list of stacked tibbles of multiple dataframes
 #'
 #' @examples
-#' files <- system.file("extdata/multiple-flexfiles", package = "csdrtools")
+#' files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
 #'
 #' flexfiles <- costmisc::read_folder(files, read_ff) %>%
-#' listindex_to_col() %>%
+#' costmisc::listindex_to_col() %>%
 #' stack_ff()
 #'
 

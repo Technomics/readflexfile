@@ -30,14 +30,14 @@ stacked into a single table.
 }
 \examples{
 # read a sample flex file
-file <- system.file("extdata", "Sample File_FF.zip", package = "csdrtools")
+file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
 
 flat_flex_file <- read_ff(file) \%>\%
   costmisc::add_id_col() \%>\%
   flatten_ff()
 
 # read a sample quantity report
-file <- system.file("extdata", "Sample File_Q.zip", package = "csdrtools")
+file <- system.file("extdata", "Sample File_Q.zip", package = "readflexfile")
 
 flat_flex_file <- read_ff(file) \%>\%
   costmisc::add_id_col() \%>\%
