@@ -18,10 +18,18 @@ A list of tibbles for the \code{file}.
 \description{
 \code{read_ff()} returns a list of tibbles from a zip folder submission of the FlexFiles.
 Each tibble corresponds to its respective JSON table.
+
+Can be used with \code{\link[costmisc:read_folder]{read_folder}} as in example.
 }
 \examples{
 file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
 
 flexfile <- read_ff(file)
+
+files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
+
+flexfiles <- costmisc::read_folder(files, read_ff) \%>\%
+costmisc::listindex_to_col() \%>\%
+stack_ff()
 
 }
