@@ -11,7 +11,6 @@
 #'
 #' @export
 #'
-#'
 #' @param file Path to a FlexFile .zip archive.
 #' @param .clean_names Logical whether to clean the names using \code{\link[janitor]{clean_names}()}
 #' or not.
