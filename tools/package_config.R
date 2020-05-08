@@ -77,8 +77,22 @@ devtools::load_all()
 devtools::build(binary = TRUE)
 devtools::build()
 
+
 detach("package:readflexfile", unload = TRUE)
 
 ## ===== Scratch Work =====
 
 setupr::check_r()
+
+file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
+
+flexfile <- read_ff(file) %>%
+  costmisc::add_id_col()
+
+
+files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
+
+flexfiles <- costmisc::read_folder(files, read_ff) %>%
+  costmisc::listindex_to_col() %>%
+  stack_ff()
+
