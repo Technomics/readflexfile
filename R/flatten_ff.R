@@ -38,7 +38,7 @@ NULL
 #'
 flatten_ff <- function(flexfile) {
   # selects all, but provides a quick safety net in case of changes
-  cats <- sfc_mapping %>%
+  cats <- readflexfile::sfc_mapping %>%
     dplyr::distinct(standard_category_id, standard_category, detailed_standard_category_id, direct_or_overhead)
 
   # function to join in the sfc category
