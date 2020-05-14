@@ -2,6 +2,7 @@
 
 export("%>%")
 export(add_id_col)
+export(allocate_ff)
 export(flatten_ff)
 export(flatten_qdr)
 export(listindex_to_col)
