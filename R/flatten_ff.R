@@ -72,49 +72,49 @@ flatten_ff <- function(flexfile) {
 ## ===== Internal FlexFile Helpers =====
 
 #' @keywords internal
-flatten_actuals <- function(flexfile) {
+flatten_actuals <- function(flexfile)  {
   flexfile$actualcosthourdata %>%
     dplyr::left_join(dplyr::select(flexfile$reportmetadata,
                                    c(program_name,
                                      contract_number,
                                      approved_plan_number,
                                      reporting_organization_organization_name,
-                                     ff_id)),
-                     by = c(ff_id = "ff_id")) %>%
+                                     1)),
+                     by = c(names(flexfile$actualcosthourdata)[1])) %>%
     dplyr::left_join(dplyr::select(flexfile$accounts,
-                                   c(id, name, ff_id)),
+                                   c(id, name, 1)),
                      by = c(account_id = "id",
-                            ff_id = "ff_id"),
+                            names(flexfile$actualcosthourdata)[1]),
                      suffix = c("", ".accounts")) %>%
     dplyr::left_join(dplyr::select(flexfile$enditems,
-                                   c(id, name, ff_id)),
+                                   c(id, name, 1)),
                      by = c(end_item_id = "id",
-                            ff_id = "ff_id"),
+                            names(flexfile$actualcosthourdata)[1]),
                      suffix = c("", ".enditems")) %>%
     dplyr::left_join(dplyr::select(flexfile$clins,
-                                   c(id, name, ff_id)),
+                                   c(id, name, 1)),
                      by = c(clin_id = "id",
-                            ff_id = "ff_id"),
+                            names(flexfile$actualcosthourdata)[1]),
                      suffix = c("", ".clins")) %>%
     dplyr::left_join(dplyr::select(flexfile$wbs,
-                                   c(level, id, name, parent_id, ff_id)),
+                                   c(level, id, name, parent_id, 1)),
                      by = c(wbs_element_id = "id",
-                            ff_id = "ff_id"),
+                            names(flexfile$actualcosthourdata)[1]),
                      suffix = c("", ".wbs")) %>%
     dplyr::left_join(dplyr::select(flexfile$functionalcategories,
-                                   c(id, name, ff_id)),
+                                   c(id, name, 1)),
                      by = c(functional_category_id = "id",
-                            ff_id = "ff_id"),
+                            names(flexfile$actualcosthourdata)[1]),
                      suffix = c("", ".functionalcategories")) %>%
     dplyr::left_join(dplyr::select(flexfile$functionaloverheadcategories,
-                                   c(id, name, ff_id)),
+                                   c(id, name, 1)),
                      by = c(functional_overhead_category_id = "id",
-                            ff_id = "ff_id"),
+                            names(flexfile$actualcosthourdata)[1]),
                      suffix = c("", ".overheadcategories")) %>%
     dplyr::left_join(dplyr::select(flexfile$reportingcalendar,
-                                   c(id, start_date, end_date, ff_id)),
+                                   c(id, start_date, end_date, 1)),
                      by = c(reporting_period_id = "id",
-                            ff_id = "ff_id"),
+                            names(flexfile$actualcosthourdata)[1]),
                      suffix = c("", ".reportingcalendar")) %>%
     dplyr::mutate(start_date = lubridate::ymd(start_date),
                   end_date = lubridate::ymd(end_date),
@@ -149,12 +149,13 @@ flatten_forecasts <- function(flexfile) {
 
     flexfile$forecastatcompletioncosthourdata %>%
       dplyr::left_join(dplyr::select(flexfile$wbs,
-                                     c(level, id, name, parent_id, ff_id)),
+                                     c(level, id, name, parent_id, 1)),
                        by = c(wbs_element_id = "id",
-                              ff_id = "ff_id")) %>%
+                              names(flexfile$forecastatcompletioncosthourdata)[1])) %>%
       dplyr::left_join(dplyr::select(flexfile$ordersorlots,
-                                     c(id, name, ff_id)),
-                       by = c(order_or_lot_id = "id", ff_id = "ff_id")) %>%
+                                     c(id, name, 1)),
+                       by = c(order_or_lot_id = "id",
+                              names(flexfile$forecastatcompletioncosthourdata)[1])) %>%
       dplyr::rename(wbs_parent = parent_id,
                     wbs_name = name.x,
                     wbs_level = level,
@@ -162,7 +163,9 @@ flatten_forecasts <- function(flexfile) {
       dplyr::mutate(atd_or_fac = "FAC",
                     order_or_lot_id = NULL)
 
-  } else {
+  }
+
+  else {
 
     NULL
 
@@ -174,7 +177,7 @@ flatten_forecasts <- function(flexfile) {
 flexfile_order_columns <- function(flexfile) {
 
   flexfile %>%
-    dplyr::select(ff_id,
+    dplyr::select(1,
                   order_or_lot_name,
                   clin_name,
                   end_item_name,
@@ -217,11 +220,13 @@ flatten_qdr <- function(quantity_data) {
 
   quant_to_date <- quantity_data$quantitiestodate %>%
     dplyr::left_join(quantity_data$ordersorlots,
-                     by = c(order_or_lot_id = "id", ff_id = "ff_id")) %>%
+                     by = c(order_or_lot_id = "id",
+                            names(quantity_data$quantitiestodate)[1])) %>%
     dplyr::left_join(quantity_data$wbs,
                      by = c(wbs_element_id = "id", ff_id = "ff_id")) %>%
     dplyr::left_join(dplyr::select(quantity_data$wbselementremarks, -order_or_lot_id),
-                     by = c(wbs_element_id = "wbs_element_id", ff_id = "ff_id")) %>%
+                     by = c(wbs_element_id = "wbs_element_id",
+                            names(quantity_data$quantitiestodate)[1])) %>%
     dplyr::rename("dictionary_definition" = text,
                   "order_or_lot_name" = name.x,
                   "wbs_element_name" = name.y) %>%
@@ -229,13 +234,16 @@ flatten_qdr <- function(quantity_data) {
 
   quant_completion <- quantity_data$quantitiesatcompletion %>%
     dplyr::left_join(quantity_data$ordersorlots,
-                     by = c(order_or_lot_id = "id", ff_id = "ff_id")) %>%
+                     by = c(order_or_lot_id = "id",
+                            names(quantity_data$quantitiesatcompletion)[1])) %>%
     dplyr::left_join(quantity_data$wbs,
                      by = c(wbs_element_id = "id", ff_id = "ff_id")) %>%
     dplyr::left_join(dplyr::select(quantity_data$wbselementremarks, -order_or_lot_id),
-                     by = c(wbs_element_id = "wbs_element_id", ff_id = "ff_id")) %>%
+                     by = c(wbs_element_id = "wbs_element_id",
+                            names(quantity_data$quantitiesatcompletion)[1])) %>%
     dplyr::left_join(quantity_data$productionsequence,
-                     by = c(end_item_id = "end_item_id", ff_id = "ff_id",
+                     by = c(end_item_id = "end_item_id",
+                            names(quantity_data$quantitiesatcompletion)[1],
                             order_or_lot_id = "order_or_lot_id")) %>%
     dplyr::rename("dictionary_definition" = text,
                   "order_or_lot_name" = name.x,
