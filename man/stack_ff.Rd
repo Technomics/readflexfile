@@ -19,8 +19,8 @@ Thin wrapper around \code{\link{unnest_df}()}.
 \examples{
 files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
 
-flexfiles <- costmisc::read_folder(files, read_ff) \%>\%
-costmisc::listindex_to_col() \%>\%
+flexfiles <- read_folder(files, read_ff) \%>\%
+listindex_to_col() \%>\%
 stack_ff()
 
 }

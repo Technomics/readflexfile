@@ -29,12 +29,21 @@ NULL
 #' @param flexfile A flexfile created from the \code{\link{read_ff}} function
 #'
 #' @examples
-#' # read a sample flex file
+#' # Flatten one FlexFile
 #' file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
 #'
 #' flat_flex_file <- read_ff(file) %>%
-#'   costmisc::add_id_col() %>%
-#'   flatten_ff()
+#' add_id_col(var = "doc_id") %>%
+#' flatten_ff()
+#'
+#' #Flatten mutliple FlexFiles
+#'
+#' files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
+#'
+#' flat_flexfiles <- read_folder(files, read_ff) %>%
+#' listindex_to_col(var = "doc_id") %>%
+#' stack_ff() %>%
+#' flatten_ff()
 #'
 flatten_ff <- function(flexfile) {
   # selects all, but provides a quick safety net in case of changes
@@ -213,7 +222,7 @@ flexfile_order_columns <- function(flexfile) {
 #' file <- system.file("extdata", "Sample File_Q.zip", package = "readflexfile")
 #'
 #' flat_flex_file <- read_ff(file) %>%
-#'   costmisc::add_id_col() %>%
+#'   add_id_col() %>%
 #'   flatten_qdr()
 #'
 flatten_qdr <- function(quantity_data) {
@@ -223,7 +232,8 @@ flatten_qdr <- function(quantity_data) {
                      by = c(order_or_lot_id = "id",
                             names(quantity_data$quantitiestodate)[1])) %>%
     dplyr::left_join(quantity_data$wbs,
-                     by = c(wbs_element_id = "id", ff_id = "ff_id")) %>%
+                     by = c(wbs_element_id = "id",
+                            names(quantity_data$quantitiestodate)[1])) %>%
     dplyr::left_join(dplyr::select(quantity_data$wbselementremarks, -order_or_lot_id),
                      by = c(wbs_element_id = "wbs_element_id",
                             names(quantity_data$quantitiestodate)[1])) %>%
@@ -237,7 +247,8 @@ flatten_qdr <- function(quantity_data) {
                      by = c(order_or_lot_id = "id",
                             names(quantity_data$quantitiesatcompletion)[1])) %>%
     dplyr::left_join(quantity_data$wbs,
-                     by = c(wbs_element_id = "id", ff_id = "ff_id")) %>%
+                     by = c(wbs_element_id = "id",
+                            names(quantity_data$quantitiesatcompletion)[1])) %>%
     dplyr::left_join(dplyr::select(quantity_data$wbselementremarks, -order_or_lot_id),
                      by = c(wbs_element_id = "wbs_element_id",
                             names(quantity_data$quantitiesatcompletion)[1])) %>%

@@ -29,18 +29,27 @@ stacked into a single table.
 \code{flatten_qdr()} creates a master dataframe for working with FlexFile quantity data.
 }
 \examples{
-# read a sample flex file
+# Flatten one FlexFile
 file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
 
 flat_flex_file <- read_ff(file) \%>\%
-  costmisc::add_id_col() \%>\%
-  flatten_ff()
+add_id_col(var = "doc_id") \%>\%
+flatten_ff()
+
+#Flatten mutliple FlexFiles
+
+files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
+
+flat_flexfiles <- read_folder(files, read_ff) \%>\%
+listindex_to_col(var = "doc_id") \%>\%
+stack_ff() \%>\%
+flatten_ff()
 
 # read a sample quantity report
 file <- system.file("extdata", "Sample File_Q.zip", package = "readflexfile")
 
 flat_flex_file <- read_ff(file) \%>\%
-  costmisc::add_id_col() \%>\%
+  add_id_col() \%>\%
   flatten_qdr()
 
 }
