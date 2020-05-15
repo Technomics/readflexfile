@@ -217,7 +217,7 @@ flexfile_order_columns <- function(flexfile) {
 #'   add_id_col() %>%
 #'   flatten_qdr()
 #'
-flatten_qdr <- function(quantity_data, .id) {
+flatten_qdr <- function(quantity_data, .id = "doc_id") {
 
   quant_to_date <- quantity_data$quantitiestodate %>%
     dplyr::left_join(quantity_data$ordersorlots,
