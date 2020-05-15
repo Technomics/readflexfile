@@ -23,8 +23,12 @@ usethis::use_pkgdown()
 rnomics::use_readme()
 usethis::use_news_md()
 
-# allow markdown rendering in documentation
+# Allow markdown rendering in documentation
 desc::desc_set("Roxygen", "list(markdown = TRUE)")
+
+# Vignettes
+usethis::use_vignette("csdrtool-vignette")
+usethis::use_vignette("importing-flexfile")
 
 ## ===== DESCRIPTION =====
 
@@ -70,8 +74,6 @@ devtools::document()
 devtools::spell_check()
 devtools::check()
 
-usethis::use_vignette("csdrtool-vignette")
-usethis::use_vignette("importing-flexfile")
 usethis::use_version()
 
 devtools::load_all()
