@@ -6,9 +6,9 @@
 \alias{flatten_qdr}
 \title{Flatten FlexFile and Quantity Data Report}
 \usage{
-flatten_ff(flexfile)
+flatten_ff(flexfile, .id = "doc_id")
 
-flatten_qdr(quantity_data)
+flatten_qdr(quantity_data, .id = "doc_id")
 }
 \arguments{
 \item{flexfile}{A flexfile created from the \code{\link{read_ff}} function}

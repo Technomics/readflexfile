@@ -53,7 +53,7 @@ usethis::use_package("tidyr", min_version = "1.0.0")
 usethis::use_package("tibble", min_version = "2.0.0")
 usethis::use_package("purrr", min_version = "0.3.3")
 usethis::use_package("rlang", min_version = "0.4.2")
-usethis::use_package("costmisc", min_version = "0.1.0.9000")
+usethis::use_package("costmisc", min_version = "0.2.1")
 usethis::use_package("stringr", min_version = "1.4.0")
 usethis::use_package("lifecycle")
 usethis::use_package("magrittr")
@@ -84,8 +84,4 @@ devtools::build()
 detach("package:readflexfile", unload = TRUE)
 
 ## ===== Scratch Work =====
-
-setupr::check_r()
-
-
 
