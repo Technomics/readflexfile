@@ -330,8 +330,8 @@ Where,
 
 Here, we've created the DD 1921 report, filtering to only the actuals incurred to date, and printing the first six WBS elements.
 
-```{r echo = TRUE, eval = F}
-library(csdrtools)
+```{r echo = TRUE, eval = T}
+library(analyzeflexfile)
 
 DD_1921 <- tbl_1921(ff_flat, value = "Dollars")
 
@@ -344,7 +344,7 @@ head(DD_1921_actuals)
 
 The `tbl_1921()` and `tbl_1921_1()` functions provide some flexibility while maintaining the core structure of the DD 1921 and 1921-1 reports. In this example, we've elected to print hours. Using functions from dplyr, such as `select()`, we can further manipulate the table to only include the forecasts columns.
 
-```{r echo = TRUE, eval = F}
+```{r echo = TRUE, eval = T}
 
 DD_1921_1 <- tbl_1921_1(ff_flat, value = "Dollars")
 
@@ -359,7 +359,7 @@ head(DD_1921_1_actuals)
 
 The relationship between standard category and functional category, as well as WBS element and account, are of interest when analyzing the FlexFile. These provide insight into how a contractor is mapping their internal pricing categories and work packages to the standard elements on the DD 1921 and 1921-1 reports. The `tbl_direct_rates()` and `tbl_wbs_by_account()` functions provide these mappings.
 
-```{r echo = TRUE, eval = F}
+```{r echo = TRUE, eval = T}
 
 head(tbl_direct_rates(ff_flat)) %>%
   dplyr::select(standard_category, functional_category_name, direct_rate)
@@ -368,7 +368,7 @@ head(tbl_direct_rates(ff_flat)) %>%
 
 Both are called in largely the same manner.
 
-```{r echo = TRUE,eval=F}
+```{r echo = TRUE,eval=T}
 
 head(tbl_wbs_by_account(ff_flat)) %>%
   dplyr::select(wbs_name, account_name, value_dollars)
@@ -379,7 +379,7 @@ head(tbl_wbs_by_account(ff_flat)) %>%
 
 The FlexFile is time-phased. This is an advantage over the DD 1921 reports, which represented only a snapshot from a point in time. Function `tbl_wbs_by_date()` details WBS element expenditures over the report’s reporting periods. The resulting table can be viewed at either an annual or monthly level.
 
-```{r echo = TRUE, eval=F}
+```{r echo = TRUE, eval=T}
 
 head(tbl_wbs_by_date(ff_flat, timeframe = "Year"))
 ```
@@ -388,7 +388,7 @@ head(tbl_wbs_by_date(ff_flat, timeframe = "Year"))
 
 These two functions identify accounts and CLINs that drive costs. One can specify the number of rows it filters, with 10 as the default. In this example, we leverage the `scales` package to apply formatting to the dollars, hours, and percentages.
 
-```{r echo = TRUE, message= FALSE, warning= FALSE, eval = F}
+```{r echo = TRUE, message= FALSE, warning= FALSE, eval = T}
 library(scales)
 
 top_five <- tbl_top_n_accounts(ff_flat, n = 5)
@@ -406,7 +406,7 @@ top_five
 The design philosophy of **`csdrtools`** enabled the functions to interact nicely with tidyverse packages. In this example, they also work with packages outside of the tidyverse. For example, we can present a stylized version of the data frame by throwing it into the `pander` package with minimal additional code. This reformats the data from a data frame (useful for data analysis) to a formatted table (useful for presentation and decision making). The table printed below is the same data as the data frame printed above, but easier on the eyes.
 
 
-```{r echo = TRUE, message= FALSE, warning= FALSE, eval=F}
+```{r echo = TRUE, message= FALSE, warning= FALSE, eval= T}
 library(kableExtra)
 
 kable(top_five) %>%
@@ -442,7 +442,7 @@ The `plot_ff()` function delivers a set of visualizations of the FlexFile. The f
 
 Time-phased dollars and hours are an important aspect of the FlexFile. A natural way to view time phasing is through an area (or sand) chart, where the x-axis represents the date costs are incurred and the y-value depicts those costs. `plot_ff(Type = 1)` presents costs over time, colored by nonrecurring (NR) or recurring (R) effort. This helps readily distinguish the ratio of NR to R costs.
 
-```{r echo = FALSE,eval=F}
+```{r echo = FALSE,eval=T}
 
 ff_flat <- ff_flat %>%
   dplyr::filter(doc_id == 1)
@@ -450,7 +450,7 @@ ff_flat <- ff_flat %>%
 
 ```
 
-```{r echo = TRUE, eval = F, fig.width=7,fig.height=5}
+```{r echo = TRUE, eval = T, fig.width=7,fig.height=5}
 
 ff_flat %>%
   plot_ff(Type = 1)
@@ -462,7 +462,7 @@ ff_flat %>%
 
 The `plot_ff(Type = 2)` function uses the same structure as `plot_ff(Type = 1)`, but instead breaks the colors out by WBS element ID. This demonstrates, for example, cost growth for certain elements at specific points throughout a contract lifecycle. In this example, we've filtered down to select aircraft hardware elements: the wing and the nacelle.
 
-```{r echo = TRUE,eval = F, fig.width=7,fig.height=5}
+```{r echo = TRUE,eval = T, fig.width=7,fig.height=5}
 
 ff_flat_hardware <- ff_flat %>%
   filter(stringr::str_detect(wbs_name, 'Subsystem 1.1.5.3') | 
@@ -477,7 +477,7 @@ ff_flat_hardware %>%
 
 The functional category field in the FlexFile lends insight into contractor’s internal direct and overhead pricing categories. The `plot_ff(Type = 3)` function offers a bar chart of these direct pricing rates, ordered from highest to lowest and colored by the standard categories that they map to.
 
-```{r echo = TRUE, eval=F, fig.width=7,fig.height=5}
+```{r echo = TRUE, eval=T, fig.width=7,fig.height=5}
 
 ff_flat %>%
   plot_ff(Type = 3)
@@ -506,13 +506,13 @@ Sankey diagrams display flows from one variable (node) to another. The FlexFile 
 
 The `sankey_ff(Type = 1)` function illustrates the flow of costs from the standard functional categories (the government-defined categories in the DD 1921-1 and 1921-5 reports) to the contractor's functional categories (intended to align with internal pricing categories). This example demonstrates this relationship for the direct and overhead engineering labor categories. 
 
-```{r echo = TRUE, eval=F, fig.width=7,fig.height=5}
+```{r echo = TRUE, eval=T, fig.width=7,fig.height=5}
 
 ff_flat_engineering <- ff_flat %>%
   filter(stringr::str_detect(standard_category, 'ENGINEERING'))
  
-#ff_flat_engineering %>%
-#   sankey_ff(Type = 1)
+ff_flat_engineering %>%
+   sankey_ff(Type = 1)
 
 ```
 
@@ -520,7 +520,8 @@ ff_flat_engineering <- ff_flat %>%
 
 The `sankey_ff(Type = 2)` function outputs the same plot as `sankey_ff(Type = 1)`, but for the account to WBS element relationship. Filtering to one WBS element, in this case WBS #1.1.2 (Engine/Propulsion), the accounts that map to this element are visualized from highest to lowest cost, denoted by the size of the node. When outputted in R, this visual leverages an interactive “tool-tip” that displays costs and relationship details as one hovers over the diagram. 
 
-```{r echo = TRUE, eval=F, fig.width=7,fig.height=5}
+```{r echo = TRUE, eval=T, fig.width=7,fig.height=5}
+
 ff_flat_engine <- ff_flat %>%
   filter(stringr::str_detect(wbs_name, 'Subsystem 1.1.5.3'))
 

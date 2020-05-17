@@ -77,7 +77,7 @@ flatten_qdr() creates a master dataframe for working with FlexFile quantity data
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
       </span>
     </div>
 
@@ -91,6 +91,21 @@ flatten_qdr() creates a master dataframe for working with FlexFile quantity data
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/csdrtool-vignette.html">The FlexFile Framework: Preparing for Powerful Analysis in R (ICEAA Paper)</a>
+    </li>
+    <li>
+      <a href="../articles/importing-flexfile.html">Using csdrtools to import one or multiple FlexFiles</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -125,9 +140,9 @@ stacked into a single table.</p>
 <p><code>flatten_qdr()</code> creates a master dataframe for working with FlexFile quantity data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>flatten_ff</span>(<span class='no'>flexfile</span>)
+    <pre class="usage"><span class='fu'>flatten_ff</span>(<span class='no'>flexfile</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"doc_id"</span>)
 
-<span class='fu'>flatten_qdr</span>(<span class='no'>quantity_data</span>)</pre>
+<span class='fu'>flatten_qdr</span>(<span class='no'>quantity_data</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"doc_id"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,18 +162,27 @@ stacked into a single table.</p>
     <p>A data frame with the flattened flexfile or quantity data.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># read a sample flex file</span>
+    <pre class="examples"><div class='input'><span class='co'># Flatten one FlexFile</span>
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"Sample File_FF.zip"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readflexfile"</span>)
 
 <span class='no'>flat_flex_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_ff.html'>read_ff</a></span>(<span class='no'>file</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>costmisc</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/add_id_col.html'>add_id_col</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>flatten_ff</span>()
+<span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/add_id_col.html'>add_id_col</a></span>(<span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"doc_id"</span>) <span class='kw'>%&gt;%</span>
+<span class='fu'>flatten_ff</span>()
+
+<span class='co'>#Flatten mutliple FlexFiles</span>
+
+<span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/multiple-flexfiles"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readflexfile"</span>)
+
+<span class='no'>flat_flexfiles</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/read_folder.html'>read_folder</a></span>(<span class='no'>files</span>, <span class='no'>read_ff</span>) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/add_id_col.html'>listindex_to_col</a></span>(<span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"doc_id"</span>) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='stack_ff.html'>stack_ff</a></span>() <span class='kw'>%&gt;%</span>
+<span class='fu'>flatten_ff</span>()
 
 <span class='co'># read a sample quantity report</span>
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"Sample File_Q.zip"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readflexfile"</span>)
 
 <span class='no'>flat_flex_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_ff.html'>read_ff</a></span>(<span class='no'>file</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>costmisc</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/add_id_col.html'>add_id_col</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/add_id_col.html'>add_id_col</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>flatten_qdr</span>()</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
