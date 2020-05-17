@@ -12,6 +12,12 @@ To learn more about readflexfile, start with the vignettes:
 \author{
 \strong{Maintainer}: Adam H. James \email{ajames@technomics.net}
 
+Authors:
+\itemize{
+  \item Adam H. James \email{ajames@technomics.net}
+  \item Ben Berkman \email{bberkman@technomics.net}
+}
+
 Other contributors:
 \itemize{
   \item Technomics, Inc [copyright holder]

@@ -7,7 +7,15 @@ Authors@R:
              role = c("cre", "aut"),
              email = "ajames@technomics.net"),
       person(given = "Technomics, Inc",
-             role = "cph"))
+             role = "cph"),
+      person(given = "Adam H.",
+             family = "James",
+             role = "aut",
+             email = "ajames@technomics.net"),
+      person(given = "Ben",
+             family = "Berkman",
+             role = "aut",
+             email = "bberkman@technomics.net"))
 Description: Read the FlexFile native data into R.
 License: GPL-3
 Encoding: UTF-8

@@ -33,10 +33,14 @@ usethis::use_vignette("importing-flexfile")
 ## ===== DESCRIPTION =====
 
 # Description list
-description <- list(Description = "Read the FlexFile native data into R.",
-                    Title = "Read FlexFile data",
-                    `Authors@R` = list(person(given = "Adam H.", family = "James",
-                                              email = "ajames@technomics.net", role = c("cre","aut"))))
+description <- list(Description = "Tools for Cost and Software Data Reporting (CSDR) data.",
+                    Title = "Tools for CSDR data",
+                    `Authors@R` = list(person(given = "Justin", family = "Cooper",
+                                              email = "jcooper@technomics.net",
+                                              role = c("cre", "aut"))))
+
+desc::desc_add_author("Adam H.", "James", "ajames@technomics.net", "aut")
+desc::desc_add_author("Ben", "Berkman", "bberkman@technomics.net", "aut")
 
 # Run this to set description. It will replace whatever is there! Keep in mind the version before doing this.
 #usethis::use_description(fields = description)
