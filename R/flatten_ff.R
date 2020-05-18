@@ -99,6 +99,10 @@ flatten_actuals <- function(flexfile, .id)  {
                                    c(id, name, 1)),
                      by = setNames(c("id", .id), c("end_item_id", .id)),
                      suffix = c("", ".enditems")) %>%
+    dplyr::left_join(dplyr::select(flexfile$ordersorlots,
+                                   c(id, name, 1)),
+                     by = setNames(c("id", .id), c("order_or_lot_id", .id)),
+                     suffix = c("", ".ordersorlots")) %>%
     dplyr::left_join(dplyr::select(flexfile$clins,
                                    c(id, name, 1)),
                      by = setNames(c("id", .id), c("clin_id", .id)),
@@ -127,6 +131,7 @@ flatten_actuals <- function(flexfile, .id)  {
                   wbs_parent = parent_id,
                   wbs_name = name.wbs,
                   end_item_name = name.enditems,
+                  order_or_lot_name = name..ordersorlots,
                   wbs_level = level,
                   functional_category_name = name.functionalcategories,
                   functional_overhead_category_name = name.overheadcategories) %>%
@@ -136,6 +141,7 @@ flatten_actuals <- function(flexfile, .id)  {
                   -functional_overhead_category_id,
                   -reporting_period_id,
                   -end_item_id,
+                  -order_or_lot_id,
                   -account_id,
                   -order_or_lot_id)
 
