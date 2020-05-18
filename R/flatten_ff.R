@@ -131,7 +131,7 @@ flatten_actuals <- function(flexfile, .id)  {
                   wbs_parent = parent_id,
                   wbs_name = name.wbs,
                   end_item_name = name.enditems,
-                  order_or_lot_name = name..ordersorlots,
+                  order_or_lot_name = name.ordersorlots,
                   wbs_level = level,
                   functional_category_name = name.functionalcategories,
                   functional_overhead_category_name = name.overheadcategories) %>%
