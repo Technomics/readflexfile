@@ -86,8 +86,6 @@ flatten_actuals <- function(flexfile, .id)  {
   flexfile$actualcosthourdata %>%
     dplyr::left_join(dplyr::select(flexfile$reportmetadata,
                                    c(program_name,
-                                     contract_number,
-                                     approved_plan_number,
                                      reporting_organization_organization_name,
                                      1)),
                      by = .id) %>%

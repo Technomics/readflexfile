@@ -331,7 +331,7 @@ Where,
 Here, we've created the DD 1921 report, filtering to only the actuals incurred to date, and printing the first six WBS elements.
 
 ```{r echo = TRUE, eval = T}
-library(analyzeflexfile)
+library(ezflexfile)
 
 DD_1921 <- tbl_1921(ff_flat, value = "Dollars")
 
