@@ -50,18 +50,20 @@ flatten_ff <- function(flexfile, .id = "doc_id") {
   cats <- readflexfile::sfc_mapping %>%
     dplyr::distinct(standard_category_id, standard_category, detailed_standard_category_id, direct_or_overhead)
 
+  dir_oh <- readflexfile::sfc_mapping %>%
+    dplyr::distinct(standard_category, direct_or_overhead)
+
   # function to join in the sfc category
   join_sfc <- function(the_table) {
 
     the_table %>%
-      left_join(cats, by = "detailed_standard_category_id",suffix = c("_ff", "_sfc")) %>%
-      mutate(standard_category =
-               case_when(
-                 is.na(standard_category) ~ standard_category_id_ff,
-                 TRUE ~ standard_category)) %>%
-      left_join(dir_oh,by = "standard_category", suffix = c("_ff", "_sfc")) %>%
-      select(- standard_category_id_sfc, - direct_or_overhead_ff) %>%
-      rename("standard_category_id" = standard_category_id_ff,
+      dplyr::left_join(cats, by = "detailed_standard_category_id", suffix = c("_ff", "_sfc")) %>%
+      dplyr::mutate(standard_category =
+                      dplyr::case_when(is.na(standard_category) ~ standard_category_id_ff,
+                                       TRUE ~ standard_category)) %>%
+      dplyr::left_join(dir_oh, by = "standard_category", suffix = c("_ff", "_sfc")) %>%
+      dplyr::select(- standard_category_id_sfc, - direct_or_overhead_ff) %>%
+      dplyr::rename("standard_category_id" = standard_category_id_ff,
              "direct_or_overhead" = direct_or_overhead_sfc)
   }
 
