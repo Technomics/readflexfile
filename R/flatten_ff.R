@@ -52,18 +52,17 @@ flatten_ff <- function(flexfile, .id = "doc_id") {
 
   # function to join in the sfc category
   join_sfc <- function(the_table) {
-    is_detailed <- isFALSE(all(is.na(the_table$detailed_standard_category_id)))
 
-    if (is_detailed) {
-      # remove the standard_category_id since it will get joined back in
-      the_table %>%
-        dplyr::select(-standard_category_id) %>%
-        dplyr::left_join(cats, by = "detailed_standard_category_id")
-    } else {
-      the_table %>%
-        dplyr::left_join(dplyr::distinct_at(cats, dplyr::vars(-detailed_standard_category_id)),
-                         by = "standard_category_id")
-    }
+    the_table %>%
+      left_join(cats, by = "detailed_standard_category_id",suffix = c("_ff", "_sfc")) %>%
+      mutate(standard_category =
+               case_when(
+                 is.na(standard_category) ~ standard_category_id_ff,
+                 TRUE ~ standard_category)) %>%
+      left_join(dir_oh,by = "standard_category", suffix = c("_ff", "_sfc")) %>%
+      select(- standard_category_id_sfc, - direct_or_overhead_ff) %>%
+      rename("standard_category_id" = standard_category_id_ff,
+             "direct_or_overhead" = direct_or_overhead_sfc)
   }
 
   join_sfc_tables <- c("actualcosthourdata", "forecastatcompletioncosthourdata")
@@ -77,6 +76,7 @@ flatten_ff <- function(flexfile, .id = "doc_id") {
   dplyr::bind_rows(actuals, forecasts) %>%
     flexfile_order_columns()
 }
+
 
 ## ===== Internal FlexFile Helpers =====
 
