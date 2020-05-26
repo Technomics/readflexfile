@@ -89,3 +89,17 @@ detach("package:readflexfile", unload = TRUE)
 
 ## ===== Scratch Work =====
 
+test_data <- read_folder("I:/Tools/costverse/data/readflexfile", read_ff)
+
+df <- test_data %>%
+  listindex_to_col(var = "doc_id") %>%
+  stack_ff()
+
+flexfile <- df
+
+df <- df %>%
+  flatten_ff()
+
+View(df)
+
+

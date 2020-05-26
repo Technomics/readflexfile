@@ -48,21 +48,20 @@ NULL
 flatten_ff <- function(flexfile, .id = "doc_id") {
   # selects all, but provides a quick safety net in case of changes
   cats <- readflexfile::sfc_mapping %>%
-    dplyr::distinct(standard_category, detailed_standard_category_id, direct_or_overhead)
+    dplyr::distinct(standard_category_id, detailed_standard_category_id, direct_or_overhead)
 
   dir_oh <- readflexfile::sfc_mapping %>%
-    dplyr::distinct(standard_category, direct_or_overhead)
+    dplyr::distinct(standard_category_id, direct_or_overhead)
 
   # function to join in the sfc category
   join_sfc <- function(the_table) {
 
     the_table %>%
-      dplyr::left_join(cats, by = "detailed_standard_category_id") %>%
-      dplyr::mutate(standard_category = dplyr::if_else(is.na(standard_category),
-                                                       standard_category_id,
-                                                       standard_category)) %>%
-      dplyr::select(-direct_or_overhead)
-      dplyr::left_join(dir_oh, by = "standard_category")
+      dplyr::left_join(cats, by = "detailed_standard_category_id", suffix = c("", "_sfc")) %>%
+      dplyr::mutate(standard_category_id = dplyr::coalesce(standard_category_id,
+                                                           standard_category_id_sfc)) %>%
+      dplyr::select(-direct_or_overhead, -standard_category_id_sfc) %>%
+      dplyr::left_join(dir_oh, by = "standard_category_id")
   }
 
   join_sfc_tables <- c("actualcosthourdata", "forecastatcompletioncosthourdata")
