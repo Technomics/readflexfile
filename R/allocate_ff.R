@@ -18,27 +18,33 @@
 #'
 #'#Work in progress
 
-allocate_ff <- function(flexfile) {
+allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
 
-  flexfile$actualcosthourdata <- left_join(flexfile$actualcosthourdata, flexfile$allocationcomponents,
-                                           by = c("allocation_method_id",
-                                                  names(flexfile$actualcosthourdata)[1]),
-                                           suffix = c("", ".allocations")) %>%
+  # return the input if the allocation table is not found
+  if (is.null(flexfile$allocationcomponents)) {
+    if (!(.silent) & interactive()) message("no allocation table available, returning input")
+    return(flexfile)
+  }
+
+  new_actualcosthourdata <- flexfile$actualcosthourdata %>%
+    left_join(flexfile$allocationcomponents,
+              by = c("allocation_method_id", .id),
+              suffix = c("", "_allocations")) %>%
     try(mutate(order_or_lot_id =
-                 case_when(
-                   is.na(order_or_lot_id) ~ order_or_lot_id.allocations,
-                   TRUE ~ order_or_lot_id))) %>%
+               case_when(
+                 is.na(order_or_lot_id) ~ order_or_lot_id_allocations,
+                 TRUE ~ order_or_lot_id))) %>%
     try(mutate(end_item_id =
                  case_when(
-                   is.na(end_item_id) ~ end_item_id.allocations,
+                   is.na(end_item_id) ~ end_item_id_allocations,
                    TRUE ~ end_item_id))) %>%
     try(mutate(wbs_element_id =
                  case_when(
-                   is.na(wbs_element_id) ~ wbs_element_id.allocations,
+                   is.na(wbs_element_id) ~ wbs_element_id_allocations,
                    TRUE ~ wbs_element_id))) %>%
     try(mutate(wbs_element_id =
                  case_when(
-                   is.na(unit_or_sublot_id) ~ unit_or_sublot_id.allocations,
+                   is.na(unit_or_sublot_id) ~ unit_or_sublot_id_allocations,
                    TRUE ~ unit_or_sublot_id))) %>%
     mutate(value_dollars =
              case_when(!is.na(allocation_method_id) ~ value_dollars*percent_value,
@@ -47,6 +53,6 @@ allocate_ff <- function(flexfile) {
              case_when(!is.na(allocation_method_id) ~ value_hours*percent_value,
                        TRUE ~ value_hours))
 
-  return(flexfile)
-
+  flexfile$actualcosthourdata <- new_actualcosthourdata
+  flexfile
 }
