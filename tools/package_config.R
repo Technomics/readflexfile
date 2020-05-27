@@ -95,7 +95,8 @@ df <- test_data %>%
   listindex_to_col(var = "doc_id") %>%
   stack_ff()
 
-flexfile <- df
+flexfile <- test_data[[3]] %>%
+  add_id_col()
 
 df <- df %>%
   flatten_ff()
