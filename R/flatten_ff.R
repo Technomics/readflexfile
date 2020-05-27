@@ -5,8 +5,9 @@
 #' This generally involves joining together numerous ID fields. Actuals and forecasts are also
 #' stacked into a single table.
 #'
-#' @param flexfile A flexfile created from the \code{read_ff} function
-#' @param quantity_data A quantity data report created from the \code{read_ff} function
+#' @param flexfile A flexfile created from the \code{read_ff} function.
+#' @param quantity_data A quantity data report created from the \code{read_ff} function.
+#' @param .id The name of the ID column which uniquely identifies a flexfile.
 #'
 #' @name flatten_lists
 #'
@@ -25,8 +26,6 @@ NULL
 #' @export
 #'
 #' @name flatten_lists
-#'
-#' @param flexfile A flexfile created from the \code{\link{read_ff}} function
 #'
 #' @examples
 #' # Flatten one FlexFile
