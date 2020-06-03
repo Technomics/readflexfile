@@ -1,4 +1,4 @@
-# readflexfile (development version)
+# readflexfile 0.0.2
 
 # readflexfile 0.0.1
 

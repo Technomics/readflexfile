@@ -98,7 +98,7 @@ test_df <- test_data %>%
   stack_ff() %>%
   flatten_ff()
 
-df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
+test_df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
 
 standard_df <- standard %>%
   add_id_col(var = "doc_id") %>%
