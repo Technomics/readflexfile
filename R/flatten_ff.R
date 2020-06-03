@@ -48,22 +48,20 @@ NULL
 flatten_ff <- function(flexfile, .id = "doc_id") {
   # selects all, but provides a quick safety net in case of changes
   cats <- readflexfile::sfc_mapping %>%
-    dplyr::distinct(standard_category_id, standard_category, detailed_standard_category_id, direct_or_overhead)
+    dplyr::distinct(standard_category_id, detailed_standard_category_id, direct_or_overhead)
+
+  dir_oh <- readflexfile::sfc_mapping %>%
+    dplyr::distinct(standard_category_id, direct_or_overhead)
 
   # function to join in the sfc category
   join_sfc <- function(the_table) {
-    is_detailed <- isFALSE(all(is.na(the_table$detailed_standard_category_id)))
 
-    if (is_detailed) {
-      # remove the standard_category_id since it will get joined back in
-      the_table %>%
-        dplyr::select(-standard_category_id) %>%
-        dplyr::left_join(cats, by = "detailed_standard_category_id")
-    } else {
-      the_table %>%
-        dplyr::left_join(dplyr::distinct_at(cats, dplyr::vars(-detailed_standard_category_id)),
-                         by = "standard_category_id")
-    }
+    the_table %>%
+      dplyr::left_join(cats, by = "detailed_standard_category_id", suffix = c("", "_sfc")) %>%
+      dplyr::mutate(standard_category_id = dplyr::coalesce(standard_category_id,
+                                                           standard_category_id_sfc)) %>%
+      dplyr::select(-direct_or_overhead, -standard_category_id_sfc) %>%
+      dplyr::left_join(dir_oh, by = "standard_category_id")
   }
 
   join_sfc_tables <- c("actualcosthourdata", "forecastatcompletioncosthourdata")
@@ -77,6 +75,7 @@ flatten_ff <- function(flexfile, .id = "doc_id") {
   dplyr::bind_rows(actuals, forecasts) %>%
     flexfile_order_columns()
 }
+
 
 ## ===== Internal FlexFile Helpers =====
 
@@ -191,7 +190,8 @@ flexfile_order_columns <- function(flexfile) {
                   nonrecurring_or_recurring_id,
                   functional_category_name,
                   functional_overhead_category_name,
-                  standard_category,
+                  standard_category_id,
+                  detailed_standard_category_id,
                   start_date,
                   end_date,
                   value_dollars,

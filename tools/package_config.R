@@ -89,3 +89,25 @@ detach("package:readflexfile", unload = TRUE)
 
 ## ===== Scratch Work =====
 
+test_data <- read_folder("I:/Tools/costverse/data/readflexfile", read_ff)
+standard <- read_ff("I:/Tools/costverse/data/readflexfile/1. standard_category_id.zip")
+detailed <- read_ff("I:/Tools/costverse/data/readflexfile/2. detailed_category_id.zip")
+
+test_df <- test_data %>%
+  listindex_to_col(var = "doc_id") %>%
+  stack_ff() %>%
+  flatten_ff()
+
+df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
+
+standard_df <- standard %>%
+  add_id_col(var = "doc_id") %>%
+  flatten_ff()
+
+standard_df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
+
+detailed_df <- detailed %>%
+  add_id_col(var = "doc_id") %>%
+  flatten_ff()
+
+detailed_df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
