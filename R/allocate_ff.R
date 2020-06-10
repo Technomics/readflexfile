@@ -54,7 +54,7 @@ allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
     dplyr::left_join(flexfile$allocationcomponents,
                      by = c("allocation_method_id", .id),
                      suffix = c("", "_allocations")) %>%
-    dplyr::left_join(select(flexfile$allocationmethods, !!.id, id, allocation_method_type_id),
+    dplyr::left_join(dplyr::select(flexfile$allocationmethods, !!.id, id, allocation_method_type_id),
                      by = c(allocation_method_id = "id", .id))
 
   # iterate over the function to apply it across all allocation fields

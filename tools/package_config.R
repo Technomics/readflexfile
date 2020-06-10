@@ -89,18 +89,24 @@ detach("package:readflexfile", unload = TRUE)
 
 ## ===== Scratch Work =====
 
-test_data <- read_folder("I:/Tools/costverse/data/readflexfile", read_ff)
-
-df <- test_data %>%
-  listindex_to_col(var = "doc_id") %>%
+test_data <- read_folder("I:/Tools/costverse/data/readflexfile", read_ff) %>%
+  listindex_to_col() %>%
   stack_ff()
 
-flexfile <- test_data[[3]] %>%
+test_data <- test_data %>%
+  allocate_ff()
+
+test_data$actualcosthourdata %>%
+  dplyr::distinct(allocation_method_id, end_item_id, order_or_lot_id)
+
+alloc <- read_ff("I:/Tools/costverse/data/readflexfile/3. allocation.zip") %>%
   add_id_col()
 
-df <- df %>%
-  flatten_ff()
+alloc <- alloc %>%
+  allocate_ff()
 
-View(df)
+no_alloc<- read_ff("I:/Tools/costverse/data/readflexfile/2. detailed_category_id.zip") %>%
+  add_id_col()
 
-
+no_alloc <- no_alloc %>%
+  allocate_ff()

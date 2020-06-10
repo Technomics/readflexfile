@@ -47,7 +47,8 @@ NULL
 flatten_ff <- function(flexfile, .id = "doc_id") {
   # selects all, but provides a quick safety net in case of changes
   cats <- readflexfile::sfc_mapping %>%
-    dplyr::distinct(standard_category_id, detailed_standard_category_id, direct_or_overhead)
+    dplyr::distinct(standard_category_id, detailed_standard_category_id, direct_or_overhead) %>%
+    dplyr::mutate(detailed_standard_category_id = as.character(detailed_standard_category_id))
 
   dir_oh <- readflexfile::sfc_mapping %>%
     dplyr::distinct(standard_category_id, direct_or_overhead)
@@ -56,6 +57,7 @@ flatten_ff <- function(flexfile, .id = "doc_id") {
   join_sfc <- function(the_table) {
 
     the_table %>%
+      dplyr::mutate(detailed_standard_category_id = as.character(detailed_standard_category_id)) %>%
       dplyr::left_join(cats, by = "detailed_standard_category_id", suffix = c("", "_sfc")) %>%
       dplyr::mutate(standard_category_id = dplyr::coalesce(standard_category_id,
                                                            standard_category_id_sfc)) %>%
@@ -74,6 +76,8 @@ flatten_ff <- function(flexfile, .id = "doc_id") {
   dplyr::bind_rows(actuals, forecasts) %>%
     flexfile_order_columns()
 }
+
+
 
 
 ## ===== Internal FlexFile Helpers =====
@@ -143,6 +147,7 @@ flatten_actuals <- function(flexfile, .id)  {
 
 }
 
+
 #' @keywords internal
 flatten_forecasts <- function(flexfile, .id) {
 
@@ -176,6 +181,7 @@ flatten_forecasts <- function(flexfile, .id) {
 
 }
 
+
 #' @keywords internal
 flexfile_order_columns <- function(flexfile) {
 
@@ -189,7 +195,8 @@ flexfile_order_columns <- function(flexfile) {
                   nonrecurring_or_recurring_id,
                   functional_category_name,
                   functional_overhead_category_name,
-                  standard_category,
+                  standard_category_id,
+                  detailed_standard_category_id,
                   start_date,
                   end_date,
                   value_dollars,
@@ -197,6 +204,7 @@ flexfile_order_columns <- function(flexfile) {
                   dplyr::everything()) #everything else isn't required by the data model
 
 }
+
 
 
 ## ===== Flatten Quantity Data Report ----
