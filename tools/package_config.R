@@ -30,6 +30,9 @@ desc::desc_set("Roxygen", "list(markdown = TRUE)")
 usethis::use_vignette("csdrtool-vignette")
 usethis::use_vignette("importing-flexfile")
 
+# Tests
+usethis::use_test("read")
+
 ## ===== DESCRIPTION =====
 
 # Description list
@@ -65,10 +68,15 @@ usethis::use_package("lubridate")
 
 ## ===== README & NEWS =====
 
-usethis::use_lifecycle_badge("Maturing")
+rnomics::use_badge_costverse()
+usethis::use_lifecycle_badge("Stable")
 rnomics::use_badge_passing()
+rnomics::use_badge_gpl3()
 
 ## ===== Developmental Tools =====
+
+cvg <- devtools::test_coverage()
+rnomics::use_badge_coverage(cvg)
 
 pkgdown::build_reference()
 
@@ -79,6 +87,7 @@ devtools::spell_check()
 devtools::check()
 
 usethis::use_version()
+rnomics::use_badge_version()
 
 devtools::load_all()
 
