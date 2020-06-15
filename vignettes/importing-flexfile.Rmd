@@ -32,7 +32,7 @@ This vignette demonstrates how to import the FlexFile using `csdrtools`.
 To import one FlexFile, first point `read_ff` to a .zip of JSON tables of a FlexFile.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
-file <- system.file("extdata", "Sample File_FF.zip", package = "csdrtools")
+file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
 
 list_ff <- read_ff(file)
 ```

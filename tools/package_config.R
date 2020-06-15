@@ -89,24 +89,25 @@ detach("package:readflexfile", unload = TRUE)
 
 ## ===== Scratch Work =====
 
-test_data <- read_folder("I:/Tools/costverse/data/readflexfile", read_ff) %>%
-  listindex_to_col() %>%
-  stack_ff()
+test_data <- read_folder("I:/Tools/costverse/data/readflexfile", read_ff)
+standard <- read_ff("I:/Tools/costverse/data/readflexfile/1. standard_category_id.zip")
+detailed <- read_ff("I:/Tools/costverse/data/readflexfile/2. detailed_category_id.zip")
 
-test_data <- test_data %>%
-  allocate_ff()
+test_df <- test_data %>%
+  listindex_to_col(var = "doc_id") %>%
+  stack_ff() %>%
+  flatten_ff()
 
-test_data$actualcosthourdata %>%
-  dplyr::distinct(allocation_method_id, end_item_id, order_or_lot_id)
+test_df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
 
-alloc <- read_ff("I:/Tools/costverse/data/readflexfile/3. allocation.zip") %>%
-  add_id_col()
+standard_df <- standard %>%
+  add_id_col(var = "doc_id") %>%
+  flatten_ff()
 
-alloc <- alloc %>%
-  allocate_ff()
+standard_df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
 
-no_alloc<- read_ff("I:/Tools/costverse/data/readflexfile/2. detailed_category_id.zip") %>%
-  add_id_col()
+detailed_df <- detailed %>%
+  add_id_col(var = "doc_id") %>%
+  flatten_ff()
 
-no_alloc <- no_alloc %>%
-  allocate_ff()
+detailed_df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
