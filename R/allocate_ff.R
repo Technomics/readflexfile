@@ -6,47 +6,63 @@
 #'
 #' \code{allocate_ff()} applies the allocations provided in the Allocation Methodology table to
 #' the Actual Coust Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
-#' Each tibble corresponds to its respective JSON table.
-#'
+#' Each tibble corresponds to its respective JSON table. \cr
+#' \cr
+#' Currently this is implemented for \code{allocation_method_type_id == "PERCENT"}.
 #'
 #' @export
 #'
 #' @param flexfile A list of one or multiple FlexFiles imported through the \code{read_ff()} and \code{read_folder()} functions.
+#' @inheritParams flatten_lists
 #' @return A list of tibbles for the \code{file}.
 #'
 #' @examples
 #'
 #'#Work in progress
+allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
 
-allocate_ff <- function(flexfile) {
+  # return the input if the allocation table is not found
+  if (is.null(flexfile$allocationcomponents)) {
+    if (!(.silent) & interactive()) message("no allocation table available, returning input")
+    return(flexfile)
+  }
 
-  flexfile$actualcosthourdata <- left_join(flexfile$actualcosthourdata, flexfile$allocationcomponents,
-                                           by = c("allocation_method_id",
-                                                  names(flexfile$actualcosthourdata)[1]),
-                                           suffix = c("", ".allocations")) %>%
-    try(mutate(order_or_lot_id =
-                 case_when(
-                   is.na(order_or_lot_id) ~ order_or_lot_id.allocations,
-                   TRUE ~ order_or_lot_id))) %>%
-    try(mutate(end_item_id =
-                 case_when(
-                   is.na(end_item_id) ~ end_item_id.allocations,
-                   TRUE ~ end_item_id))) %>%
-    try(mutate(wbs_element_id =
-                 case_when(
-                   is.na(wbs_element_id) ~ wbs_element_id.allocations,
-                   TRUE ~ wbs_element_id))) %>%
-    try(mutate(wbs_element_id =
-                 case_when(
-                   is.na(unit_or_sublot_id) ~ unit_or_sublot_id.allocations,
-                   TRUE ~ unit_or_sublot_id))) %>%
-    mutate(value_dollars =
-             case_when(!is.na(allocation_method_id) ~ value_dollars*percent_value,
-                       TRUE ~ value_dollars),
-           value_hours =
-             case_when(!is.na(allocation_method_id) ~ value_hours*percent_value,
-                       TRUE ~ value_hours))
+  # check methods
+  valid_methods <- c("PERCENT")
+  allocation_methods <- flexfile$allocationmethods %>%
+    dplyr::distinct(allocation_method_type_id) %>%
+    dplyr::pull()
 
-  return(flexfile)
+  allocation_methods[!(allocation_methods %in% valid_methods)]
 
+  if (!(all(allocation_methods %in% valid_methods))) {
+    # then some allocation method is used that we do not recognize
+    if (!(.silent)) warning(paste("unknown allocation method(s): "),
+                            paste(allocation_methods[!(allocation_methods %in% valid_methods)], collapse = ", "))
+  }
+
+  allocation_fields <- c("order_or_lot_id", "end_item_id", "wbs_element_id", "unit_or_sublot_id")
+
+  coalesce_field <- function(df, field) {
+    field_list <- rlang::syms(list(paste0(field, "_allocations"), field))
+
+    df %>%
+      dplyr::mutate(!!field := dplyr::coalesce(!!!field_list))
+  }
+
+  new_actualcosthourdata <- flexfile$actualcosthourdata %>%
+    dplyr::left_join(flexfile$allocationcomponents,
+                     by = c("allocation_method_id", .id),
+                     suffix = c("", "_allocations")) %>%
+    dplyr::left_join(dplyr::select(flexfile$allocationmethods, !!.id, id, allocation_method_type_id),
+                     by = c(allocation_method_id = "id", .id))
+
+  # iterate over the function to apply it across all allocation fields
+  # reduce will take the output from iteration i and use it as input to i + 1
+  flexfile$actualcosthourdata <- purrr::reduce(allocation_fields, coalesce_field, .init = new_actualcosthourdata) %>%
+    tidyr::replace_na(list(percent_value = 1)) %>%
+    dplyr::mutate_at(dplyr::vars(dplyr::starts_with("value_")), ~ . * percent_value) %>% # need to handle other methods
+    dplyr::select(-(dplyr::ends_with("_allocations")), -allocation_method_type_id)
+
+  flexfile
 }
