@@ -1,0 +1,97 @@
+---
+title: "Using csdrtools to import one or multiple FlexFiles"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{importing-flexfile}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(readflexfile)
+```
+
+One of the core functions of `csdrtools` is to import the FlexFile into the R environment. `csdrtools` supports importing both one FlexFile or a folder of multiple FlexFiles into R. The functions:
+
+* Import the JSON format of the FlexFile into a list of tibbles
+* Assign a unique ID to each FlexFile
+* Stack the multiple FlexFiles on top of each other
+* Flatten the lists into one data frame of actual and forecasts dollars and hours.
+
+This vignette demonstrates how to import the FlexFile using `csdrtools`.
+
+## Importing one FlexFile
+
+To import one FlexFile, first point `read_ff` to a .zip of JSON tables of a FlexFile.
+
+```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
+file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
+
+list_ff <- read_ff(file)
+```
+
+Next, apply `add_id_col` to assign an ID value for the FlexFile. The default value is "1", but can be customized with the value argument.
+
+```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
+list_ff_id <- list_ff %>% 
+  add_id_col(var = "doc_id")
+
+```
+
+Finally, apply `flatten_ff`. This joins all ID and name tables, stacks forecasts and actuals, and creates on data frame to work with.
+
+```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
+flexfile <- list_ff_id %>%
+  flatten_ff()
+```
+
+## Importing multiple FlexFiles
+
+To import multiple FlexFiles, point `read_folder` to a folder of FlexFile submissions. `read_function = read_ff` applies the `read_ff` function to each FlexFile in the folder.
+
+```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
+folder <- system.file("extdata/multiple-flexfiles", package = "csdrtools")
+
+list_ffs <- read_folder(folder, 
+                        read_function = read_ff)
+```
+
+Next, apply `listindex_to_col` to add a unique ID for each FlexFile in the folder.
+
+```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
+list_ffs_id <- list_ffs %>%
+  listindex_to_col(var = "doc_id")
+```
+
+`stack_ff` reads in a list of lists of FlexFile submissions and returns one list of stacked tibbles
+
+```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
+list_ffs_stack <- list_ffs_id %>%
+  stack_ff()
+```
+
+Finally, use `flatten_ff` to create the data frame of dollars and hours.
+
+```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
+flexfiles <- list_ffs_stack %>%
+   flatten_ff()
+```
+
+## Importing the Quantity Data Report
+
+`csdrtools` also provides functionality for the Quantity Data Report (QDR). The workflow for reading in the QDR is the same as for the FlexFile (and uses many of the same functions). However, instead of `flatten_ff`, use `flatten_qdr`.
+
+```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
+quantity_data <- system.file("extdata", "Sample File_Q.zip", package = "csdrtools")
+
+qdr <- read_ff(quantity_data) %>%
+  add_id_col(var = "doc_id") %>%
+  flatten_qdr()
+```
