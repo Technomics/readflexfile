@@ -11,9 +11,11 @@ flatten_ff(flexfile, .id = "doc_id")
 flatten_qdr(quantity_data, .id = "doc_id")
 }
 \arguments{
-\item{flexfile}{A flexfile created from the \code{\link{read_ff}} function}
+\item{flexfile}{A flexfile created from the \code{read_ff} function.}
 
-\item{quantity_data}{A quantity data report created from the \code{read_ff} function}
+\item{.id}{The name of the ID column which uniquely identifies a flexfile.}
+
+\item{quantity_data}{A quantity data report created from the \code{read_ff} function.}
 }
 \value{
 A data frame with the flattened flexfile or quantity data.

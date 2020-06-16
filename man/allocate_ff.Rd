@@ -4,10 +4,12 @@
 \alias{allocate_ff}
 \title{Apply allocation methodologies provided}
 \usage{
-allocate_ff(flexfile)
+allocate_ff(flexfile, .id = "doc_id", .silent = FALSE)
 }
 \arguments{
 \item{flexfile}{A list of one or multiple FlexFiles imported through the \code{read_ff()} and \code{read_folder()} functions.}
+
+\item{.id}{The name of the ID column which uniquely identifies a flexfile.}
 }
 \value{
 A list of tibbles for the \code{file}.
@@ -15,7 +17,9 @@ A list of tibbles for the \code{file}.
 \description{
 \code{allocate_ff()} applies the allocations provided in the Allocation Methodology table to
 the Actual Coust Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
-Each tibble corresponds to its respective JSON table.
+Each tibble corresponds to its respective JSON table. \cr
+\cr
+Currently this is implemented for \code{allocation_method_type_id == "PERCENT"}.
 }
 \examples{
 
