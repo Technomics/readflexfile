@@ -228,5 +228,7 @@ flexfile_constraints <- list(actualcosthourdata_fk01 = list(type = "constraint",
                                                            by = c("doc_id" = "doc_id",
                                                                   "wbs_element_id" = "id")))
 
+flexfile_constraints <- purrr::modify(flexfile_constraints, ~ purrr::modify_at(.x, .at = "by", costmisc::clean_by))
+
 usethis::use_data(flexfile_tables, overwrite = TRUE)
 usethis::use_data(flexfile_constraints, overwrite = TRUE)
