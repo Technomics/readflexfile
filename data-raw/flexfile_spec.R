@@ -116,8 +116,8 @@ flexfile_constraints <- list(actualcosthourdata_fk01 = list(type = "constraint",
                                                ref_table = "contracttypeenum",
                                                by = c("contract_type_id" = "id")),
 
-                             costhourdatatagdefinitions_fk01 = list(type = "constraint",
-                                                                    table = "costhourdatatagdefinitions",
+                             costhourtagdefinitions_fk01 = list(type = "constraint",
+                                                                    table = "costhourtagdefinitions",
                                                                     ref_table = "costhourtagenum",
                                                                     by = c("cost_hour_tag_id" = "id")),
 
