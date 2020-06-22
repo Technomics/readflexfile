@@ -123,8 +123,3 @@ detailed_df <- detailed %>%
 
 detailed_df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
 
-sql_to_r_types <- tibble::tibble(VARCHAR = NA_character_,
-                                 LONG = NA_integer_,
-                                 DOUBLE = NA_real_,
-                                 BIT = NA,
-                                 DATETIME = NA_character_)
