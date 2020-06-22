@@ -35,7 +35,9 @@ Imports:
     rlang (>= 0.4.2),
     costmisc (>= 0.2.1),
     stringr (>= 1.4.0),
-    lubridate
+    lubridate,
+    glue (>= 1.4.1),
+    cli (>= 2.0.2)
 RdMacros: lifecycle
 Depends: 
     R (>= 2.10)

@@ -4,13 +4,13 @@
 \alias{read_ff}
 \title{Read one FlexFile into a list of tibbles}
 \usage{
-read_ff(file, .clean_names = TRUE)
+read_ff(file, .show_check = FALSE)
 }
 \arguments{
 \item{file}{Path to a FlexFile .zip archive.}
 
-\item{.clean_names}{Logical whether to clean the names using \code{\link[janitor]{clean_names}()}
-or not.}
+\item{.show_check}{Logical whether to print information about the file check to the
+console or not.}
 }
 \value{
 A list of tibbles for the \code{file}.
@@ -22,18 +22,18 @@ Each tibble corresponds to its respective JSON table.
 Can be used with \code{\link[costmisc:read_folder]{read_folder}} as in example.
 }
 \examples{
-#Read in one FlexFile
+# Read in one FlexFile
 file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
 
 flexfile <- read_ff(file) \%>\%
-add_id_col(var = "doc_id")
+  add_id_col(var = "doc_id")
 
-#Read in multiple FlexFiles by using read_folder
+# Read in multiple FlexFiles by using read_folder
 files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
 
 flexfiles <- read_folder(files, read_ff) \%>\%
-listindex_to_col(var = "doc_id") \%>\%
-stack_ff() \%>\%
-flatten_ff()
+  listindex_to_col(var = "doc_id") \%>\%
+  stack_ff() \%>\%
+  flatten_ff()
 
 }

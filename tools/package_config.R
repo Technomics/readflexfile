@@ -62,6 +62,8 @@ usethis::use_package("purrr", min_version = "0.3.3")
 usethis::use_package("rlang", min_version = "0.4.2")
 usethis::use_package("costmisc", min_version = "0.2.1")
 usethis::use_package("stringr", min_version = "1.4.0")
+usethis::use_package("glue", min_version = "1.4.1")
+usethis::use_package("cli", min_version = "2.0.2")
 usethis::use_package("lifecycle")
 usethis::use_package("magrittr")
 usethis::use_package("lubridate")
@@ -120,3 +122,9 @@ detailed_df <- detailed %>%
   flatten_ff()
 
 detailed_df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
+
+sql_to_r_types <- tibble::tibble(VARCHAR = NA_character_,
+                                 LONG = NA_integer_,
+                                 DOUBLE = NA_real_,
+                                 BIT = NA,
+                                 DATETIME = NA_character_)
