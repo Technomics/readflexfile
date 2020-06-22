@@ -134,16 +134,7 @@ flatten_actuals <- function(flexfile, .id)  {
                   order_or_lot_name = name.ordersorlots,
                   wbs_level = level,
                   functional_category_name = name.functionalcategories,
-                  functional_overhead_category_name = name.overheadcategories) %>%
-    dplyr::select(-account_id,
-                  -clin_id,
-                  -functional_category_id,
-                  -functional_overhead_category_id,
-                  -reporting_period_id,
-                  -end_item_id,
-                  -order_or_lot_id,
-                  -account_id,
-                  -order_or_lot_id)
+                  functional_overhead_category_name = name.overheadcategories)
 
 }
 
@@ -187,14 +178,14 @@ flexfile_order_columns <- function(flexfile) {
 
   flexfile %>%
     dplyr::select(1,
-                  order_or_lot_name,
-                  clin_name,
-                  end_item_name,
+                  order_or_lot_id, order_or_lot_name,
+                  clin_id,clin_name,
+                  end_item_id, end_item_name,
                   wbs_element_id, wbs_name, wbs_parent, wbs_level,
-                  account_name,
+                  account_id, account_name,
                   nonrecurring_or_recurring_id,
-                  functional_category_name,
-                  functional_overhead_category_name,
+                  functional_category_id, functional_category_name,
+                  functional_overhead_category_id, functional_overhead_category_name,
                   standard_category_id,
                   detailed_standard_category_id,
                   start_date,
@@ -204,6 +195,7 @@ flexfile_order_columns <- function(flexfile) {
                   dplyr::everything()) #everything else isn't required by the data model
 
 }
+
 
 
 
