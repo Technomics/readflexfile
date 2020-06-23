@@ -36,7 +36,7 @@ read_ff <- function(file, .show_check = FALSE) {
   ff <- rio::import_list(file, setclass = "tibble")
 
   # check file type
-  check <- check_ff(ff, .show_check = TRUE)
+  check <- check_ff(ff, .silent = TRUE)
 
   ff[["FileType"]] <- NULL
 

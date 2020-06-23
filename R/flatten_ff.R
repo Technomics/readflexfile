@@ -188,8 +188,9 @@ flexfile_order_columns <- function(flexfile) {
                   functional_overhead_category_id, functional_overhead_category_name,
                   standard_category_id,
                   detailed_standard_category_id,
-                  start_date,
-                  end_date,
+                  reporting_period_id, start_date, end_date,
+                  allocation_method_id,
+                  unit_or_sublot_id,
                   value_dollars,
                   value_hours,
                   dplyr::everything()) #everything else isn't required by the data model
