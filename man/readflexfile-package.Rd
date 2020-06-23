@@ -14,8 +14,8 @@ To learn more about readflexfile, start with the vignettes:
 
 Authors:
 \itemize{
-  \item Adam H. James \email{ajames@technomics.net}
   \item Ben Berkman \email{bberkman@technomics.net}
+  \item Justin Cooper \email{jcooper@technomics.net}
 }
 
 Other contributors:

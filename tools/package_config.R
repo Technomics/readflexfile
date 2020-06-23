@@ -36,19 +36,14 @@ usethis::use_test("read")
 ## ===== DESCRIPTION =====
 
 # Description list
-description <- list(Description = "Tools for Cost and Software Data Reporting (CSDR) data.",
-                    Title = "Tools for CSDR data",
-                    `Authors@R` = list(person(given = "Justin", family = "Cooper",
-                                              email = "jcooper@technomics.net",
-                                              role = c("cre", "aut"))))
-
 desc::desc_add_author("Adam H.", "James", "ajames@technomics.net", "aut")
 desc::desc_add_author("Ben", "Berkman", "bberkman@technomics.net", "aut")
-
-# Run this to set description. It will replace whatever is there! Keep in mind the version before doing this.
-#usethis::use_description(fields = description)
+desc::desc_add_author("Justin", "Cooper", "jcooper@technomics.net", "aut")
 
 desc::desc_add_author(given = "Technomics, Inc", role = "cph")
+
+desc::desc_set(Description = "Read the FlexFile data from the JSON specification into R. This includes simply reading the FlexFile into a list, and joining the individual tables together into a single flat file. These functions can also
+               handle nuances of the FlexFile, such as allocations and optional fields.")
 
 # Package dependencies
 usethis::use_pipe()

@@ -6,17 +6,17 @@ Authors@R:
              family = "James",
              role = c("cre", "aut"),
              email = "ajames@technomics.net"),
-      person(given = "Technomics, Inc",
-             role = "cph"),
-      person(given = "Adam H.",
-             family = "James",
-             role = "aut",
-             email = "ajames@technomics.net"),
       person(given = "Ben",
              family = "Berkman",
              role = "aut",
-             email = "bberkman@technomics.net"))
-Description: Read the FlexFile native data into R.
+             email = "bberkman@technomics.net"),
+      person(given = "Justin",
+             family = "Cooper",
+             role = "aut",
+             email = "jcooper@technomics.net"),
+      person(given = "Technomics, Inc",
+             role = "cph"))
+Description: Read the FlexFile data from the JSON specification into R. This includes simply reading the FlexFile into a list, and joining the individual tables together into a single flat file. These functions can also handle nuances of the FlexFile, such as allocations and optional fields.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
