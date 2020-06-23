@@ -46,7 +46,7 @@ read_ff <- function(file, .show_check = FALSE) {
       dplyr::filter(table == table_name)
 
     # build a prototype list
-    all_cols <- rlang::set_names(unclass(ff2db::sql_to_r_types[field_spec$type]),
+    all_cols <- rlang::set_names(unclass(sql_to_r_types[field_spec$type]),
                                  field_spec$field)
 
     new_names <- rlang::set_names(field_spec$field, field_spec$snake_name)

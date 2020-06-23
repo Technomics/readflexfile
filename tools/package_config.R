@@ -15,6 +15,7 @@ usethis::use_gpl3_license("Technomics, Inc.")
 
 # Data folders
 usethis::use_data_raw(name = "sfc_mapping")
+usethis::use_data_raw(name = "sql_to_r_types")
 
 # Package site
 usethis::use_pkgdown()
@@ -50,7 +51,6 @@ usethis::use_pipe()
 usethis::use_package("dplyr", min_version = "0.8.3")
 usethis::use_package("rio")
 usethis::use_package("jsonlite")
-usethis::use_package("janitor")
 usethis::use_package("tidyr", min_version = "1.0.0")
 usethis::use_package("tibble", min_version = "2.0.0")
 usethis::use_package("purrr", min_version = "0.3.3")
@@ -81,7 +81,7 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
-devtools::check()
+devtools::check(vignettes = FALSE)
 
 usethis::use_version()
 rnomics::use_badge_version()
