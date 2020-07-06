@@ -33,16 +33,26 @@
 #'   flatten_ff()
 #'
 read_ff <- function(file, .show_check = FALSE) {
-  ff <- rio::import_list(file, setclass = "tibble")
+  # check the file type
+  file_type <- check_filetype(file)
 
-  # check file type
-  check <- check_ff(ff, .silent = isFALSE(.show_check))
+  # assign a file specification based on the type
+  if (file_type == "FlexFile") {
+    table_spec <- flexfile_spec
+  } else if (file_type == "Quantity") {
+    table_spec <- quantity_spec
+  }
 
-  ff[["FileType"]] <- NULL
+  # read into a list of tables, dropping the FileType.txt input
+  table_list <- rio::import_list(file, setclass = "tibble")
+  table_list[["FileType"]] <- NULL
+
+  # check file against the spec
+  check <- check_spec(table_list, table_spec, file_type, .silent = isFALSE(.show_check))
 
   # add any missing columns back in and rename
   add_missing_columns <- function(table, table_name) {
-    field_spec <- flexfile_spec$flexfile_fields %>%
+    field_spec <- table_spec$fields %>%
       dplyr::filter(table == table_name)
 
     # build a prototype list
@@ -56,26 +66,36 @@ read_ff <- function(file, .show_check = FALSE) {
       dplyr::rename(dplyr::all_of(new_names))
   }
 
-  ff <- purrr::imodify(ff, add_missing_columns)
+  table_list <- purrr::imodify(table_list, add_missing_columns)
 
   # clean up table names
-  clean_table_names <- rlang::set_names(flexfile_spec$flexfile_tables$snake_table,
-                                        flexfile_spec$flexfile_tables$table)
-  names(ff) <- clean_table_names[names(ff)]
+  clean_table_names <- rlang::set_names(table_spec$tables$snake_table,
+                                        table_spec$tables$table)
+  names(table_list) <- clean_table_names[names(table_list)]
 
-  ff
+  table_list
 }
 
 #' @keywords internal
-check_ff <- function(ff, .silent = TRUE) {
-  # check file type
-  if (names(ff[["FileType"]]) != "CSDR_COST_HOUR_REPORT/1.0")
-    stop("this is not a flexfile file type")
+check_filetype <- function(file) {
+  # read the FileType.txt without loading the entire file
+  file_type <- readr::read_file(unz(file, "FileType.txt"))
 
-  ff["FileType"] <- NULL
+  valid_files <- c(FlexFile = "CSDR_COST_HOUR_REPORT/1.0",
+                   Quantity = "CSDR_QUANTITY_REPORT/1.0")
 
-  table_names <- names(ff)
-  check_table <- flexfile_spec$flexfile_tables %>%
+  the_type <- valid_files[file_type == valid_files]
+
+  if (length(the_type) == 0) stop("this is not a flexfile or quantity report")
+
+  names(the_type)
+}
+
+#' @keywords internal
+check_spec <- function(table_list, table_spec, type_label = "Import File", .silent = TRUE) {
+
+  table_names <- names(table_list)
+  check_table <- table_spec$tables %>%
     dplyr::filter(type == "submission") %>%
     dplyr::pull(table)
 
@@ -84,8 +104,8 @@ check_ff <- function(ff, .silent = TRUE) {
   missing_tables <- check_table[!(check_table %in% table_names)]
 
   if (!.silent) {
-    cli::cli_h1("FlexFile Format Check")
-    cli::cat_line(c("The following shows status of the FlexFile against the File Format",
+    cli::cli_h1(paste(type_label, "Format Check"))
+    cli::cat_line(c(paste("The following shows status of the", type_label, "against the File Format"),
                     "Specification. Some fields and tables are optional, so being missing",
                     "does not necessarily indicate a problem."))
 
@@ -108,7 +128,7 @@ check_ff <- function(ff, .silent = TRUE) {
   check_field_names <- function(table, table_name) {
 
     field_names <- names(table)
-    check_field <- flexfile_spec$flexfile_fields %>%
+    check_field <- table_spec$fields %>%
       dplyr::filter(table == table_name) %>%
       dplyr::pull(field)
 
@@ -136,7 +156,7 @@ check_ff <- function(ff, .silent = TRUE) {
          missing = missing_fields)
   }
 
-  field_check <- purrr::imap(ff, check_field_names)
+  field_check <- purrr::imap(table_list, check_field_names)
 
   list(tables = list(unknown = unknown_tables,
                      missing = missing_tables),
