@@ -9,8 +9,8 @@ read_ff(file, .show_check = FALSE)
 \arguments{
 \item{file}{Path to a FlexFile .zip archive.}
 
-\item{.show_check}{Logical whether to print information about the file check to the
-console or not.}
+\item{.show_check}{Logical whether to print information to the console about the
+file check to the console or not.}
 }
 \value{
 A list of tibbles for the \code{file}.

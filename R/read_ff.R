@@ -12,8 +12,8 @@
 #' @export
 #'
 #' @param file Path to a FlexFile .zip archive.
-#' @param .show_check Logical whether to print information about the file check to the
-#' console or not.
+#' @param .show_check Logical whether to print information to the console about the
+#' file check to the console or not.
 #'
 #' @return A list of tibbles for the \code{file}.
 #'
@@ -36,7 +36,7 @@ read_ff <- function(file, .show_check = FALSE) {
   ff <- rio::import_list(file, setclass = "tibble")
 
   # check file type
-  check <- check_ff(ff, .silent = TRUE)
+  check <- check_ff(ff, .silent = isFALSE(.show_check))
 
   ff[["FileType"]] <- NULL
 
@@ -53,7 +53,7 @@ read_ff <- function(file, .show_check = FALSE) {
 
     tibble::add_column(table, !!!all_cols[setdiff(names(all_cols), names(table))]) %>%
       dplyr::select(dplyr::all_of(names(all_cols))) %>%
-      dplyr::rename(new_names)
+      dplyr::rename(dplyr::all_of(new_names))
   }
 
   ff <- purrr::imodify(ff, add_missing_columns)
@@ -89,7 +89,7 @@ check_ff <- function(ff, .silent = TRUE) {
                     "Specification. Some fields and tables are optional, so being missing",
                     "does not necessarily indicate a problem."))
 
-    if (length(unknown_fields) > 0) {
+    if (length(unknown_tables) > 0) {
       cli::cli_h2("Unknown Tables")
       cli::cat_bullet(unknown_tables)
       cli::cat_line("")
