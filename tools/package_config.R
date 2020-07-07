@@ -114,6 +114,7 @@ standard_df %>% dplyr::distinct(standard_category_id, detailed_standard_category
 
 detailed_df <- detailed %>%
   add_id_col(var = "doc_id") %>%
+  allocate_ff() %>%
   flatten_ff()
 
 detailed_df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
