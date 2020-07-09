@@ -29,7 +29,7 @@ NULL
 #'
 #' @examples
 #' # Flatten one FlexFile
-#' file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
+#' file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
 #'
 #' flat_flex_file <- read_ff(file) %>%
 #' add_id_col(var = "doc_id") %>%
@@ -37,7 +37,7 @@ NULL
 #'
 #' #Flatten mutliple FlexFiles
 #'
-#' files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
+#' files <- system.file("extdata", package = "readflexfile")
 #'
 #' flat_flexfiles <- read_folder(files, read_ff) %>%
 #' listindex_to_col(var = "doc_id") %>%
@@ -214,7 +214,7 @@ flexfile_order_columns <- function(flexfile) {
 #'
 #' @examples
 #' # read a sample quantity report
-#' file <- system.file("extdata", "Sample File_Q.zip", package = "readflexfile")
+#' file <- system.file("extdata", "Sample_Quantity_A.zip", package = "readflexfile")
 #'
 #' flat_flex_file <- read_ff(file) %>%
 #'   add_id_col() %>%

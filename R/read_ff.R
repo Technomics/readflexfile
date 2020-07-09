@@ -19,13 +19,13 @@
 #'
 #' @examples
 #' # Read in one FlexFile
-#' file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
+#' file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
 #'
 #' flexfile <- read_ff(file) %>%
 #'   add_id_col(var = "doc_id")
 #'
 #' # Read in multiple FlexFiles by using read_folder
-#' files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
+#' files <- system.file("extdata", package = "readflexfile")
 #'
 #' flexfiles <- read_folder(files, read_ff) %>%
 #'   listindex_to_col(var = "doc_id") %>%
@@ -180,7 +180,7 @@ check_spec <- function(table_list, table_spec, type_label = "Import File", .sile
 #' @return A list of stacked tibbles of multiple dataframes
 #'
 #' @examples
-#' files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
+#' files <- system.file("extdata", package = "readflexfile")
 #'
 #' flexfiles <- read_folder(files, read_ff) %>%
 #' listindex_to_col() %>%

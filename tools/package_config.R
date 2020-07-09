@@ -62,6 +62,8 @@ usethis::use_package("cli", min_version = "2.0.2")
 usethis::use_package("lifecycle")
 usethis::use_package("magrittr")
 usethis::use_package("lubridate")
+usethis::use_package("janitor")
+
 
 ## ===== README & NEWS =====
 
@@ -86,7 +88,7 @@ devtools::check(vignettes = FALSE)
 usethis::use_version()
 rnomics::use_badge_version()
 
-devtools::load_all()
+devtools::load_all()''
 
 devtools::build(binary = TRUE)
 devtools::build()

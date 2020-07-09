@@ -129,7 +129,7 @@ Minimal code is required to run this function and store the data as list `aircra
 library(readflexfile)
 
 # Read an example from the package
-file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
+file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
 
 # Read in the example FlexFile
 aircraft_ff <- readflexfile::read_ff(file = file,
@@ -162,7 +162,7 @@ Loading multiple FlexFiles into one list enables comparing or aggregating multip
 Much like `read_ff()`, minimal code is required to read in a folder of FlexFile submissions. This example reads in a folder of two FlexFiles into R.
 
 ```{r echo = TRUE, warning=FALSE}
-folder <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
+folder <- system.file("extdata", package = "readflexfile")
 
 flexfiles <- read_folder(folder, 
                          read_function = readflexfile::read_ff)

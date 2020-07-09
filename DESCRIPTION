@@ -36,7 +36,8 @@ Imports:
     stringr (>= 1.4.0),
     lubridate,
     glue (>= 1.4.1),
-    cli (>= 2.0.2)
+    cli (>= 2.0.2),
+    janitor
 RdMacros: lifecycle
 Depends: 
     R (>= 2.10)
