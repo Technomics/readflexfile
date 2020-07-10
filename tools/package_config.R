@@ -88,7 +88,7 @@ devtools::check(vignettes = FALSE)
 usethis::use_version()
 rnomics::use_badge_version()
 
-devtools::load_all()''
+devtools::load_all()
 
 devtools::build(binary = TRUE)
 devtools::build()
