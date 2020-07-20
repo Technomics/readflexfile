@@ -87,6 +87,7 @@ devtools::check(vignettes = FALSE)
 
 usethis::use_version()
 rnomics::use_badge_version()
+usethis::use_citation()
 
 devtools::load_all()
 
