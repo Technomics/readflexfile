@@ -132,9 +132,7 @@ library(readflexfile)
 file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
 
 # Read in the example FlexFile
-aircraft_ff <- readflexfile::read_ff(file = file,
-                       .clean_names = T)
-
+aircraft_ff <- readflexfile::read_ff(file = file)
 
 ```
 

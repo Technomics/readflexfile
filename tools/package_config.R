@@ -83,7 +83,7 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
-devtools::check(vignettes = FALSE)
+devtools::check(vignettes = TRUE)
 
 usethis::use_version()
 rnomics::use_badge_version()

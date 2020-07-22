@@ -13,5 +13,6 @@ citEntry(
   pages    = ,
   url      = ,
   textVersion = paste("Benjamin Berkman, Justin Cooper, Adam James (2020).",
-        "Importing the FlexFile with ezflexfile.")
-        )
+        "Importing the FlexFile with readflexfile."
+  )
+)
