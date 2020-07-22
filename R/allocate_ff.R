@@ -13,6 +13,7 @@
 #' @export
 #'
 #' @param flexfile A list of one or multiple FlexFiles imported through the \code{read_ff()} and \code{read_folder()} functions.
+#' @param .silent Logical whether to print information to the console about the allocation or not.
 #' @inheritParams flatten_lists
 #' @return A list of tibbles for the \code{file}.
 #'

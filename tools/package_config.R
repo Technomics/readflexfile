@@ -63,6 +63,7 @@ usethis::use_package("lifecycle")
 usethis::use_package("magrittr")
 usethis::use_package("lubridate")
 usethis::use_package("janitor")
+usethis::use_package("readr")
 
 
 ## ===== README & NEWS =====
@@ -83,7 +84,7 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
-devtools::check(vignettes = TRUE)
+devtools::check(vignettes = FALSE)
 
 usethis::use_version()
 rnomics::use_badge_version()

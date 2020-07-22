@@ -37,7 +37,8 @@ Imports:
     lubridate,
     glue (>= 1.4.1),
     cli (>= 2.0.2),
-    janitor
+    janitor,
+    readr
 RdMacros: lifecycle
 Depends: 
     R (>= 2.10)

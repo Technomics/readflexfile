@@ -10,6 +10,8 @@ allocate_ff(flexfile, .id = "doc_id", .silent = FALSE)
 \item{flexfile}{A list of one or multiple FlexFiles imported through the \code{read_ff()} and \code{read_folder()} functions.}
 
 \item{.id}{The name of the ID column which uniquely identifies a flexfile.}
+
+\item{.silent}{Logical whether to print information to the console about the allocation or not.}
 }
 \value{
 A list of tibbles for the \code{file}.
