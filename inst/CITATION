@@ -10,6 +10,5 @@ citEntry(
   note     = "R package",
   url      = "https://www.technomics.net",
   textVersion = paste("Benjamin Berkman, Justin Cooper, Adam James (2020).",
-        "Importing the FlexFile with readflexfile."
-  )
+        "Importing the FlexFile with readflexfile.")
 )
