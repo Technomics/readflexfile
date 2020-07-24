@@ -47,21 +47,21 @@ NULL
 flatten_ff <- function(flexfile, .id = "doc_id") {
   # selects all, but provides a quick safety net in case of changes
   cats <- readflexfile::sfc_mapping %>%
-    dplyr::distinct(standard_category_id, detailed_standard_category_id, direct_or_overhead) %>%
-    dplyr::mutate(detailed_standard_category_id = as.character(detailed_standard_category_id))
+    dplyr::distinct(.data$standard_category_id, .data$detailed_standard_category_id, .data$direct_or_overhead) %>%
+    dplyr::mutate(detailed_standard_category_id = as.character(.data$detailed_standard_category_id))
 
   dir_oh <- readflexfile::sfc_mapping %>%
-    dplyr::distinct(standard_category_id, direct_or_overhead)
+    dplyr::distinct(.data$standard_category_id, .data$direct_or_overhead)
 
   # function to join in the sfc category
   join_sfc <- function(the_table) {
 
     the_table %>%
-      dplyr::mutate(detailed_standard_category_id = as.character(detailed_standard_category_id)) %>%
+      dplyr::mutate(detailed_standard_category_id = as.character(.data$detailed_standard_category_id)) %>%
       dplyr::left_join(cats, by = "detailed_standard_category_id", suffix = c("", "_sfc")) %>%
-      dplyr::mutate(standard_category_id = dplyr::coalesce(standard_category_id,
-                                                           standard_category_id_sfc)) %>%
-      dplyr::select(-direct_or_overhead, -standard_category_id_sfc) %>%
+      dplyr::mutate(standard_category_id = dplyr::coalesce(.data$standard_category_id,
+                                                           .data$standard_category_id_sfc)) %>%
+      dplyr::select(-.data$direct_or_overhead, -.data$standard_category_id_sfc) %>%
       dplyr::left_join(dir_oh, by = "standard_category_id")
   }
 
@@ -87,54 +87,54 @@ flatten_actuals <- function(flexfile, .id)  {
 
   flexfile$actualcosthourdata %>%
     dplyr::left_join(dplyr::select(flexfile$reportmetadata,
-                                   c(program_name,
-                                     reporting_organization_organization_name,
-                                     1)),
+                                   .data$program_name,
+                                   .data$reporting_organization_organization_name,
+                                   1),
                      by = .id) %>%
     dplyr::left_join(dplyr::select(flexfile$accounts,
-                                   c(id, name, 1)),
-                     by = setNames(c("id", .id), c("account_id", .id)),
+                                   .data$id, .data$name, 1),
+                     by = stats::setNames(c("id", .id), c("account_id", .id)),
                      suffix = c("", ".accounts")) %>%
     dplyr::left_join(dplyr::select(flexfile$enditems,
-                                   c(id, name, 1)),
-                     by = setNames(c("id", .id), c("end_item_id", .id)),
+                                   .data$id, .data$name, 1),
+                     by = stats::setNames(c("id", .id), c("end_item_id", .id)),
                      suffix = c("", ".enditems")) %>%
     dplyr::left_join(dplyr::select(flexfile$ordersorlots,
-                                   c(id, name, 1)),
-                     by = setNames(c("id", .id), c("order_or_lot_id", .id)),
+                                   .data$id, .data$name, 1),
+                     by = stats::setNames(c("id", .id), c("order_or_lot_id", .id)),
                      suffix = c("", ".ordersorlots")) %>%
     dplyr::left_join(dplyr::select(flexfile$clins,
-                                   c(id, name, 1)),
-                     by = setNames(c("id", .id), c("clin_id", .id)),
+                                   .data$id, .data$name, 1),
+                     by = stats::setNames(c("id", .id), c("clin_id", .id)),
                      suffix = c("", ".clins")) %>%
     dplyr::left_join(dplyr::select(flexfile$wbs,
-                                   c(level, id, name, parent_id, 1)),
-                     by = setNames(c("id", .id), c("wbs_element_id", .id)),
+                                   .data$level, .data$id, .data$name, .data$parent_id, 1),
+                     by = stats::setNames(c("id", .id), c("wbs_element_id", .id)),
                      suffix = c("", ".wbs")) %>%
     dplyr::left_join(dplyr::select(flexfile$functionalcategories,
-                                   c(id, name, 1)),
-                     by = setNames(c("id", .id), c("functional_category_id", .id)),
+                                   .data$id, .data$name, 1),
+                     by = stats::setNames(c("id", .id), c("functional_category_id", .id)),
                      suffix = c("", ".functionalcategories")) %>%
     dplyr::left_join(dplyr::select(flexfile$functionaloverheadcategories,
-                                   c(id, name, 1)),
-                     by = setNames(c("id", .id), c("functional_overhead_category_id", .id)),
+                                   .data$id, .data$name, 1),
+                     by = stats::setNames(c("id", .id), c("functional_overhead_category_id", .id)),
                      suffix = c("", ".overheadcategories")) %>%
     dplyr::left_join(dplyr::select(flexfile$reportingcalendar,
-                                   c(id, start_date, end_date, 1)),
-                     by = setNames(c("id", .id), c("reporting_period_id", .id)),
+                                   .data$id, .data$start_date, .data$end_date, 1),
+                     by = stats::setNames(c("id", .id), c("reporting_period_id", .id)),
                      suffix = c("", ".reportingcalendar")) %>%
-    dplyr::mutate(start_date = lubridate::ymd(start_date),
-                  end_date = lubridate::ymd(end_date),
+    dplyr::mutate(start_date = lubridate::ymd(.data$start_date),
+                  end_date = lubridate::ymd(.data$end_date),
                   atd_or_fac = "ATD") %>%
-    dplyr::rename(account_name = name,
-                  clin_name = name.clins,
-                  wbs_parent = parent_id,
-                  wbs_name = name.wbs,
-                  end_item_name = name.enditems,
-                  order_or_lot_name = name.ordersorlots,
-                  wbs_level = level,
-                  functional_category_name = name.functionalcategories,
-                  functional_overhead_category_name = name.overheadcategories)
+    dplyr::rename(account_name = .data$name,
+                  clin_name = .data$name.clins,
+                  wbs_parent = .data$parent_id,
+                  wbs_name = .data$name.wbs,
+                  end_item_name = .data$name.enditems,
+                  order_or_lot_name = .data$name.ordersorlots,
+                  wbs_level = .data$level,
+                  functional_category_name = .data$name.functionalcategories,
+                  functional_overhead_category_name = .data$name.overheadcategories)
 
 }
 
@@ -150,15 +150,15 @@ flatten_forecasts <- function(flexfile, .id) {
 
     flexfile$forecastatcompletioncosthourdata %>%
       dplyr::left_join(dplyr::select(flexfile$wbs,
-                                     c(level, id, name, parent_id, 1)),
-                       by = setNames(c("id", .id), c("wbs_element_id", .id))) %>%
+                                     .data$level, .data$id, .data$name, .data$parent_id, 1),
+                       by = stats::setNames(c("id", .id), c("wbs_element_id", .id))) %>%
       dplyr::left_join(dplyr::select(flexfile$ordersorlots,
-                                     c(id, name, 1)),
-                       by = setNames(c("id", .id), c("order_or_lot_id", .id))) %>%
-      dplyr::rename(wbs_parent = parent_id,
-                    wbs_name = name.x,
-                    wbs_level = level,
-                    order_or_lot_name = name.y) %>%
+                                     .data$id, .data$name, 1),
+                       by = stats::setNames(c("id", .id), c("order_or_lot_id", .id))) %>%
+      dplyr::rename(wbs_parent = .data$parent_id,
+                    wbs_name = .data$name.x,
+                    wbs_level = .data$level,
+                    order_or_lot_name = .data$name.y) %>%
       dplyr::mutate(atd_or_fac = "FAC",
                     order_or_lot_id = NULL)
 
@@ -178,21 +178,21 @@ flexfile_order_columns <- function(flexfile) {
 
   flexfile %>%
     dplyr::select(1,
-                  order_or_lot_id, order_or_lot_name,
-                  clin_id,clin_name,
-                  end_item_id, end_item_name,
-                  wbs_element_id, wbs_name, wbs_parent, wbs_level,
-                  account_id, account_name,
-                  nonrecurring_or_recurring_id,
-                  functional_category_id, functional_category_name,
-                  functional_overhead_category_id, functional_overhead_category_name,
-                  standard_category_id,
-                  detailed_standard_category_id,
-                  reporting_period_id, start_date, end_date,
-                  allocation_method_id,
-                  unit_or_sublot_id,
-                  value_dollars,
-                  value_hours,
+                  .data$order_or_lot_id, .data$order_or_lot_name,
+                  .data$clin_id, .data$clin_name,
+                  .data$end_item_id, .data$end_item_name,
+                  .data$wbs_element_id, .data$wbs_name, .data$wbs_parent, .data$wbs_level,
+                  .data$account_id, .data$account_name,
+                  .data$nonrecurring_or_recurring_id,
+                  .data$functional_category_id, .data$functional_category_name,
+                  .data$functional_overhead_category_id, .data$functional_overhead_category_name,
+                  .data$standard_category_id,
+                  .data$detailed_standard_category_id,
+                  .data$reporting_period_id, .data$start_date, .data$end_date,
+                  .data$allocation_method_id,
+                  .data$unit_or_sublot_id,
+                  .data$value_dollars,
+                  .data$value_hours,
                   dplyr::everything()) #everything else isn't required by the data model
 
 }
@@ -224,28 +224,28 @@ flatten_qdr <- function(quantity_data, .id = "doc_id") {
 
   quant_to_date <- quantity_data$quantitiestodate %>%
     dplyr::left_join(quantity_data$ordersorlots,
-                     by = setNames(c("id", .id), c("order_or_lot_id", .id))) %>%
+                     by = stats::setNames(c("id", .id), c("order_or_lot_id", .id))) %>%
     dplyr::left_join(quantity_data$wbs,
-                     by = setNames(c("id", .id), c("wbs_element_id", .id))) %>%
-    dplyr::left_join(dplyr::select(quantity_data$wbselementremarks, -order_or_lot_id),
+                     by = stats::setNames(c("id", .id), c("wbs_element_id", .id))) %>%
+    dplyr::left_join(dplyr::select(quantity_data$wbselementremarks, -.data$order_or_lot_id),
                      by = c("wbs_element_id", .id)) %>%
-    dplyr::rename("dictionary_definition" = text,
-                  "order_or_lot_name" = name.x,
-                  "wbs_element_name" = name.y) %>%
+    dplyr::rename("dictionary_definition" = .data$text,
+                  "order_or_lot_name" = .data$name.x,
+                  "wbs_element_name" = .data$name.y) %>%
     dplyr::mutate(atd_or_fac = "ATD")
 
   quant_completion <- quantity_data$quantitiesatcompletion %>%
     dplyr::left_join(quantity_data$ordersorlots,
-                     by = setNames(c("id", .id), c("order_or_lot_id", .id))) %>%
+                     by = stats::setNames(c("id", .id), c("order_or_lot_id", .id))) %>%
     dplyr::left_join(quantity_data$wbs,
-                     by = setNames(c("id", .id), c("wbs_element_id", .id))) %>%
-    dplyr::left_join(dplyr::select(quantity_data$wbselementremarks, -order_or_lot_id),
+                     by = stats::setNames(c("id", .id), c("wbs_element_id", .id))) %>%
+    dplyr::left_join(dplyr::select(quantity_data$wbselementremarks, -.data$order_or_lot_id),
                      by = c("wbs_element_id", .id)) %>%
     dplyr::left_join(quantity_data$productionsequence,
                      by = c("end_item_id", .id, "order_or_lot_id")) %>%
-    dplyr::rename("dictionary_definition" = text,
-                  "order_or_lot_name" = name.x,
-                  "wbs_element_name" = name.y) %>%
+    dplyr::rename("dictionary_definition" = .data$text,
+                  "order_or_lot_name" = .data$name.x,
+                  "wbs_element_name" = .data$name.y) %>%
     dplyr::mutate(atd_or_fac = "FAC")
 
   dplyr::bind_rows(quant_to_date, quant_completion)

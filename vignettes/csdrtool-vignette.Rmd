@@ -133,7 +133,7 @@ library(readflexfile)
 file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
 
 # Read in the example FlexFile
-aircraft_ff <- readflexfile::read_ff(file = file, .show_check = TRUE)
+aircraft_ff <- read_ff(file = file)
 
 ```
 
@@ -206,7 +206,7 @@ Because the output of `read_folder()` and `listindex_to_col()` is simply a list,
 ```{r echo = TRUE}
 ff_stack <- flexfiles %>%
   listindex_to_col() %>%
-  readflexfile::stack_ff()
+  stack_ff()
 
 # ff_stack is a list of 15 data frames.
 class(ff_stack)
@@ -244,7 +244,7 @@ flexfiles[[1]]$enditems
 
 Data transformation involves creating new variables from existing ones, reorganizing columns in a more logical manner, and joining together previously separate tables. The FlexFile requires a certain amount of data transformation due to its relational structure. Often a single flat table is easier to work with. The `flatten_ff()` function does this, joining names and IDs, and pulling in metadata (e.g., the program name or the contract number) to form one data frame for analysis.
 
-#### ````flatten_ff()````
+#### `flatten_ff()`
 
 The function `flatten_ff()` transforms the imported FlexFile list object into one data frame.
 
@@ -280,8 +280,8 @@ Doing this for every FlexFile is a significant resource strain. The `flatten_ff(
 
 ```{r echo=TRUE, eval = T}
 ff_flat <- flexfiles %>%
-  readflexfile::stack_ff() %>%
-  readflexfile::flatten_ff()
+  stack_ff() %>%
+  flatten_ff()
 
 ```
 
@@ -336,7 +336,7 @@ Here, we've created the DD 1921 report, filtering to only the actuals incurred t
 ```{r echo = TRUE, eval = T}
 library(ezflexfile)
 
-DD_1921 <- tbl_1921(ff_flat, value = "Dollars")
+DD_1921 <- tbl_1921(ff_flat, unit = "dollars")
 
 DD_1921_actuals <- DD_1921 %>%
   dplyr::select(wbs_element_id, wbs_name, ATD_NONRECURRING, ATD_RECURRING)
@@ -349,7 +349,7 @@ The `tbl_1921()` and `tbl_1921_1()` functions provide some flexibility while mai
 
 ```{r echo = TRUE, eval = T}
 
-DD_1921_1 <- tbl_1921_1(ff_flat, value = "Dollars")
+DD_1921_1 <- tbl_1921_1(ff_flat, unit = "dollars")
 
 DD_1921_1_actuals <- DD_1921_1 %>%
   dplyr::select(standard_category_id, FAC_NONRECURRING, FAC_RECURRING)
@@ -371,7 +371,7 @@ head(tbl_direct_rates(ff_flat)) %>%
 
 Both are called in largely the same manner.
 
-```{r echo = TRUE,eval = T}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 
 head(tbl_wbs_by_account(ff_flat)) %>%
   dplyr::select(wbs_name, account_name, value_dollars)
@@ -444,14 +444,9 @@ The `plot_area()` and `plot_bar()` functions deliver a set of visualizations of 
 
 Time-phased dollars and hours are an important aspect of the FlexFile. A natural way to view time phasing is through an area (or sand) chart, where the x-axis represents the date costs are incurred and the y-value depicts those costs. `plot_area(type = 1)` presents costs over time, colored by nonrecurring (NR) or recurring (R) effort. This helps readily distinguish the ratio of NR to R costs.
 
-```{r echo = FALSE,eval = T}
-
+```{r eval=T, echo=TRUE, fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
 ff_flat <- ff_flat %>%
   dplyr::filter(doc_id == 1)
-
-```
-
-```{r echo = TRUE, eval = T, fig.width=7,fig.height=5}
 
 ff_flat %>%
   plot_area(type = 1, unit = "dollars")

@@ -1,17 +1,14 @@
-citHeader("To cite readflexfile in publications use:")
+citHeader("To cite readflexfile in your own work use:")
 
 citEntry(
-  entry    = "Article",
+  entry    = "Unpublished",
   title    = "Importing the FlexFile with {readflexfile}",
   author   = personList(as.person("Benjamin Berkman"),
                    as.person("Justin Cooper"),
                    as.person("Adam James")),
-  journal  = ,
   year     = "2020",
-  volume   = ,
-  number   = ,
-  pages    = ,
-  url      = ,
+  note     = "R package",
+  url      = "https://www.technomics.net",
   textVersion = paste("Benjamin Berkman, Justin Cooper, Adam James (2020).",
         "Importing the FlexFile with readflexfile."
   )

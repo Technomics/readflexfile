@@ -96,8 +96,8 @@ check_spec <- function(table_list, table_spec, type_label = "Import File", .sile
 
   table_names <- names(table_list)
   check_table <- table_spec$tables %>%
-    dplyr::filter(type == "submission") %>%
-    dplyr::pull(table)
+    dplyr::filter(.data$type == "submission") %>%
+    dplyr::pull(.data$table)
 
   # check table names
   unknown_tables <- table_names[!(table_names %in% check_table)]
@@ -130,7 +130,7 @@ check_spec <- function(table_list, table_spec, type_label = "Import File", .sile
     field_names <- names(table)
     check_field <- table_spec$fields %>%
       dplyr::filter(table == table_name) %>%
-      dplyr::pull(field)
+      dplyr::pull(.data$field)
 
     unknown_fields <- field_names[!(field_names %in% check_field)]
     missing_fields <- check_field[!(check_field %in% field_names)]

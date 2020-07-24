@@ -64,7 +64,12 @@ usethis::use_package("magrittr")
 usethis::use_package("lubridate")
 usethis::use_package("janitor")
 usethis::use_package("readr")
+usethis::use_package("stats")
 
+# These are only in the vignettes
+usethis::use_package("ezflexfile", min_version = "0.0.8", type = "Suggests")
+usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
+usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
 
 ## ===== README & NEWS =====
 
@@ -84,7 +89,7 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
-devtools::check(vignettes = TRUE)
+devtools::check()
 
 usethis::use_version()
 rnomics::use_badge_version()

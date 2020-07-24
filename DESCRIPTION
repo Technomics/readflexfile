@@ -38,12 +38,16 @@ Imports:
     glue (>= 1.4.1),
     cli (>= 2.0.2),
     janitor,
-    readr
+    readr,
+    stats
 RdMacros: lifecycle
 Depends: 
     R (>= 2.10)
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ezflexfile (>= 0.0.8),
+    kableExtra (>= 1.1.0),
+    scales (>= 1.1.0)
 VignetteBuilder: knitr

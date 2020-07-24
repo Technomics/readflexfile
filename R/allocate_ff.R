@@ -31,7 +31,7 @@ allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
   # check methods
   valid_methods <- c("PERCENT")
   allocation_methods <- flexfile$allocationmethods %>%
-    dplyr::distinct(allocation_method_type_id) %>%
+    dplyr::distinct(.data$allocation_method_type_id) %>%
     dplyr::pull()
 
   allocation_methods[!(allocation_methods %in% valid_methods)]
@@ -55,15 +55,15 @@ allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
     dplyr::left_join(flexfile$allocationcomponents,
                      by = c("allocation_method_id", .id),
                      suffix = c("", "_allocations")) %>%
-    dplyr::left_join(dplyr::select(flexfile$allocationmethods, !!.id, id, allocation_method_type_id),
+    dplyr::left_join(dplyr::select(flexfile$allocationmethods, !!.id, .data$id, .data$allocation_method_type_id),
                      by = c(allocation_method_id = "id", .id))
 
   # iterate over the function to apply it across all allocation fields
   # reduce will take the output from iteration i and use it as input to i + 1
   flexfile$actualcosthourdata <- purrr::reduce(allocation_fields, coalesce_field, .init = new_actualcosthourdata) %>%
     tidyr::replace_na(list(percent_value = 1)) %>%
-    dplyr::mutate_at(dplyr::vars(dplyr::starts_with("value_")), ~ . * percent_value) %>% # need to handle other methods
-    dplyr::select(-(dplyr::ends_with("_allocations")), -allocation_method_type_id)
+    dplyr::mutate_at(dplyr::vars(dplyr::starts_with("value_")), ~ . * .data$percent_value) %>% # need to handle other methods
+    dplyr::select(-(dplyr::ends_with("_allocations")), -.data$allocation_method_type_id)
 
   flexfile
 }
