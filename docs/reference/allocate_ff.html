@@ -42,7 +42,9 @@
 <meta property="og:title" content="Apply allocation methodologies provided — allocate_ff" />
 <meta property="og:description" content="allocate_ff() applies the allocations provided in the Allocation Methodology table to
 the Actual Coust Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
-Each tibble corresponds to its respective JSON table." />
+Each tibble corresponds to its respective JSON table. 
+
+Currently this is implemented for allocation_method_type_id == &quot;PERCENT&quot;." />
 
 
 
@@ -74,7 +76,7 @@ Each tibble corresponds to its respective JSON table." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
@@ -100,7 +102,7 @@ Each tibble corresponds to its respective JSON table." />
       <a href="../articles/csdrtool-vignette.html">The FlexFile Framework: Preparing for Powerful Analysis in R (ICEAA Paper)</a>
     </li>
     <li>
-      <a href="../articles/importing-flexfile.html">Using csdrtools to import one or multiple FlexFiles</a>
+      <a href="../articles/importing-flexfile.html">Using readflexfile to import one or multiple FlexFiles</a>
     </li>
   </ul>
 </li>
@@ -131,10 +133,12 @@ Each tibble corresponds to its respective JSON table." />
     <div class="ref-description">
     <p><code>allocate_ff()</code> applies the allocations provided in the Allocation Methodology table to
 the Actual Coust Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
-Each tibble corresponds to its respective JSON table.</p>
+Each tibble corresponds to its respective JSON table. <br />
+<br />
+Currently this is implemented for <code>allocation_method_type_id == "PERCENT"</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>allocate_ff</span>(<span class='no'>flexfile</span>)</pre>
+    <pre class="usage"><span class='fu'>allocate_ff</span>(<span class='no'>flexfile</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"doc_id"</span>, <span class='kw'>.silent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,6 +146,14 @@ Each tibble corresponds to its respective JSON table.</p>
     <tr>
       <th>flexfile</th>
       <td><p>A list of one or multiple FlexFiles imported through the <code><a href='read_ff.html'>read_ff()</a></code> and <code><a href='https://rdrr.io/pkg/costmisc/man/read_folder.html'>read_folder()</a></code> functions.</p></td>
+    </tr>
+    <tr>
+      <th>.id</th>
+      <td><p>The name of the ID column which uniquely identifies a flexfile.</p></td>
+    </tr>
+    <tr>
+      <th>.silent</th>
+      <td><p>Logical whether to print information to the console about the allocation or not.</p></td>
     </tr>
     </table>
 
@@ -164,7 +176,7 @@ Each tibble corresponds to its respective JSON table.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Adam H. James.</p>
+  <p>Developed by Adam H. James, Ben Berkman, Justin Cooper.</p>
 </div>
 
 <div class="pkgdown">

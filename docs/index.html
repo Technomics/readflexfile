@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Read FlexFile data">
-<meta property="og:description" content="Read the FlexFile native data into R.">
+<meta property="og:description" content="Read the FlexFile data from the JSON specification into R. This includes simply reading the FlexFile into a list, and joining the individual tables together into a single flat file. These functions can also handle nuances of the FlexFile, such as allocations and optional fields.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
@@ -57,7 +57,7 @@
       <a href="articles/csdrtool-vignette.html">The FlexFile Framework: Preparing for Powerful Analysis in R (ICEAA Paper)</a>
     </li>
     <li>
-      <a href="articles/importing-flexfile.html">Using csdrtools to import one or multiple FlexFiles</a>
+      <a href="articles/importing-flexfile.html">Using readflexfile to import one or multiple FlexFiles</a>
     </li>
   </ul>
 </li>
@@ -82,39 +82,25 @@
 <a href="#readflexfile" class="anchor"></a>readflexfile</h1></div>
 <!-- badges: start -->
 
-<p>The goal of readflexfile is to …</p>
+<p>The goal of readflexfile is to facilitate the reading of the FlexFile from the original JSON format into R. The package also includes helpful functions to flatten the schema into a single table.</p>
+<p>View the <a href="http://shiny.technomics.net/tran/www/docs/readflexfile">package site</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div id="install-directly" class="section level3">
-<h3 class="hasAnchor">
-<a href="#install-directly" class="anchor"></a>Install Directly</h3>
 <p>You can install the released version of readflexfile from <a href="http://shiny.technomics.net/tran/www/home/">TRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"readflexfile"</span>, <span class="kw">repos</span> <span class="kw">=</span> <span class="st">"http://shiny.technomics.net/tran"</span>)</pre></div>
+<div id="development-version" class="section level3">
+<h3 class="hasAnchor">
+<a href="#development-version" class="anchor"></a>Development version</h3>
+<p>To get a bug fix, or to use a feature from the development version, you can install readflexfile from GitLab using <a href="http://shiny.technomics.net/tran/www/docs/rnomics/"><code>rnomics</code></a>.</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">rnomics</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/rnomics/man/gitlab_install.html">gitlab_install</a></span>(<span class="st">"costverse/readflexfile"</span>, <span class="kw">branch</span> <span class="kw">=</span> <span class="st">"master"</span>)</pre></div>
 </div>
 <div id="clone-repository" class="section level3">
 <h3 class="hasAnchor">
 <a href="#clone-repository" class="anchor"></a>Clone Repository</h3>
-<p>Clone the repository into a working directory of your choice. The most simple way is to use <a href="http://shiny.technomics.net/tran/www/docs/rnomics/"><code>rnomics</code></a>.</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">rnomics</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/rnomics/man/gitlab_clone.html">gitlab_clone</a></span>(<span class="st">"NA"</span>, <span class="st">"your/file/directory/here"</span>)</pre></div>
-<p>Otherwise using the following method.</p>
-<ol>
-<li>Navigate to the directory with terminal using the <code>cd</code> command to where you would like to clone the repository too. The project will become a sub-directory of this location.
-<ul>
-<li><code>cd "your/file/directory/here"</code></li>
-</ul>
-</li>
-<li>Clone the desired repository from GitLab. Use the option to not check for the valid certificate (note the double hyphen in front of config).
-<ul>
-<li><code>git clone --config http.sslVerify=false https://192.168.10.152/costverse/readflexfile.git</code></li>
-</ul>
-</li>
-</ol>
+<p>Clone the repository into a working directory of your choice. Use either the RStudio menus or <a href="http://shiny.technomics.net/tran/www/docs/rnomics/"><code>rnomics</code></a>.</p>
+<div class="sourceCode" id="cb3"><pre class="r"><span class="kw pkg">rnomics</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/rnomics/man/gitlab_clone.html">gitlab_clone</a></span>(<span class="st">"costverse/readflexfile"</span>, <span class="st">"your/file/directory/here"</span>)</pre></div>
 </div>
-</div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
 </div>
 </div>
   </div>
@@ -127,12 +113,18 @@
 <li><small><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></small></li>
 </ul>
 </div>
+<div class="citation">
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing readflexfile</a></li>
+</ul>
+</div>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Adam H. James <br><small class="roles"> Maintainer, author </small>  </li>
-<li>Adam H. James <br><small class="roles"> Author </small>  </li>
 <li>Ben Berkman <br><small class="roles"> Author </small>  </li>
+<li>Justin Cooper <br><small class="roles"> Author </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
@@ -140,7 +132,12 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
+<li><a href="https://gitlab.technomics.net/costverse"><img src="https://img.shields.io/badge/technomics-costverse-EAC435.svg" alt="technomics: costverse"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://gitlab.technomics.net/costverse/readflexfile.git"><img src="https://img.shields.io/badge/build-passing-green.svg" alt="Build: passing"></a></li>
+<li><a href="https://opensource.org/licenses/GPL-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License: GPLv3"></a></li>
+<li><a href=""><img src="https://img.shields.io/badge/version-0.0.2.9000-blue.svg" alt="version: 0.0.2.9000"></a></li>
+<li><a href=""><img src="https://img.shields.io/badge/coverage-0%25-blue.svg" alt="coverage: 0%25"></a></li>
 </ul>
 </div>
 </div>
@@ -148,7 +145,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Adam H. James, Adam H. James, Ben Berkman.</p>
+  <p>Developed by Adam H. James, Ben Berkman, Justin Cooper.</p>
 </div>
 
 <div class="pkgdown">
