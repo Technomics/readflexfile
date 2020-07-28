@@ -47,7 +47,7 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    ezflexfile (>= 0.0.8),
+    ezflexfile (>= 0.0.9),
     kableExtra (>= 1.1.0),
     scales (>= 1.1.0)
 VignetteBuilder: knitr
