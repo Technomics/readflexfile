@@ -38,9 +38,9 @@ read_ff <- function(file, .show_check = FALSE) {
 
   # assign a file specification based on the type
   if (file_type == "FlexFile") {
-    table_spec <- flexfile_spec
+    table_spec <- readflexfile::flexfile_spec
   } else if (file_type == "Quantity") {
-    table_spec <- quantity_spec
+    table_spec <- readflexfile::quantity_spec
   }
 
   # read into a list of tables, dropping the FileType.txt input

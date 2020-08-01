@@ -104,7 +104,7 @@ detach("package:readflexfile", unload = TRUE)
 
 ## ===== Scratch Work =====
 
-test_data <- readflexfile::read_folder("I:/Tools/costverse/data/readflexfile", read_ff)
+test_data <- costmisc::read_folder("I:/Tools/costverse/data/readflexfile", read_ff)
 standard <- read_ff("I:/Tools/costverse/data/readflexfile/1. standard_category_id.zip", TRUE)
 detailed <- read_ff("I:/Tools/costverse/data/readflexfile/2. detailed_category_id.zip")
 
