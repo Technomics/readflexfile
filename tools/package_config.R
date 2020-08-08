@@ -11,7 +11,7 @@ usethis::use_build_ignore("tools")
 usethis::use_lifecycle()
 
 # License
-usethis::use_gpl3_license("Technomics, Inc.")
+rnomics::use_license_prop()
 
 # Data folders
 usethis::use_data_raw(name = "sfc_mapping")
@@ -76,7 +76,7 @@ usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
 rnomics::use_badge_costverse()
 usethis::use_lifecycle_badge("Stable")
 rnomics::use_badge_passing()
-rnomics::use_badge_gpl3()
+rnomics::use_badge_prop()
 
 ## ===== Developmental Tools =====
 
