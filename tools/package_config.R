@@ -11,10 +11,11 @@ usethis::use_build_ignore("tools")
 usethis::use_lifecycle()
 
 # License
-usethis::use_gpl3_license("Technomics, Inc.")
+rnomics::use_license_prop()
 
 # Data folders
 usethis::use_data_raw(name = "sfc_mapping")
+usethis::use_data_raw(name = "sql_to_r_types")
 
 # Package site
 usethis::use_pkgdown()
@@ -30,45 +31,59 @@ desc::desc_set("Roxygen", "list(markdown = TRUE)")
 usethis::use_vignette("csdrtool-vignette")
 usethis::use_vignette("importing-flexfile")
 
+# Tests
+usethis::use_test("read")
+
+# Citation
+usethis::use_citation()
+
 ## ===== DESCRIPTION =====
 
 # Description list
-description <- list(Description = "Tools for Cost and Software Data Reporting (CSDR) data.",
-                    Title = "Tools for CSDR data",
-                    `Authors@R` = list(person(given = "Justin", family = "Cooper",
-                                              email = "jcooper@technomics.net",
-                                              role = c("cre", "aut"))))
-
 desc::desc_add_author("Adam H.", "James", "ajames@technomics.net", "aut")
 desc::desc_add_author("Ben", "Berkman", "bberkman@technomics.net", "aut")
-
-# Run this to set description. It will replace whatever is there! Keep in mind the version before doing this.
-#usethis::use_description(fields = description)
+desc::desc_add_author("Justin", "Cooper", "jcooper@technomics.net", "aut")
 
 desc::desc_add_author(given = "Technomics, Inc", role = "cph")
+
+desc::desc_set(Description = "Read the FlexFile data from the JSON specification into R. This includes simply reading the FlexFile into a list, and joining the individual tables together into a single flat file. These functions can also
+               handle nuances of the FlexFile, such as allocations and optional fields.")
 
 # Package dependencies
 usethis::use_pipe()
 usethis::use_package("dplyr", min_version = "0.8.3")
 usethis::use_package("rio")
 usethis::use_package("jsonlite")
-usethis::use_package("janitor")
 usethis::use_package("tidyr", min_version = "1.0.0")
 usethis::use_package("tibble", min_version = "2.0.0")
 usethis::use_package("purrr", min_version = "0.3.3")
 usethis::use_package("rlang", min_version = "0.4.2")
-usethis::use_package("costmisc", min_version = "0.2.1")
+usethis::use_package("costmisc", min_version = "0.5.1")
 usethis::use_package("stringr", min_version = "1.4.0")
+usethis::use_package("glue", min_version = "1.4.1")
+usethis::use_package("cli", min_version = "2.0.2")
 usethis::use_package("lifecycle")
 usethis::use_package("magrittr")
 usethis::use_package("lubridate")
+usethis::use_package("janitor")
+usethis::use_package("readr")
+usethis::use_package("stats")
+
+# These are only in the vignettes
+usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
+usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
 
 ## ===== README & NEWS =====
 
-usethis::use_lifecycle_badge("Maturing")
+rnomics::use_badge_costverse()
+usethis::use_lifecycle_badge("Stable")
 rnomics::use_badge_passing()
+rnomics::use_badge_prop()
 
 ## ===== Developmental Tools =====
+
+cvg <- devtools::test_coverage()
+rnomics::use_badge_coverage(cvg)
 
 pkgdown::build_reference()
 
@@ -79,6 +94,7 @@ devtools::spell_check()
 devtools::check()
 
 usethis::use_version()
+rnomics::use_badge_version()
 
 devtools::load_all()
 
@@ -89,8 +105,8 @@ detach("package:readflexfile", unload = TRUE)
 
 ## ===== Scratch Work =====
 
-test_data <- read_folder("I:/Tools/costverse/data/readflexfile", read_ff)
-standard <- read_ff("I:/Tools/costverse/data/readflexfile/1. standard_category_id.zip")
+test_data <- costmisc::read_folder("I:/Tools/costverse/data/readflexfile", read_ff)
+standard <- read_ff("I:/Tools/costverse/data/readflexfile/1. standard_category_id.zip", TRUE)
 detailed <- read_ff("I:/Tools/costverse/data/readflexfile/2. detailed_category_id.zip")
 
 test_df <- test_data %>%
@@ -108,6 +124,8 @@ standard_df %>% dplyr::distinct(standard_category_id, detailed_standard_category
 
 detailed_df <- detailed %>%
   add_id_col(var = "doc_id") %>%
+  allocate_ff() %>%
   flatten_ff()
 
 detailed_df %>% dplyr::distinct(standard_category_id, detailed_standard_category_id)
+

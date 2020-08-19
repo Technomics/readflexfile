@@ -1,13 +1,8 @@
 # FlexFile enumerations from file specs
 
-flexfile_enum <- list(phaseormilestoneenum = readxl::read_excel("data-raw/flexfile-enumerations.xlsx", sheet = 1),
-                      contracttypeenum = readxl::read_excel("data-raw/flexfile-enumerations.xlsx", sheet = 1),
-                      appropriationtypeenum = readxl::read_excel("data-raw/flexfile-enumerations.xlsx", sheet = 1),
-                      reportcycleenum = readxl::read_excel("data-raw/flexfile-enumerations.xlsx", sheet = 1),
-                      nonrecurringorrecurringenum = readxl::read_excel("data-raw/flexfile-enumerations.xlsx", sheet = 1),
-                      standardcategoryenum = readxl::read_excel("data-raw/flexfile-enumerations.xlsx", sheet = 1),
-                      detailedstandardcategoryenum = readxl::read_excel("data-raw/flexfile-enumerations.xlsx", sheet = 1),
-                      allocationmethodtypeenum = readxl::read_excel("data-raw/flexfile-enumerations.xlsx", sheet = 1),
-                      costhourtagenum = readxl::read_excel("data-raw/flexfile-enumerations.xlsx", sheet = 1))
+enum_file <- "data-raw/flexfile-enumerations.xlsx"
+
+all_sheets <- purrr::set_names(readxl::excel_sheets(enum_file))
+flexfile_enum <- purrr::map(all_sheets, ~readxl::read_excel(enum_file, sheet = .x))
 
 usethis::use_data(flexfile_enum, overwrite = TRUE)

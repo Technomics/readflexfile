@@ -1,23 +1,23 @@
 Package: readflexfile
 Title: Read FlexFile data
-Version: 0.0.2.9000
+Version: 0.1.1
 Authors@R: 
     c(person(given = "Adam H.",
              family = "James",
              role = c("cre", "aut"),
              email = "ajames@technomics.net"),
-      person(given = "Technomics, Inc",
-             role = "cph"),
-      person(given = "Adam H.",
-             family = "James",
-             role = "aut",
-             email = "ajames@technomics.net"),
       person(given = "Ben",
              family = "Berkman",
              role = "aut",
-             email = "bberkman@technomics.net"))
-Description: Read the FlexFile native data into R.
-License: GPL-3
+             email = "bberkman@technomics.net"),
+      person(given = "Justin",
+             family = "Cooper",
+             role = "aut",
+             email = "jcooper@technomics.net"),
+      person(given = "Technomics, Inc",
+             role = "cph"))
+Description: Read the FlexFile data from the JSON specification into R. This includes simply reading the FlexFile into a list, and joining the individual tables together into a single flat file. These functions can also handle nuances of the FlexFile, such as allocations and optional fields.
+License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -28,19 +28,26 @@ Imports:
     dplyr (>= 0.8.3),
     rio,
     jsonlite,
-    janitor,
     tidyr (>= 1.0.0),
     tibble (>= 2.0.0),
     purrr (>= 0.3.3),
     rlang (>= 0.4.2),
-    costmisc (>= 0.2.1),
+    costmisc (>= 0.5.1),
     stringr (>= 1.4.0),
-    lubridate
+    lubridate,
+    glue (>= 1.4.1),
+    cli (>= 2.0.2),
+    janitor,
+    readr,
+    stats
 RdMacros: lifecycle
 Depends: 
     R (>= 2.10)
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ezflexfile (>= 0.0.9),
+    kableExtra (>= 1.1.0),
+    scales (>= 1.1.0)
 VignetteBuilder: knitr

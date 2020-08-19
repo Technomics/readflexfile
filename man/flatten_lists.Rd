@@ -11,9 +11,11 @@ flatten_ff(flexfile, .id = "doc_id")
 flatten_qdr(quantity_data, .id = "doc_id")
 }
 \arguments{
-\item{flexfile}{A flexfile created from the \code{\link{read_ff}} function}
+\item{flexfile}{A flexfile created from the \code{read_ff} function.}
 
-\item{quantity_data}{A quantity data report created from the \code{read_ff} function}
+\item{.id}{The name of the ID column which uniquely identifies a flexfile.}
+
+\item{quantity_data}{A quantity data report created from the \code{read_ff} function.}
 }
 \value{
 A data frame with the flattened flexfile or quantity data.
@@ -30,7 +32,7 @@ stacked into a single table.
 }
 \examples{
 # Flatten one FlexFile
-file <- system.file("extdata", "Sample File_FF.zip", package = "readflexfile")
+file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
 
 flat_flex_file <- read_ff(file) \%>\%
 add_id_col(var = "doc_id") \%>\%
@@ -38,7 +40,7 @@ flatten_ff()
 
 #Flatten mutliple FlexFiles
 
-files <- system.file("extdata/multiple-flexfiles", package = "readflexfile")
+files <- system.file("extdata", package = "readflexfile")
 
 flat_flexfiles <- read_folder(files, read_ff) \%>\%
 listindex_to_col(var = "doc_id") \%>\%
@@ -46,7 +48,7 @@ stack_ff() \%>\%
 flatten_ff()
 
 # read a sample quantity report
-file <- system.file("extdata", "Sample File_Q.zip", package = "readflexfile")
+file <- system.file("extdata", "Sample_Quantity_A.zip", package = "readflexfile")
 
 flat_flex_file <- read_ff(file) \%>\%
   add_id_col() \%>\%

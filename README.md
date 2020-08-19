@@ -5,15 +5,28 @@
 
 <!-- badges: start -->
 
+[![technomics:
+costverse](https://img.shields.io/badge/technomics-costverse-EAC435.svg)](https://gitlab.technomics.net/costverse)
 [![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![Build:
+passing](https://img.shields.io/badge/build-passing-green.svg)](https://gitlab.technomics.net/costverse/readflexfile.git)
+[![coverage:
+0%25](https://img.shields.io/badge/coverage-0%25-blue.svg)]()
+[![technomics:
+proprietary](https://img.shields.io/badge/technomics-proprietary-00A0B2.svg)](https://gitlab.technomics.net/)
+[![version:
+0.1.1](https://img.shields.io/badge/version-0.1.1-blue.svg)]()
 <!-- badges: end -->
 
-The goal of readflexfile is to …
+The goal of readflexfile is to facilitate the reading of the FlexFile
+from the original JSON format into R. The package also includes helpful
+functions to flatten the schema into a single table.
+
+View the [package
+site](http://shiny.technomics.net/tran/www/docs/readflexfile).
 
 ## Installation
-
-### Install Directly
 
 You can install the released version of readflexfile from
 [TRAN](http://shiny.technomics.net/tran/www/home/) with:
@@ -22,26 +35,22 @@ You can install the released version of readflexfile from
 install.packages("readflexfile", repos = "http://shiny.technomics.net/tran")
 ```
 
-### Clone Repository
+### Development version
 
-Clone the repository into a working directory of your choice. The most
-simple way is to use
+To get a bug fix, or to use a feature from the development version, you
+can install readflexfile from GitLab using
 [`rnomics`](http://shiny.technomics.net/tran/www/docs/rnomics/).
 
 ``` r
-rnomics::gitlab_clone("NA", "your/file/directory/here")
+rnomics::gitlab_install("costverse/readflexfile", branch = "master")
 ```
 
-Otherwise using the following method.
+### Clone Repository
 
-1.  Navigate to the directory with terminal using the `cd` command to
-    where you would like to clone the repository too. The project will
-    become a sub-directory of this location.
-      - `cd "your/file/directory/here"`
-2.  Clone the desired repository from GitLab. Use the option to not
-    check for the valid certificate (note the double hyphen in front of
-    config).
-      - `git clone --config http.sslVerify=false
-        https://192.168.10.152/costverse/readflexfile.git`
+Clone the repository into a working directory of your choice. Use either
+the RStudio menus or
+[`rnomics`](http://shiny.technomics.net/tran/www/docs/rnomics/).
 
-## Example
+``` r
+rnomics::gitlab_clone("costverse/readflexfile", "your/file/directory/here")
+```
