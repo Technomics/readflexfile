@@ -34,6 +34,9 @@ usethis::use_vignette("importing-flexfile")
 # Tests
 usethis::use_test("read")
 
+# Citation
+usethis::use_citation()
+
 ## ===== DESCRIPTION =====
 
 # Description list
@@ -55,7 +58,7 @@ usethis::use_package("tidyr", min_version = "1.0.0")
 usethis::use_package("tibble", min_version = "2.0.0")
 usethis::use_package("purrr", min_version = "0.3.3")
 usethis::use_package("rlang", min_version = "0.4.2")
-usethis::use_package("costmisc", min_version = "0.2.1")
+usethis::use_package("costmisc", min_version = "0.5.1")
 usethis::use_package("stringr", min_version = "1.4.0")
 usethis::use_package("glue", min_version = "1.4.1")
 usethis::use_package("cli", min_version = "2.0.2")
@@ -92,7 +95,6 @@ devtools::check()
 
 usethis::use_version()
 rnomics::use_badge_version()
-usethis::use_citation()
 
 devtools::load_all()
 

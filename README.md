@@ -11,12 +11,12 @@ costverse](https://img.shields.io/badge/technomics-costverse-EAC435.svg)](https:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![Build:
 passing](https://img.shields.io/badge/build-passing-green.svg)](https://gitlab.technomics.net/costverse/readflexfile.git)
-[![version:
-0.0.2.9000](https://img.shields.io/badge/version-0.0.2.9000-blue.svg)]()
 [![coverage:
 0%25](https://img.shields.io/badge/coverage-0%25-blue.svg)]()
 [![technomics:
 proprietary](https://img.shields.io/badge/technomics-proprietary-00A0B2.svg)](https://gitlab.technomics.net/)
+[![version:
+0.1.1](https://img.shields.io/badge/version-0.1.1-blue.svg)]()
 <!-- badges: end -->
 
 The goal of readflexfile is to facilitate the reading of the FlexFile

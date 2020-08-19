@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -54,9 +54,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/csdrtool-vignette.html">The FlexFile Framework: Preparing for Powerful Analysis in R (ICEAA Paper)</a>
-    </li>
-    <li>
       <a href="../articles/importing-flexfile.html">Using readflexfile to import one or multiple FlexFiles</a>
     </li>
   </ul>
@@ -88,7 +85,10 @@
 
     
     
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">readflexfile</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">readflexfile</span>)
+<span class="co">#&gt; costverse::readflexfile. Copyright © 2020 by Technomics, Inc. All rights reserved.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Run 'citation("readflexfile")' for information on how to cite in your own work.</span></pre></body></html></div>
 <p>One of the core functions of <code>readflexfile</code> is to import the FlexFile into the R environment. <code>readflexfile</code> supports importing both one FlexFile or a folder of multiple FlexFiles into R. The functions:</p>
 <ul>
 <li>Import the JSON format of the FlexFile into a list of tibbles</li>
