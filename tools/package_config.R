@@ -11,7 +11,7 @@ usethis::use_build_ignore("tools")
 usethis::use_lifecycle()
 
 # License
-usethis::use_gpl3_license("Technomics, Inc.")
+rnomics::use_license_prop()
 
 # Data folders
 usethis::use_data_raw(name = "sfc_mapping")
@@ -34,6 +34,9 @@ usethis::use_vignette("importing-flexfile")
 # Tests
 usethis::use_test("read")
 
+# Citation
+usethis::use_citation()
+
 ## ===== DESCRIPTION =====
 
 # Description list
@@ -55,7 +58,7 @@ usethis::use_package("tidyr", min_version = "1.0.0")
 usethis::use_package("tibble", min_version = "2.0.0")
 usethis::use_package("purrr", min_version = "0.3.3")
 usethis::use_package("rlang", min_version = "0.4.2")
-usethis::use_package("costmisc", min_version = "0.2.1")
+usethis::use_package("costmisc", min_version = "0.5.1")
 usethis::use_package("stringr", min_version = "1.4.0")
 usethis::use_package("glue", min_version = "1.4.1")
 usethis::use_package("cli", min_version = "2.0.2")
@@ -67,7 +70,6 @@ usethis::use_package("readr")
 usethis::use_package("stats")
 
 # These are only in the vignettes
-usethis::use_package("ezflexfile", min_version = "0.0.9", type = "Suggests")
 usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
 
@@ -76,7 +78,7 @@ usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
 rnomics::use_badge_costverse()
 usethis::use_lifecycle_badge("Stable")
 rnomics::use_badge_passing()
-rnomics::use_badge_gpl3()
+rnomics::use_badge_prop()
 
 ## ===== Developmental Tools =====
 
@@ -93,7 +95,6 @@ devtools::check()
 
 usethis::use_version()
 rnomics::use_badge_version()
-usethis::use_citation()
 
 devtools::load_all()
 
@@ -104,7 +105,7 @@ detach("package:readflexfile", unload = TRUE)
 
 ## ===== Scratch Work =====
 
-test_data <- readflexfile::read_folder("I:/Tools/costverse/data/readflexfile", read_ff)
+test_data <- costmisc::read_folder("I:/Tools/costverse/data/readflexfile", read_ff)
 standard <- read_ff("I:/Tools/costverse/data/readflexfile/1. standard_category_id.zip", TRUE)
 detailed <- read_ff("I:/Tools/costverse/data/readflexfile/2. detailed_category_id.zip")
 

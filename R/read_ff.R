@@ -38,9 +38,9 @@ read_ff <- function(file, .show_check = FALSE) {
 
   # assign a file specification based on the type
   if (file_type == "FlexFile") {
-    table_spec <- flexfile_spec
+    table_spec <- readflexfile::flexfile_spec
   } else if (file_type == "Quantity") {
-    table_spec <- quantity_spec
+    table_spec <- readflexfile::quantity_spec
   }
 
   # read into a list of tables, dropping the FileType.txt input
@@ -174,7 +174,6 @@ check_spec <- function(table_list, table_spec, type_label = "Import File", .sile
 #'
 #' @export
 #'
-#'
 #' @param .data A list of FlexFile submissions' tibbles converted from JSON format.
 #'
 #' @return A list of stacked tibbles of multiple dataframes
@@ -186,7 +185,6 @@ check_spec <- function(table_list, table_spec, type_label = "Import File", .sile
 #' listindex_to_col() %>%
 #' stack_ff()
 #'
-
 stack_ff <- function(.data) {
   costmisc::unnest_df(.data)
 }

@@ -18,7 +18,7 @@ A list of tibbles for the \code{file}.
 }
 \description{
 \code{allocate_ff()} applies the allocations provided in the Allocation Methodology table to
-the Actual Coust Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
+the Actual Cost Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
 Each tibble corresponds to its respective JSON table. \cr
 \cr
 Currently this is implemented for \code{allocation_method_type_id == "PERCENT"}.
