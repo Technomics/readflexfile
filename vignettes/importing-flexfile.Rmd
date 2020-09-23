@@ -32,7 +32,7 @@ This vignette demonstrates how to import the FlexFile using `readflexfile`.
 To import one FlexFile, first point `read_ff` to a .zip of JSON tables of a FlexFile.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
-file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
+file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 
 list_ff <- read_ff(file)
 ```
@@ -57,7 +57,7 @@ flexfile <- list_ff_id %>%
 To import multiple FlexFiles, point `read_folder` to a folder of FlexFile submissions. `read_function = read_ff` applies the `read_ff` function to each FlexFile in the folder.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
-folder <- system.file("extdata", package = "readflexfile")
+folder <- system.file("extdata", package = "flexample")
 
 list_ffs <- read_folder(folder, 
                         read_function = read_ff)
@@ -89,7 +89,7 @@ flexfiles <- list_ffs_stack %>%
 `readflexfile` also provides functionality for the Quantity Data Report (QDR). The workflow for reading in the QDR is the same as for the FlexFile (and uses many of the same functions). However, instead of `flatten_ff`, use `flatten_qdr`.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = T}
-quantity_data <- system.file("extdata", "Sample_Quantity_A.zip", package = "readflexfile")
+quantity_data <- system.file("extdata", "Sample_Quantity_A.zip", package = "flexample")
 
 qdr <- read_ff(quantity_data) %>%
   add_id_col(var = "doc_id") %>%

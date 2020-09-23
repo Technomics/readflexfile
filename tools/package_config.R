@@ -11,7 +11,8 @@ usethis::use_build_ignore("tools")
 usethis::use_lifecycle()
 
 # License
-rnomics::use_license_prop()
+#rnomics::use_license_prop()
+usethis::use_gpl3_license("readflexfile")
 
 # Data folders
 usethis::use_data_raw(name = "sfc_mapping")

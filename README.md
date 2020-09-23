@@ -9,6 +9,8 @@
 costverse](https://img.shields.io/badge/technomics-costverse-EAC435.svg)](https://gitlab.technomics.net/costverse)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Build:
 passing](https://img.shields.io/badge/build-passing-green.svg)](https://gitlab.technomics.net/costverse/readflexfile.git)
 [![coverage:
@@ -29,7 +31,8 @@ site](http://shiny.technomics.net/tran/www/docs/readflexfile).
 ## Installation
 
 You can install the released version of readflexfile from
-[TRAN](http://shiny.technomics.net/tran/www/home/) with:
+[TRAN](http://shiny.technomics.net/tran/www/home/)
+with:
 
 ``` r
 install.packages("readflexfile", repos = "http://shiny.technomics.net/tran")
