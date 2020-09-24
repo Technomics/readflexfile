@@ -28,6 +28,7 @@ NULL
 #' @name flatten_lists
 #'
 #' @examples
+#' \dontrun{
 #' # Flatten one FlexFile
 #' file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
 #'
@@ -43,7 +44,7 @@ NULL
 #' listindex_to_col(var = "doc_id") %>%
 #' stack_ff() %>%
 #' flatten_ff()
-#'
+#'}
 flatten_ff <- function(flexfile, .id = "doc_id") {
   # selects all, but provides a quick safety net in case of changes
   cats <- readflexfile::sfc_mapping %>%
@@ -213,13 +214,14 @@ flexfile_order_columns <- function(flexfile) {
 #' @name flatten_lists
 #'
 #' @examples
+#' \dontrun{
 #' # read a sample quantity report
 #' file <- system.file("extdata", "Sample_Quantity_A.zip", package = "readflexfile")
 #'
 #' flat_flex_file <- read_ff(file) %>%
 #'   add_id_col() %>%
 #'   flatten_qdr()
-#'
+#'}
 flatten_qdr <- function(quantity_data, .id = "doc_id") {
 
   quant_to_date <- quantity_data$quantitiestodate %>%
