@@ -27,7 +27,7 @@ View the [package site](https://github.com/Technomics).
 
 ## Installation
 
-First install the package devtools if you haven’t already
+First install the package devtools if you haven’t already.
 
 ``` r
 #install.packages("devtools")
