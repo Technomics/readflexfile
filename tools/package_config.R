@@ -46,6 +46,7 @@ usethis::use_package("stats")
 # These are only in the vignettes
 usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
+usethis::use_package("flexample", min_version = "1.0.0", type = "Suggests")
 
 ## ===== README & NEWS =====
 

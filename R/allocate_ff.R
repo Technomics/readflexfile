@@ -17,9 +17,6 @@
 #' @inheritParams flatten_lists
 #' @return A list of tibbles for the \code{file}.
 #'
-#' @examples
-#'
-#'#Work in progress
 allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
 
   # return the input if the allocation table is not found

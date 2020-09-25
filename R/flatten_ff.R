@@ -78,9 +78,6 @@ flatten_ff <- function(flexfile, .id = "doc_id") {
     flexfile_order_columns()
 }
 
-
-
-
 ## ===== Internal FlexFile Helpers =====
 
 #' @keywords internal
@@ -197,9 +194,6 @@ flexfile_order_columns <- function(flexfile) {
                   dplyr::everything()) #everything else isn't required by the data model
 
 }
-
-
-
 
 ## ===== Flatten Quantity Data Report ----
 
