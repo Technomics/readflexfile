@@ -1,6 +1,6 @@
 Package: readflexfile
 Title: Read FlexFile data
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: 
     c(person(given = "Adam H.",
              family = "James",
@@ -17,7 +17,7 @@ Authors@R:
       person(given = "Technomics, Inc",
              role = "cph"))
 Description: Read the FlexFile data from the JSON specification into R. This includes simply reading the FlexFile into a list, and joining the individual tables together into a single flat file. These functions can also handle nuances of the FlexFile, such as allocations and optional fields.
-License: file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -49,5 +49,6 @@ Suggests:
     rmarkdown,
     ezflexfile (>= 0.0.9),
     kableExtra (>= 1.1.0),
-    scales (>= 1.1.0)
+    scales (>= 1.1.0),
+    flexample (>= 1.0.0)
 VignetteBuilder: knitr

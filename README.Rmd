@@ -16,38 +16,32 @@ knitr::opts_chunk$set(
 # readflexfile
 
 <!-- badges: start -->
-[![technomics: costverse](https://img.shields.io/badge/technomics-costverse-EAC435.svg)](https://gitlab.technomics.net/costverse)
+[![technomics: costverse](https://img.shields.io/badge/technomics-costverse-EAC435.svg)](https://github.com/technomics)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
-[![Build: passing](https://img.shields.io/badge/build-passing-green.svg)](https://gitlab.technomics.net/costverse/readflexfile.git)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Build: passing](https://img.shields.io/badge/build-passing-green.svg)](https://github.com/technomics/readflexfile.git)
 [![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-blue.svg)]()
-[![technomics: proprietary](https://img.shields.io/badge/technomics-proprietary-00A0B2.svg)](https://gitlab.technomics.net/)
 [![version: 0.1.1](https://img.shields.io/badge/version-0.1.1-blue.svg)]()
 <!-- badges: end -->
 
 The goal of readflexfile is to facilitate the reading of the FlexFile from the original JSON format into R. The package also includes helpful functions to flatten the schema into a single table.
 
-View the [package site](http://shiny.technomics.net/tran/www/docs/readflexfile).
+View the [package site](https://technomics.github.com/readflexfile).
 
 ## Installation
 
-You can install the released version of readflexfile from [TRAN](http://shiny.technomics.net/tran/www/home/) with:
+First install the package devtools if you haven't already.
 
 ```{r eval=FALSE}
-install.packages("readflexfile", repos = "http://shiny.technomics.net/tran")
+#install.packages("devtools")
+devtools::install_github("Technomics/readflexfile")
 ```
 
 ### Development version
 
-To get a bug fix, or to use a feature from the development version, you can install readflexfile from GitLab using [`rnomics`](http://shiny.technomics.net/tran/www/docs/rnomics/).
+To get a bug fix, or to use a feature from the development version, you can install readflexfile using the following. 
 
 ```{r eval=FALSE}
-rnomics::gitlab_install("costverse/readflexfile", branch = "master")
-```
-
-### Clone Repository
-
-Clone the repository into a working directory of your choice. Use either the RStudio menus or [`rnomics`](http://shiny.technomics.net/tran/www/docs/rnomics/).
-
-```{r eval=FALSE}
-rnomics::gitlab_clone("costverse/readflexfile", "your/file/directory/here")
+devtools::dev_mode(on = TRUE)
+devtools::install_github("Technomics/readflexfile")
 ```

@@ -23,7 +23,3 @@ Each tibble corresponds to its respective JSON table. \cr
 \cr
 Currently this is implemented for \code{allocation_method_type_id == "PERCENT"}.
 }
-\examples{
-
-#Work in progress
-}

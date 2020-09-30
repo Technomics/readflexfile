@@ -18,6 +18,7 @@
 #' @return A list of tibbles for the \code{file}.
 #'
 #' @examples
+#' \dontrun{
 #' # Read in one FlexFile
 #' file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
 #'
@@ -31,7 +32,7 @@
 #'   listindex_to_col(var = "doc_id") %>%
 #'   stack_ff() %>%
 #'   flatten_ff()
-#'
+#'}
 read_ff <- function(file, .show_check = FALSE) {
   # check the file type
   file_type <- check_filetype(file)
@@ -179,12 +180,13 @@ check_spec <- function(table_list, table_spec, type_label = "Import File", .sile
 #' @return A list of stacked tibbles of multiple dataframes
 #'
 #' @examples
+#' \dontrun{
 #' files <- system.file("extdata", package = "readflexfile")
 #'
 #' flexfiles <- read_folder(files, read_ff) %>%
 #' listindex_to_col() %>%
 #' stack_ff()
-#'
+#'}
 stack_ff <- function(.data) {
   costmisc::unnest_df(.data)
 }

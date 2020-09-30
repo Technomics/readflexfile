@@ -17,10 +17,11 @@ A list of stacked tibbles of multiple dataframes
 Thin wrapper around \code{\link{unnest_df}()}.
 }
 \examples{
+\dontrun{
 files <- system.file("extdata", package = "readflexfile")
 
 flexfiles <- read_folder(files, read_ff) \%>\%
 listindex_to_col() \%>\%
 stack_ff()
-
+}
 }
