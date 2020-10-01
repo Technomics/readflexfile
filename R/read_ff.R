@@ -63,8 +63,8 @@ read_ff <- function(file, .show_check = FALSE) {
     new_names <- rlang::set_names(field_spec$field, field_spec$snake_name)
 
     tibble::add_column(table, !!!all_cols[setdiff(names(all_cols), names(table))]) %>%
-      dplyr::select(dplyr::all_of(names(all_cols))) %>%
-      dplyr::rename(dplyr::all_of(new_names))
+      dplyr::select(tidyselect::all_of(names(all_cols))) %>%
+      dplyr::rename(tidyselect::all_of(new_names))
   }
 
   table_list <- purrr::imodify(table_list, add_missing_columns)

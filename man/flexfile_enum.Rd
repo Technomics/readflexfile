@@ -4,9 +4,7 @@
 \name{flexfile_enum}
 \alias{flexfile_enum}
 \title{FlexFile enumeration tables}
-\format{
-An object of class \code{list} of length 9.
-}
+\format{An object of class \code{list} of length 9.}
 \usage{
 flexfile_enum
 }
