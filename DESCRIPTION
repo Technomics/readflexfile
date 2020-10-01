@@ -1,5 +1,6 @@
 Package: readflexfile
 Title: Read FlexFile data
+URL: https://github.com/Technomics/readflexfile
 Version: 0.2.0
 Authors@R: 
     c(person(given = "Adam H.",
@@ -39,7 +40,8 @@ Imports:
     cli (>= 2.0.2),
     janitor,
     readr,
-    stats
+    stats,
+    tidyselect (>= 1.1.0)
 RdMacros: lifecycle
 Depends: 
     R (>= 2.10)
@@ -47,7 +49,6 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    ezflexfile (>= 0.0.9),
     kableExtra (>= 1.1.0),
     scales (>= 1.1.0),
     flexample (>= 1.0.0)

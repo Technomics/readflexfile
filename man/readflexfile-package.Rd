@@ -9,6 +9,13 @@
 To learn more about readflexfile, start with the vignettes:
 \code{browseVignettes(package = "readflexfile")}
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/Technomics/readflexfile}
+}
+
+}
 \author{
 \strong{Maintainer}: Adam H. James \email{ajames@technomics.net}
 
