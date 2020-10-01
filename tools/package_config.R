@@ -71,6 +71,8 @@ rnomics::use_badge_version()
 
 devtools::load_all()
 
+devtools::install(build_vignettes = TRUE)
+
 devtools::build(binary = TRUE)
 devtools::build()
 

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -62,7 +62,14 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/Technomics/readflexfile/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -78,7 +85,7 @@
       <h1 data-toc-skip>Using readflexfile to import one or multiple FlexFiles</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/Technomics/readflexfile/blob/master/vignettes/importing-flexfile.Rmd"><code>vignettes/importing-flexfile.Rmd</code></a></small>
       <div class="hidden name"><code>importing-flexfile.Rmd</code></div>
 
     </div>
@@ -86,7 +93,7 @@
     
     
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">readflexfile</span>)
-<span class="co">#&gt; costverse::readflexfile. Copyright © 2020 by Technomics, Inc. All rights reserved.</span>
+<span class="co">#&gt; costverse::readflexfile. Copyright © 2020 by Technomics, Inc. Licensed under GPLv3.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Run 'citation("readflexfile")' for information on how to cite in your own work.</span></pre></body></html></div>
 <p>One of the core functions of <code>readflexfile</code> is to import the FlexFile into the R environment. <code>readflexfile</code> supports importing both one FlexFile or a folder of multiple FlexFiles into R. The functions:</p>
@@ -101,7 +108,7 @@
 <h2 class="hasAnchor">
 <a href="#importing-one-flexfile" class="anchor"></a>Importing one FlexFile</h2>
 <p>To import one FlexFile, first point <code>read_ff</code> to a .zip of JSON tables of a FlexFile.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">file</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"Sample_FlexFile_A.zip"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"readflexfile"</span>)
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">file</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"Sample_FlexFile_A.zip"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"flexample"</span>)
 
 <span class="no">list_ff</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_ff.html">read_ff</a></span>(<span class="no">file</span>)
 <span class="co">#&gt; Loading required namespace: jsonlite</span></pre></body></html></div>
@@ -116,7 +123,7 @@
 <h2 class="hasAnchor">
 <a href="#importing-multiple-flexfiles" class="anchor"></a>Importing multiple FlexFiles</h2>
 <p>To import multiple FlexFiles, point <code>read_folder</code> to a folder of FlexFile submissions. <code>read_function = read_ff</code> applies the <code>read_ff</code> function to each FlexFile in the folder.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">folder</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"readflexfile"</span>)
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">folder</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"flexample"</span>)
 
 <span class="no">list_ffs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/read_folder.html">read_folder</a></span>(<span class="no">folder</span>,
                         <span class="kw">read_function</span> <span class="kw">=</span> <span class="no">read_ff</span>)</pre></body></html></div>
@@ -134,7 +141,7 @@
 <h2 class="hasAnchor">
 <a href="#importing-the-quantity-data-report" class="anchor"></a>Importing the Quantity Data Report</h2>
 <p><code>readflexfile</code> also provides functionality for the Quantity Data Report (QDR). The workflow for reading in the QDR is the same as for the FlexFile (and uses many of the same functions). However, instead of <code>flatten_ff</code>, use <code>flatten_qdr</code>.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">quantity_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"Sample_Quantity_A.zip"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"readflexfile"</span>)
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">quantity_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"Sample_Quantity_A.zip"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"flexample"</span>)
 
 <span class="no">qdr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_ff.html">read_ff</a></span>(<span class="no">quantity_data</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/add_id_col.html">add_id_col</a></span>(<span class="kw">var</span> <span class="kw">=</span> <span class="st">"doc_id"</span>) <span class="kw">%&gt;%</span>

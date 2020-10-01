@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -62,7 +62,14 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/Technomics/readflexfile/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -80,34 +87,37 @@
 <!-- badges: start -->
 
 <p>The goal of readflexfile is to facilitate the reading of the FlexFile from the original JSON format into R. The package also includes helpful functions to flatten the schema into a single table.</p>
-<p>View the <a href="http://shiny.technomics.net/tran/www/docs/readflexfile">package site</a>.</p>
+<p>View the <a href="https://technomics.github.com/readflexfile">package site</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the released version of readflexfile from <a href="http://shiny.technomics.net/tran/www/home/">TRAN</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"readflexfile"</span>, <span class="kw">repos</span> <span class="kw">=</span> <span class="st">"http://shiny.technomics.net/tran"</span>)</pre></div>
+<p>First install the package devtools if you haven’t already.</p>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="co">#install.packages("devtools")</span>
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"Technomics/readflexfile"</span>)</pre></div>
 <div id="development-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#development-version" class="anchor"></a>Development version</h3>
-<p>To get a bug fix, or to use a feature from the development version, you can install readflexfile from GitLab using <a href="http://shiny.technomics.net/tran/www/docs/rnomics/"><code>rnomics</code></a>.</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">rnomics</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/rnomics/man/gitlab_install.html">gitlab_install</a></span>(<span class="st">"costverse/readflexfile"</span>, <span class="kw">branch</span> <span class="kw">=</span> <span class="st">"master"</span>)</pre></div>
-</div>
-<div id="clone-repository" class="section level3">
-<h3 class="hasAnchor">
-<a href="#clone-repository" class="anchor"></a>Clone Repository</h3>
-<p>Clone the repository into a working directory of your choice. Use either the RStudio menus or <a href="http://shiny.technomics.net/tran/www/docs/rnomics/"><code>rnomics</code></a>.</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="kw pkg">rnomics</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/rnomics/man/gitlab_clone.html">gitlab_clone</a></span>(<span class="st">"costverse/readflexfile"</span>, <span class="st">"your/file/directory/here"</span>)</pre></div>
+<p>To get a bug fix, or to use a feature from the development version, you can install readflexfile using the following.</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/dev_mode.html">dev_mode</a></span>(<span class="kw">on</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"Technomics/readflexfile"</span>)</pre></div>
 </div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/Technomics/readflexfile/">https://​github.com/​Technomics/​readflexfile/​</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
-<li>file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></small></li>
 </ul>
 </div>
 <div class="citation">
@@ -129,12 +139,12 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://gitlab.technomics.net/costverse"><img src="https://img.shields.io/badge/technomics-costverse-EAC435.svg" alt="technomics: costverse"></a></li>
+<li><a href="https://github.com/technomics"><img src="https://img.shields.io/badge/technomics-costverse-EAC435.svg" alt="technomics: costverse"></a></li>
 <li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
-<li><a href="https://gitlab.technomics.net/costverse/readflexfile.git"><img src="https://img.shields.io/badge/build-passing-green.svg" alt="Build: passing"></a></li>
+<li><a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License: GPL v3"></a></li>
+<li><a href="https://github.com/technomics/readflexfile.git"><img src="https://img.shields.io/badge/build-passing-green.svg" alt="Build: passing"></a></li>
 <li><a href=""><img src="https://img.shields.io/badge/coverage-0%25-blue.svg" alt="coverage: 0%25"></a></li>
-<li><a href="https://gitlab.technomics.net/"><img src="https://img.shields.io/badge/technomics-proprietary-00A0B2.svg" alt="technomics: proprietary"></a></li>
-<li><a href=""><img src="https://img.shields.io/badge/version-0.1.1-blue.svg" alt="version: 0.1.1"></a></li>
+<li><a href=""><img src="https://img.shields.io/badge/version-0.2.0-blue.svg" alt="version: 0.1.1"></a></li>
 </ul>
 </div>
 </div>

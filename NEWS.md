@@ -1,8 +1,9 @@
 # readflexfile 0.2.0
 
-# readflexfile 0.1.1
+* First public release of readflexfile! This package is available now on GitHub and
+is licensed under the GPLv3.
+* Run `browseVignettes("readflexfile")` to get started!
 
-* Updated copyright and license information.
 
 # readflexfile 0.1.0
 
