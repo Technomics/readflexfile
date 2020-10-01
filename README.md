@@ -16,7 +16,7 @@ passing](https://img.shields.io/badge/build-passing-green.svg)](https://github.c
 [![coverage:
 0%25](https://img.shields.io/badge/coverage-0%25-blue.svg)]()
 [![version:
-0.1.1](https://img.shields.io/badge/version-0.1.1-blue.svg)]()
+0.1.1](https://img.shields.io/badge/version-0.2.0-blue.svg)]()
 <!-- badges: end -->
 
 The goal of readflexfile is to facilitate the reading of the FlexFile
