@@ -23,7 +23,7 @@ The goal of readflexfile is to facilitate the reading of the FlexFile
 from the original JSON format into R. The package also includes helpful
 functions to flatten the schema into a single table.
 
-View the [package site](https://technomics.github.com/readflexfile) to
+View the readflexfile [package site](https://technomics.github.com/readflexfile) to
 explore the features\!
 
 ## Welcome to the costverse\!
