@@ -16,14 +16,38 @@ passing](https://img.shields.io/badge/build-passing-green.svg)](https://github.c
 [![coverage:
 0%25](https://img.shields.io/badge/coverage-0%25-blue.svg)]()
 [![version:
-0.1.1](https://img.shields.io/badge/version-0.2.0-blue.svg)]()
+0.1.1](https://img.shields.io/badge/version-0.1.1-blue.svg)]()
 <!-- badges: end -->
 
 The goal of readflexfile is to facilitate the reading of the FlexFile
 from the original JSON format into R. The package also includes helpful
 functions to flatten the schema into a single table.
 
-View the [package site](https://technomics.github.com/readflexfile).
+View the [package site](https://technomics.github.com/readflexfile) to
+explore the features\!
+
+## Welcome to the costverse\!
+
+The *costverse* is a collection of R packages, inspired by the
+*tidyverse*. The goal is to create a cohesive ecosystem of R packages to
+streamline tasks encountered by analysts in the cost analysis
+profession. This can range from importing common data formats, working
+with difficult data structures (e.g., a WBS), or applying more advanced
+analytical techniques\!
+
+The *costverse* began as an internal project by [Technomics Employee
+Owners](https://www.technomics.net/) to develop a set of tools that we
+actually want to use, to solve problems we are actually working on.
+While aspects of the project still remain internal, the following
+packages are currently available to the public. You are free to use them
+under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html) - all
+that we ask is to please cite us as the authors.
+
+  - [costmisc](https://github.com/Technomics/costmisc/)
+  - [readflexfile](https://github.com/Technomics/readflexfile/)
+
+Do not hesitate to contact us if you have questions about what else is
+in the works\!
 
 ## Installation
 
