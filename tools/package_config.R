@@ -48,6 +48,9 @@ usethis::use_package("janitor")
 usethis::use_package("readr")
 usethis::use_package("stats")
 
+# Set GitHub remote
+desc::desc_set_remotes("technomics/costmisc")
+
 # These are only in the vignettes
 usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")

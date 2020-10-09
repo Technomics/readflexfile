@@ -53,3 +53,5 @@ Suggests:
     scales (>= 1.1.0),
     flexample (>= 1.0.0)
 VignetteBuilder: knitr
+Remotes:  
+    technomics/costmisc
