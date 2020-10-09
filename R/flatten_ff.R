@@ -191,7 +191,7 @@ flexfile_order_columns <- function(flexfile) {
                   .data$unit_or_sublot_id,
                   .data$value_dollars,
                   .data$value_hours,
-                  dplyr::everything()) #everything else isn't required by the data model
+                  tidyselect::everything()) #everything else isn't required by the data model
 
 }
 

@@ -59,8 +59,8 @@ allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
   # reduce will take the output from iteration i and use it as input to i + 1
   flexfile$actualcosthourdata <- purrr::reduce(allocation_fields, coalesce_field, .init = new_actualcosthourdata) %>%
     tidyr::replace_na(list(percent_value = 1)) %>%
-    dplyr::mutate_at(dplyr::vars(dplyr::starts_with("value_")), ~ . * .data$percent_value) %>% # need to handle other methods
-    dplyr::select(-(dplyr::ends_with("_allocations")), -.data$allocation_method_type_id)
+    dplyr::mutate_at(dplyr::vars(tidyselect::starts_with("value_")), ~ . * .data$percent_value) %>% # need to handle other methods
+    dplyr::select(-(tidyselect::ends_with("_allocations")), -.data$allocation_method_type_id)
 
   flexfile
 }

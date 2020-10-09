@@ -4,7 +4,9 @@
 \name{quantity_spec}
 \alias{quantity_spec}
 \title{File specification for the Quantity Report}
-\format{An object of class \code{list} of length 2.}
+\format{
+An object of class \code{list} of length 2.
+}
 \usage{
 quantity_spec
 }
