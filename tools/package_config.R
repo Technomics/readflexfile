@@ -17,6 +17,10 @@ usethis::use_test("read")
 # Citation
 usethis::use_citation()
 
+# GitHub
+usethis::use_github_actions() # this includes the standard R-CMD-check
+usethis::use_github_action("pkgdown")
+
 ## ===== DESCRIPTION =====
 
 # Description list
