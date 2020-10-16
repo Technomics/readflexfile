@@ -1,12 +1,12 @@
 #' Flatten FlexFile and Quantity Data Report
 #'
-#' @description Create separate data frames for the FlexFile and the Quantity Data Report.
+#' Create separate data frames for the FlexFile and the Quantity Data Report.
 #' These functions merge together many tables into a single one more useful for analysis.
 #' This generally involves joining together numerous ID fields. Actuals and forecasts are also
 #' stacked into a single table.
 #'
-#' @param flexfile A flexfile created from the \code{read_ff} function.
-#' @param quantity_data A quantity data report created from the \code{read_ff} function.
+#' @param flexfile A list of one or more FlexFiles imported through the \code{read_ff} function.
+#' @param quantity_data A list of one or more Quantity Data Reports created from the \code{read_ff} function.
 #' @param .id The name of the ID column which uniquely identifies a flexfile.
 #'
 #' @name flatten_lists
@@ -21,7 +21,7 @@ NULL
 #'
 #' @description
 #'
-#' \code{flatten_ff()} creates a master dataframe for working with FlexFile data.
+#' \code{flatten_ff()} creates a single flat file for working with FlexFile data.
 #'
 #' @export
 #'
@@ -30,20 +30,20 @@ NULL
 #' @examples
 #' \dontrun{
 #' # Flatten one FlexFile
-#' file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
+#' file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 #'
 #' flat_flex_file <- read_ff(file) %>%
-#' add_id_col(var = "doc_id") %>%
-#' flatten_ff()
+#'   add_id_col(var = "doc_id") %>%
+#'   flatten_ff()
 #'
 #' #Flatten mutliple FlexFiles
 #'
-#' files <- system.file("extdata", package = "readflexfile")
+#' files <- system.file("extdata", package = "flexample")
 #'
 #' flat_flexfiles <- read_folder(files, read_ff) %>%
-#' listindex_to_col(var = "doc_id") %>%
-#' stack_ff() %>%
-#' flatten_ff()
+#'   listindex_to_col(var = "doc_id") %>%
+#'   stack_ff() %>%
+#'   flatten_ff()
 #'}
 flatten_ff <- function(flexfile, .id = "doc_id") {
   # selects all, but provides a quick safety net in case of changes
@@ -201,7 +201,7 @@ flexfile_order_columns <- function(flexfile) {
 #'
 #' @description
 #'
-#' \code{flatten_qdr()} creates a master dataframe for working with FlexFile quantity data.
+#' \code{flatten_qdr()} creates a single flat file for working with FlexFile quantity data.
 #'
 #' @export
 #'
@@ -210,7 +210,7 @@ flexfile_order_columns <- function(flexfile) {
 #' @examples
 #' \dontrun{
 #' # read a sample quantity report
-#' file <- system.file("extdata", "Sample_Quantity_A.zip", package = "readflexfile")
+#' file <- system.file("extdata", "Sample_Quantity_A.zip", package = "flexample")
 #'
 #' flat_flex_file <- read_ff(file) %>%
 #'   add_id_col() %>%

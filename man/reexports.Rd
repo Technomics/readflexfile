@@ -13,6 +13,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{costmisc}{\code{\link[costmisc]{add_id_col}}, \code{\link[costmisc]{listindex_to_col}}, \code{\link[costmisc]{read_folder}}}
+  \item{costmisc}{\code{\link[costmisc]{add_id_col}}, \code{\link[costmisc:add_id_col]{listindex_to_col}}, \code{\link[costmisc]{read_folder}}}
 }}
 

@@ -1,17 +1,16 @@
 ## ===== Read FlexFiles =====
 
-#' Read one FlexFile into a list of tibbles
-#'
-#' @description
+#' Read FlexFile or Quantity report
 #'
 #' \code{read_ff()} returns a list of tibbles from a zip folder submission of the FlexFiles.
-#' Each tibble corresponds to its respective JSON table.
+#' Each tibble corresponds to its respective JSON table. This function can read both a FlexFile
+#' and a Quantity report.
 #'
 #' Can be used with \code{\link[costmisc:read_folder]{read_folder}} as in example.
 #'
 #' @export
 #'
-#' @param file Path to a FlexFile .zip archive.
+#' @param file Path to a FlexFile or Quantity Report .zip archive.
 #' @param .show_check Logical whether to print information to the console about the
 #' file check to the console or not.
 #'
@@ -20,13 +19,13 @@
 #' @examples
 #' \dontrun{
 #' # Read in one FlexFile
-#' file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
+#' file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 #'
 #' flexfile <- read_ff(file) %>%
 #'   add_id_col(var = "doc_id")
 #'
 #' # Read in multiple FlexFiles by using read_folder
-#' files <- system.file("extdata", package = "readflexfile")
+#' files <- system.file("extdata", package = "flexample")
 #'
 #' flexfiles <- read_folder(files, read_ff) %>%
 #'   listindex_to_col(var = "doc_id") %>%
@@ -166,27 +165,28 @@ check_spec <- function(table_list, table_spec, type_label = "Import File", .sile
 
 ## ===== Stack FlexFiles =====
 
-#' Stack list of multiple FlexFile submissions into one list of tibbles
+#' Stack list of FlexFiles or Quantity Reports into one list
 #'
-#' @description
-#'
-#' \code{stack_ff()} reads in a list of lists of FlexFile submissions returns one list of stacked tibbles.
-#' Thin wrapper around \code{\link{unnest_df}()}.
+#' \code{stack_ff()} reads in a list of lists of FlexFile or Quantity Report tibbles and returns a
+#' single list of stacked tibbles. The \code{data} list should not mix report type (i.e.,
+#' it should contain all FlexFiles or all Quantity Reports).\cr
+#' \cr
+#' This is a thin wrapper around \code{\link[costmisc]{unnest_df}()}.
 #'
 #' @export
 #'
-#' @param .data A list of FlexFile submissions' tibbles converted from JSON format.
+#' @param data A list of FlexFile or Quantity Report tibbles converted from JSON format.
 #'
-#' @return A list of stacked tibbles of multiple dataframes
+#' @return A list of stacked tibbles.
 #'
 #' @examples
 #' \dontrun{
-#' files <- system.file("extdata", package = "readflexfile")
+#' files <- system.file("extdata", package = "flexample")
 #'
 #' flexfiles <- read_folder(files, read_ff) %>%
-#' listindex_to_col() %>%
-#' stack_ff()
+#'   listindex_to_col() %>%
+#'   stack_ff()
 #'}
-stack_ff <- function(.data) {
-  costmisc::unnest_df(.data)
+stack_ff <- function(data) {
+  costmisc::unnest_df(data)
 }

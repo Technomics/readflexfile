@@ -2,26 +2,29 @@
 % Please edit documentation in R/read_ff.R
 \name{stack_ff}
 \alias{stack_ff}
-\title{Stack list of multiple FlexFile submissions into one list of tibbles}
+\title{Stack list of FlexFiles or Quantity Reports into one list}
 \usage{
-stack_ff(.data)
+stack_ff(data)
 }
 \arguments{
-\item{.data}{A list of FlexFile submissions' tibbles converted from JSON format.}
+\item{data}{A list of FlexFile or Quantity Report tibbles converted from JSON format.}
 }
 \value{
-A list of stacked tibbles of multiple dataframes
+A list of stacked tibbles.
 }
 \description{
-\code{stack_ff()} reads in a list of lists of FlexFile submissions returns one list of stacked tibbles.
-Thin wrapper around \code{\link{unnest_df}()}.
+\code{stack_ff()} reads in a list of lists of FlexFile or Quantity Report tibbles and returns a
+single list of stacked tibbles. The \code{data} list should not mix report type (i.e.,
+it should contain all FlexFiles or all Quantity Reports).\cr
+\cr
+This is a thin wrapper around \code{\link[costmisc]{unnest_df}()}.
 }
 \examples{
 \dontrun{
-files <- system.file("extdata", package = "readflexfile")
+files <- system.file("extdata", package = "flexample")
 
 flexfiles <- read_folder(files, read_ff) \%>\%
-listindex_to_col() \%>\%
-stack_ff()
+  listindex_to_col() \%>\%
+  stack_ff()
 }
 }

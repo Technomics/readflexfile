@@ -80,8 +80,11 @@ devtools::load_all()
 
 devtools::install(build_vignettes = TRUE)
 
-devtools::build(binary = TRUE)
-devtools::build()
+build_path <- file.path(setupr::get_dirs()$git_local, "costverse", "_builds")
+r_version <- paste(R.version$major, strsplit(R.version$minor, ".", fixed = TRUE)[[1L]][1L], sep = ".")
+
+devtools::build(binary = TRUE, path = file.path(build_path, "bin", r_version))
+devtools::build(path = file.path(build_path, "src"))
 
 detach("package:readflexfile", unload = TRUE)
 
