@@ -4,7 +4,9 @@
 \name{flexfile_spec}
 \alias{flexfile_spec}
 \title{File specification for the FlexFile}
-\format{An object of class \code{list} of length 2.}
+\format{
+An object of class \code{list} of length 2.
+}
 \usage{
 flexfile_spec
 }

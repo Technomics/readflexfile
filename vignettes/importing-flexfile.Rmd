@@ -88,7 +88,7 @@ flexfiles <- list_ffs_stack %>%
 
 `readflexfile` also provides functionality for the Quantity Data Report (QDR). The workflow for reading in the QDR is the same as for the FlexFile (and uses many of the same functions). However, instead of `flatten_ff`, use `flatten_qdr`.
 
-```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
+```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = FALSE}
 quantity_data <- system.file("extdata", "Sample_Quantity_A.zip", package = "flexample")
 
 qdr <- read_ff(quantity_data) %>%

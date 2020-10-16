@@ -54,4 +54,5 @@ Suggests:
     flexample (>= 1.0.0)
 VignetteBuilder: knitr
 Remotes:  
-    technomics/costmisc
+    technomics/costmisc,
+    technomics/flexample
