@@ -22,7 +22,7 @@ The goal of readflexfile is to facilitate the reading of the FlexFile
 from the original JSON format into R. The package also includes helpful
 functions to flatten the schema into a single table.
 
-View the [package site](https://technomics.github.com/readflexfile) to
+View the [package site](https://technomics.github.io/readflexfile) to
 explore the features\!
 
 If you find a bug or have an idea for a new feature, please use the
@@ -48,17 +48,19 @@ is to please cite us as the authors.
 
   - [costmisc](https://github.com/Technomics/costmisc/)
   - [readflexfile](https://github.com/Technomics/readflexfile/)
+  - [flexample](https://github.com/Technomics/flexample/)
 
 Do not hesitate to contact us if you have questions about what else is
 in the works\!
 
 ## Installation
 
-First install the package devtools if you haven’t already.
+You can download and install directly from our GitHub repository. If
+this does not work or does not have a build for your version of R, try
+using `install_github()` instead (see Development version instructions).
 
 ``` r
-#install.packages("devtools")
-devtools::install_github("Technomics/readflexfile")
+install.packages("flexample", repos = "https://technomics.github.io/repo/")
 ```
 
 ### Development version
