@@ -59,6 +59,16 @@ Currently this is implemented for allocation_method_type_id == &quot;PERCENT&quo
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180949386-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180949386-1');
+</script>
+
 
   </head>
 
@@ -147,7 +157,7 @@ Currently this is implemented for <code>allocation_method_type_id == "PERCENT"</
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>flexfile</th>
-      <td><p>A list of one or multiple FlexFiles imported through the <code><a href='read_ff.html'>read_ff()</a></code> and <code><a href='https://rdrr.io/pkg/costmisc/man/read_folder.html'>read_folder()</a></code> functions.</p></td>
+      <td><p>A list of one or more FlexFiles imported through the <code>read_ff</code> function.</p></td>
     </tr>
     <tr>
       <th>.id</th>

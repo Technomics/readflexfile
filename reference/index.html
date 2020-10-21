@@ -54,6 +54,16 @@
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180949386-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180949386-1');
+</script>
+
 
   </head>
 
@@ -180,7 +190,7 @@
         <td>
           <p><code><a href="read_ff.html">read_ff()</a></code> </p>
         </td>
-        <td><p>Read one FlexFile into a list of tibbles</p></td>
+        <td><p>Read FlexFile or Quantity report</p></td>
       </tr><tr>
         
         <td>
@@ -192,7 +202,7 @@
         <td>
           <p><code><a href="stack_ff.html">stack_ff()</a></code> </p>
         </td>
-        <td><p>Stack list of multiple FlexFile submissions into one list of tibbles</p></td>
+        <td><p>Stack list of FlexFiles or Quantity Reports into one list</p></td>
       </tr>
     </tbody>
     </table>

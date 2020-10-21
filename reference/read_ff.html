@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read one FlexFile into a list of tibbles — read_ff • readflexfile</title>
+<title>Read FlexFile or Quantity report — read_ff • readflexfile</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,10 @@
 
 
 
-<meta property="og:title" content="Read one FlexFile into a list of tibbles — read_ff" />
+<meta property="og:title" content="Read FlexFile or Quantity report — read_ff" />
 <meta property="og:description" content="read_ff() returns a list of tibbles from a zip folder submission of the FlexFiles.
-Each tibble corresponds to its respective JSON table.
-Can be used with read_folder as in example." />
+Each tibble corresponds to its respective JSON table. This function can read both a FlexFile
+and a Quantity report." />
 
 
 
@@ -56,6 +56,16 @@ Can be used with read_folder as in example." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180949386-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180949386-1');
+</script>
 
 
   </head>
@@ -125,15 +135,15 @@ Can be used with read_folder as in example." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read one FlexFile into a list of tibbles</h1>
+    <h1>Read FlexFile or Quantity report</h1>
     <small class="dont-index">Source: <a href='https://github.com/Technomics/readflexfile/blob/master/R/read_ff.R'><code>R/read_ff.R</code></a></small>
     <div class="hidden name"><code>read_ff.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p><code>read_ff()</code> returns a list of tibbles from a zip folder submission of the FlexFiles.
-Each tibble corresponds to its respective JSON table.</p>
-<p>Can be used with <code><a href='https://rdrr.io/pkg/costmisc/man/read_folder.html'>read_folder</a></code> as in example.</p>
+Each tibble corresponds to its respective JSON table. This function can read both a FlexFile
+and a Quantity report.</p>
     </div>
 
     <pre class="usage"><span class='fu'>read_ff</span><span class='op'>(</span><span class='va'>file</span>, .show_check <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
@@ -143,7 +153,7 @@ Each tibble corresponds to its respective JSON table.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file</th>
-      <td><p>Path to a FlexFile .zip archive.</p></td>
+      <td><p>Path to a FlexFile or Quantity Report .zip archive.</p></td>
     </tr>
     <tr>
       <th>.show_check</th>
@@ -155,17 +165,20 @@ file check to the console or not.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of tibbles for the <code>file</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Can be used with <code><a href='https://rdrr.io/pkg/costmisc/man/read_folder.html'>read_folder</a></code> as in example.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Read in one FlexFile</span>
-<span class='va'>file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"Sample_FlexFile_A.zip"</span>, package <span class='op'>=</span> <span class='st'>"readflexfile"</span><span class='op'>)</span>
+<span class='va'>file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"Sample_FlexFile_A.zip"</span>, package <span class='op'>=</span> <span class='st'>"flexample"</span><span class='op'>)</span>
 
 <span class='va'>flexfile</span> <span class='op'>&lt;-</span> <span class='fu'>read_ff</span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/add_id_col.html'>add_id_col</a></span><span class='op'>(</span>var <span class='op'>=</span> <span class='st'>"doc_id"</span><span class='op'>)</span>
 
 <span class='co'># Read in multiple FlexFiles by using read_folder</span>
-<span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, package <span class='op'>=</span> <span class='st'>"readflexfile"</span><span class='op'>)</span>
+<span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, package <span class='op'>=</span> <span class='st'>"flexample"</span><span class='op'>)</span>
 
 <span class='va'>flexfiles</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/read_folder.html'>read_folder</a></span><span class='op'>(</span><span class='va'>files</span>, <span class='va'>read_ff</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/add_id_col.html'>listindex_to_col</a></span><span class='op'>(</span>var <span class='op'>=</span> <span class='st'>"doc_id"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>

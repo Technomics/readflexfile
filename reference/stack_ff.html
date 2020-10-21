@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Stack list of multiple FlexFile submissions into one list of tibbles — stack_ff • readflexfile</title>
+<title>Stack list of FlexFiles or Quantity Reports into one list — stack_ff • readflexfile</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,12 @@
 
 
 
-<meta property="og:title" content="Stack list of multiple FlexFile submissions into one list of tibbles — stack_ff" />
-<meta property="og:description" content="stack_ff() reads in a list of lists of FlexFile submissions returns one list of stacked tibbles.
-Thin wrapper around unnest_df()." />
+<meta property="og:title" content="Stack list of FlexFiles or Quantity Reports into one list — stack_ff" />
+<meta property="og:description" content="stack_ff() reads in a list of lists of FlexFile or Quantity Report tibbles and returns a
+single list of stacked tibbles. The data list should not mix report type (i.e.,
+it should contain all FlexFiles or all Quantity Reports).
+
+This is a thin wrapper around unnest_df()." />
 
 
 
@@ -55,6 +58,16 @@ Thin wrapper around unnest_df()." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180949386-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180949386-1');
+</script>
 
 
   </head>
@@ -124,38 +137,41 @@ Thin wrapper around unnest_df()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Stack list of multiple FlexFile submissions into one list of tibbles</h1>
+    <h1>Stack list of FlexFiles or Quantity Reports into one list</h1>
     <small class="dont-index">Source: <a href='https://github.com/Technomics/readflexfile/blob/master/R/read_ff.R'><code>R/read_ff.R</code></a></small>
     <div class="hidden name"><code>stack_ff.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>stack_ff()</code> reads in a list of lists of FlexFile submissions returns one list of stacked tibbles.
-Thin wrapper around <code>unnest_df()</code>.</p>
+    <p><code>stack_ff()</code> reads in a list of lists of FlexFile or Quantity Report tibbles and returns a
+single list of stacked tibbles. The <code>data</code> list should not mix report type (i.e.,
+it should contain all FlexFiles or all Quantity Reports).<br />
+<br />
+This is a thin wrapper around <code><a href='https://rdrr.io/pkg/costmisc/man/unnest_df.html'>unnest_df</a>()</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stack_ff</span><span class='op'>(</span><span class='va'>.data</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>stack_ff</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
-      <td><p>A list of FlexFile submissions' tibbles converted from JSON format.</p></td>
+      <th>data</th>
+      <td><p>A list of FlexFile or Quantity Report tibbles converted from JSON format.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of stacked tibbles of multiple dataframes</p>
+    <p>A list of stacked tibbles.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, package <span class='op'>=</span> <span class='st'>"readflexfile"</span><span class='op'>)</span>
+<span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, package <span class='op'>=</span> <span class='st'>"flexample"</span><span class='op'>)</span>
 
 <span class='va'>flexfiles</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/read_folder.html'>read_folder</a></span><span class='op'>(</span><span class='va'>files</span>, <span class='va'>read_ff</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-<span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/add_id_col.html'>listindex_to_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-<span class='fu'>stack_ff</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/add_id_col.html'>listindex_to_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>stack_ff</span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>
