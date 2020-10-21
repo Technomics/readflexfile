@@ -7,7 +7,7 @@
 allocate_ff(flexfile, .id = "doc_id", .silent = FALSE)
 }
 \arguments{
-\item{flexfile}{A list of one or multiple FlexFiles imported through the \code{read_ff()} and \code{read_folder()} functions.}
+\item{flexfile}{A list of one or more FlexFiles imported through the \code{read_ff} function.}
 
 \item{.id}{The name of the ID column which uniquely identifies a flexfile.}
 

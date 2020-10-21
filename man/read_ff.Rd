@@ -2,12 +2,12 @@
 % Please edit documentation in R/read_ff.R
 \name{read_ff}
 \alias{read_ff}
-\title{Read one FlexFile into a list of tibbles}
+\title{Read FlexFile or Quantity report}
 \usage{
 read_ff(file, .show_check = FALSE)
 }
 \arguments{
-\item{file}{Path to a FlexFile .zip archive.}
+\item{file}{Path to a FlexFile or Quantity Report .zip archive.}
 
 \item{.show_check}{Logical whether to print information to the console about the
 file check to the console or not.}
@@ -17,20 +17,22 @@ A list of tibbles for the \code{file}.
 }
 \description{
 \code{read_ff()} returns a list of tibbles from a zip folder submission of the FlexFiles.
-Each tibble corresponds to its respective JSON table.
-
+Each tibble corresponds to its respective JSON table. This function can read both a FlexFile
+and a Quantity report.
+}
+\details{
 Can be used with \code{\link[costmisc:read_folder]{read_folder}} as in example.
 }
 \examples{
 \dontrun{
 # Read in one FlexFile
-file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "readflexfile")
+file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 
 flexfile <- read_ff(file) \%>\%
   add_id_col(var = "doc_id")
 
 # Read in multiple FlexFiles by using read_folder
-files <- system.file("extdata", package = "readflexfile")
+files <- system.file("extdata", package = "flexample")
 
 flexfiles <- read_folder(files, read_ff) \%>\%
   listindex_to_col(var = "doc_id") \%>\%

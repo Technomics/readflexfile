@@ -2,8 +2,6 @@
 
 #' Apply allocation methodologies provided
 #'
-#' @description
-#'
 #' \code{allocate_ff()} applies the allocations provided in the Allocation Methodology table to
 #' the Actual Cost Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
 #' Each tibble corresponds to its respective JSON table. \cr
@@ -12,9 +10,9 @@
 #'
 #' @export
 #'
-#' @param flexfile A list of one or multiple FlexFiles imported through the \code{read_ff()} and \code{read_folder()} functions.
-#' @param .silent Logical whether to print information to the console about the allocation or not.
 #' @inheritParams flatten_lists
+#' @param .silent Logical whether to print information to the console about the allocation or not.
+#'
 #' @return A list of tibbles for the \code{file}.
 #'
 allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
