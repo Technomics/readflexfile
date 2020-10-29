@@ -60,7 +60,7 @@ this does not work or does not have a build for your version of R, try
 using `install_github()` instead (see Development version instructions).
 
 ``` r
-install.packages("flexample", repos = "https://technomics.github.io/repo/")
+install.packages("readflexfile", repos = "https://technomics.github.io/repo/")
 ```
 
 ### Development version

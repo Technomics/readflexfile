@@ -47,7 +47,7 @@ Do not hesitate to contact us if you have questions about what else is in the wo
 You can download and install directly from our GitHub repository. If this does not work or does not have a build for your version of R, try using `install_github()` instead (see Development version instructions).
 
 ```{r eval=FALSE}
-install.packages("flexample", repos = "https://technomics.github.io/repo/")
+install.packages("readflexfile", repos = "https://technomics.github.io/repo/")
 ```
 
 ### Development version
