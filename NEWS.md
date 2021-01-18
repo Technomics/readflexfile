@@ -1,3 +1,7 @@
+# readflexfile (development version)
+
+* Corrected typo `period_of_performance_end_data` to `period_of_performance_end_date` in the `ordersorlots table` (#10).
+
 # readflexfile 0.2.0
 
 * First public release of readflexfile! This package is available now on GitHub and
