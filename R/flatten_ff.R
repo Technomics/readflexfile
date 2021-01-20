@@ -158,7 +158,7 @@ flatten_forecasts <- function(flexfile, .id) {
                     wbs_level = .data$level,
                     order_or_lot_name = .data$name.y) %>%
       dplyr::mutate(atd_or_fac = "FAC",
-                    order_or_lot_id = NULL)
+                    order_or_lot_id = order_or_lot_id)
 
   }
 
