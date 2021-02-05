@@ -44,7 +44,7 @@ read_ff <- function(file, .show_check = FALSE) {
   }
 
   # read into a list of tables, dropping the FileType.txt input
-  table_list <- rio::import_list(file, setclass = "tibble")
+  table_list <- costmisc::
   table_list[["FileType"]] <- NULL
 
   # check file against the spec
