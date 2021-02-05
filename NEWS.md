@@ -1,4 +1,4 @@
-# readflexfile (development version)
+# readflexfile 0.2.1
 
 * Corrected typo `period_of_performance_end_data` to `period_of_performance_end_date` in the `ordersorlots table` (#10).
 * Swapped to a JSON parser in `costmisc`. This should correct errors in tables with value 'null' in the raw file.
