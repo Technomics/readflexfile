@@ -13,6 +13,9 @@
 #' @param file Path to a FlexFile or Quantity Report .zip archive.
 #' @param .show_check Logical whether to print information to the console about the
 #' file check to the console or not.
+#' @param .coerce_spec Logical whether to coerce all column data types to those from the data models.
+#' If \code{FALSE}, the types will be as detected upon read by the JSON parser.
+#' @inheritParams costmisc::read_json_zip
 #'
 #' @return A list of tibbles for the \code{file}.
 #'
@@ -32,7 +35,7 @@
 #'   stack_ff() %>%
 #'   flatten_ff()
 #'}
-read_ff <- function(file, .show_check = FALSE) {
+read_ff <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_bom = TRUE) {
   # check the file type
   file_type <- check_filetype(file)
 
@@ -44,8 +47,7 @@ read_ff <- function(file, .show_check = FALSE) {
   }
 
   # read into a list of tables, dropping the FileType.txt input
-  table_list <- costmisc::
-  table_list[["FileType"]] <- NULL
+  table_list <- costmisc::read_json_zip(file, .warn_utf8_bom)
 
   # check file against the spec
   check <- check_spec(table_list, table_spec, file_type, .silent = isFALSE(.show_check))
@@ -67,6 +69,9 @@ read_ff <- function(file, .show_check = FALSE) {
   }
 
   table_list <- purrr::imodify(table_list, add_missing_columns)
+
+  # coerce to the data model data types if desired
+  if (.coerce_spec) table_list <- coerce_to_spec(table_list, table_spec)
 
   # clean up table names
   clean_table_names <- rlang::set_names(table_spec$tables$snake_table,
@@ -161,6 +166,45 @@ check_spec <- function(table_list, table_spec, type_label = "Import File", .sile
   list(tables = list(unknown = unknown_tables,
                      missing = missing_tables),
        fields = field_check)
+}
+
+#' @keywords internal
+coerce_to_spec <- function(table_list, table_spec) {
+
+  # function to apply for a given SQL type
+  r_to_sql_fns <- list(VARCHAR = as.character,
+                       LONG = as.integer,
+                       DOUBLE = as.numeric,
+                       BIT = as.logical,
+                       DATETIME = as.Date)
+
+  # function to alter a single table in the list
+  coerce_table <- function(the_df, table_name) {
+
+    # subset the field types
+    table_fields <- table_spec$fields %>%
+      dplyr::filter(table == table_name) %>%
+      dplyr::select(.data$field, .data$type)
+
+    # function to coerce all columns of a given type in the data frame
+    coerce_to <- function(new_type, the_df) {
+      the_cols <- dplyr::filter(table_fields, .data$type == new_type)$field
+      if (length(the_cols) == 0) return(the_df)
+
+      dplyr::mutate(the_df, dplyr::across(dplyr::any_of(the_cols), r_to_sql_fns[new_type], .names = "{.col}"))
+    }
+
+    # loop over each type - this accumulates so using a for loop (can use purrr::accumulate)
+    for (current_type in names(r_to_sql_fns)) {
+      the_df <- coerce_to(current_type, the_df)
+    }
+
+    the_df
+
+  }
+
+  purrr::imodify(table_list, coerce_table)
+
 }
 
 ## ===== Stack FlexFiles =====
