@@ -4,13 +4,18 @@
 \alias{read_ff}
 \title{Read FlexFile or Quantity report}
 \usage{
-read_ff(file, .show_check = FALSE)
+read_ff(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_bom = TRUE)
 }
 \arguments{
 \item{file}{Path to a FlexFile or Quantity Report .zip archive.}
 
 \item{.show_check}{Logical whether to print information to the console about the
 file check to the console or not.}
+
+\item{.coerce_spec}{Logical whether to coerce all column data types to those from the data models.
+If \code{FALSE}, the types will be as detected upon read by the JSON parser.}
+
+\item{.warn_utf8_bom}{Logical whether to report UTF8 byte-order-mark errors.}
 }
 \value{
 A list of tibbles for the \code{file}.
