@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -115,7 +115,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/Technomics/readflexfile/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,6 +136,15 @@
       <small>Source: <a href='https://github.com/Technomics/readflexfile/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="readflexfile-021" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.1">
+<a href="#readflexfile-021" class="anchor"></a>readflexfile 0.2.1</h1>
+<ul>
+<li>Corrected typo <code>period_of_performance_end_data</code> to <code>period_of_performance_end_date</code> in the <code>ordersorlots table</code> (<a href='https://github.com/Technomics/readflexfile/issues/10'>#10</a>).</li>
+<li>Swapped to a JSON parser in <code>costmisc</code>. This should correct errors in tables with value ‘null’ in the raw file.</li>
+<li>Added in the <code>.coerce_spec</code> option to <code><a href="../reference/read_ff.html">read_ff()</a></code> to coerce data types to those from the data model (<a href='https://github.com/Technomics/readflexfile/issues/11'>#11</a>)</li>
+</ul>
+</div>
     <div id="readflexfile-020" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0">
 <a href="#readflexfile-020" class="anchor"></a>readflexfile 0.2.0</h1>

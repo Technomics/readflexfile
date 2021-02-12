@@ -84,7 +84,7 @@ and a Quantity report." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@ and a Quantity report." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,7 +118,7 @@ and a Quantity report." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/Technomics/readflexfile/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -146,7 +146,7 @@ Each tibble corresponds to its respective JSON table. This function can read bot
 and a Quantity report.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_ff</span><span class='op'>(</span><span class='va'>file</span>, .show_check <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>read_ff</span><span class='op'>(</span><span class='va'>file</span>, .show_check <span class='op'>=</span> <span class='cn'>FALSE</span>, .coerce_spec <span class='op'>=</span> <span class='cn'>TRUE</span>, .warn_utf8_bom <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,6 +159,15 @@ and a Quantity report.</p>
       <th>.show_check</th>
       <td><p>Logical whether to print information to the console about the
 file check to the console or not.</p></td>
+    </tr>
+    <tr>
+      <th>.coerce_spec</th>
+      <td><p>Logical whether to coerce all column data types to those from the data models.
+If <code>FALSE</code>, the types will be as detected upon read by the JSON parser.</p></td>
+    </tr>
+    <tr>
+      <th>.warn_utf8_bom</th>
+      <td><p>Logical whether to report UTF8 byte-order-mark errors.</p></td>
     </tr>
     </table>
 
