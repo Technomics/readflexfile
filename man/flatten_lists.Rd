@@ -2,20 +2,20 @@
 % Please edit documentation in R/flatten_ff.R
 \name{flatten_lists}
 \alias{flatten_lists}
-\alias{flatten_ff}
+\alias{flatten_ff.flexfile}
 \alias{flatten_qdr}
 \title{Flatten FlexFile and Quantity Data Report}
 \usage{
-flatten_ff(flexfile, .id = "doc_id")
+\method{flatten_ff}{flexfile}(flexfile, .allocate = TRUE)
 
 flatten_qdr(quantity_data, .id = "doc_id")
 }
 \arguments{
 \item{flexfile}{A list of one or more FlexFiles imported through the \code{read_ff} function.}
 
-\item{.id}{The name of the ID column which uniquely identifies a flexfile.}
-
 \item{quantity_data}{A list of one or more Quantity Data Reports created from the \code{read_ff} function.}
+
+\item{.id}{The name of the ID column which uniquely identifies a flexfile.}
 }
 \value{
 A data frame with the flattened flexfile or quantity data.

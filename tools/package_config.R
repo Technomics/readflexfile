@@ -94,4 +94,16 @@ rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
 
 ## ===== Scratch Work =====
 
+file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 
+files <- system.file("extdata", package = "flexample")
+
+flexfiles <- read_folder(files, read_ff)
+
+flexfile <- read_ff(file)
+
+is_flexfile_list(flexfiles)
+
+flexfiles %>%
+  flatten_ff() %>%
+  dplyr::bind_rows(.id = "doc_id")

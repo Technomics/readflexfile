@@ -29,8 +29,6 @@ allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
     dplyr::distinct(.data$allocation_method_type_id) %>%
     dplyr::pull()
 
-  allocation_methods[!(allocation_methods %in% valid_methods)]
-
   if (!(all(allocation_methods %in% valid_methods))) {
     # then some allocation method is used that we do not recognize
     if (!(.silent)) warning(paste("unknown allocation method(s): "),

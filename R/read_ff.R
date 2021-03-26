@@ -42,8 +42,10 @@ read_ff <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_b
   # assign a file specification based on the type
   if (file_type == "FlexFile") {
     table_spec <- readflexfile::flexfile_spec
+    set_class_function <- new_flexfile
   } else if (file_type == "Quantity") {
     table_spec <- readflexfile::quantity_spec
+    #set_class_function <- new_quantityreport
   }
 
   # read into a list of tables, dropping the FileType.txt input
@@ -78,7 +80,7 @@ read_ff <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_b
                                         table_spec$tables$table)
   names(table_list) <- clean_table_names[names(table_list)]
 
-  table_list
+  set_class_function(table_list)
 }
 
 #' @keywords internal

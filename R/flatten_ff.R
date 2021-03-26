@@ -15,6 +15,22 @@
 #'
 NULL
 
+#' Flatten FlexFile data
+#'
+#' @export
+#'
+flatten_ff <- function(x, ...) {
+  UseMethod("flatten_ff")
+}
+
+#' Flatten FlexFile data
+#'
+#' @export
+#'
+flatten_ff.default <- function(x) {
+  if (is_flexfile_list(x)) lapply(x, flatten_ff) else x
+}
+
 ## ===== Flatten FlexFile ----
 
 #' Create a cost and hour dataframe from a FlexFile
@@ -45,7 +61,11 @@ NULL
 #'   stack_ff() %>%
 #'   flatten_ff()
 #'}
-flatten_ff <- function(flexfile, .id = "doc_id") {
+flatten_ff.flexfile <- function(flexfile, .allocate = TRUE) {
+
+  if (.allocate)
+    flexfile <- allocate_ff(flexfile, .silent = TRUE)
+
   # selects all, but provides a quick safety net in case of changes
   cats <- readflexfile::sfc_mapping %>%
     dplyr::distinct(.data$standard_category_id, .data$detailed_standard_category_id, .data$direct_or_overhead) %>%
@@ -71,8 +91,8 @@ flatten_ff <- function(flexfile, .id = "doc_id") {
   # for the tables where relevant, join in the sfc mappings
   flexfile_sfc <- purrr::modify_at(flexfile, join_sfc_tables, join_sfc)
 
-  actuals <- flatten_actuals(flexfile_sfc, .id)
-  forecasts <- flatten_forecasts(flexfile_sfc, .id)
+  actuals <- flatten_actuals(flexfile_sfc)
+  forecasts <- flatten_forecasts(flexfile_sfc)
 
   dplyr::bind_rows(actuals, forecasts) %>%
     flexfile_order_columns()
@@ -81,45 +101,42 @@ flatten_ff <- function(flexfile, .id = "doc_id") {
 ## ===== Internal FlexFile Helpers =====
 
 #' @keywords internal
-flatten_actuals <- function(flexfile, .id)  {
+flatten_actuals <- function(flexfile)  {
 
   flexfile$actualcosthourdata %>%
-    dplyr::left_join(dplyr::select(flexfile$reportmetadata,
-                                   .data$program_name,
-                                   .data$reporting_organization_organization_name,
-                                   1),
-                     by = .id) %>%
+    dplyr::mutate(program_name = flexfile$reportmetadata$program_name[1],
+                  reporting_organization_organization_name = flexfile$reporting_organization_organization_name[1]) %>%
     dplyr::left_join(dplyr::select(flexfile$accounts,
                                    .data$id, .data$name, 1),
-                     by = stats::setNames(c("id", .id), c("account_id", .id)),
+                     by = stats::setNames(c("id"), c("account_id")),
                      suffix = c("", ".accounts")) %>%
     dplyr::left_join(dplyr::select(flexfile$enditems,
                                    .data$id, .data$name, 1),
-                     by = stats::setNames(c("id", .id), c("end_item_id", .id)),
+                     by = stats::setNames(c("id"), c("end_item_id")),
                      suffix = c("", ".enditems")) %>%
     dplyr::left_join(dplyr::select(flexfile$ordersorlots,
                                    .data$id, .data$name, 1),
-                     by = stats::setNames(c("id", .id), c("order_or_lot_id", .id)),
+                     by = stats::setNames(c("id"), c("order_or_lot_id")),
                      suffix = c("", ".ordersorlots")) %>%
     dplyr::left_join(dplyr::select(flexfile$clins,
                                    .data$id, .data$name, 1),
-                     by = stats::setNames(c("id", .id), c("clin_id", .id)),
+                     by = stats::setNames(c("id"), c("clin_id")),
                      suffix = c("", ".clins")) %>%
     dplyr::left_join(dplyr::select(flexfile$wbs,
                                    .data$level, .data$id, .data$name, .data$parent_id, 1),
-                     by = stats::setNames(c("id", .id), c("wbs_element_id", .id)),
+                     by = stats::setNames(c("id"), c("wbs_element_id")),
                      suffix = c("", ".wbs")) %>%
     dplyr::left_join(dplyr::select(flexfile$functionalcategories,
                                    .data$id, .data$name, 1),
-                     by = stats::setNames(c("id", .id), c("functional_category_id", .id)),
+                     by = stats::setNames(c("id"), c("functional_category_id")),
                      suffix = c("", ".functionalcategories")) %>%
     dplyr::left_join(dplyr::select(flexfile$functionaloverheadcategories,
                                    .data$id, .data$name, 1),
-                     by = stats::setNames(c("id", .id), c("functional_overhead_category_id", .id)),
+                     by = stats::setNames(c("id"), c("functional_overhead_category_id")),
                      suffix = c("", ".overheadcategories")) %>%
     dplyr::left_join(dplyr::select(flexfile$reportingcalendar,
                                    .data$id, .data$start_date, .data$end_date, 1),
-                     by = stats::setNames(c("id", .id), c("reporting_period_id", .id)),
+                     by = stats::setNames(c("id"), c("reporting_period_id")),
                      suffix = c("", ".reportingcalendar")) %>%
     dplyr::mutate(start_date = lubridate::ymd(.data$start_date),
                   end_date = lubridate::ymd(.data$end_date),
@@ -138,7 +155,7 @@ flatten_actuals <- function(flexfile, .id)  {
 
 
 #' @keywords internal
-flatten_forecasts <- function(flexfile, .id) {
+flatten_forecasts <- function(flexfile) {
 
   has_fac <- function(flexfile) {
     "forecastatcompletioncosthourdata" %in% names(flexfile)
@@ -149,10 +166,10 @@ flatten_forecasts <- function(flexfile, .id) {
     flexfile$forecastatcompletioncosthourdata %>%
       dplyr::left_join(dplyr::select(flexfile$wbs,
                                      .data$level, .data$id, .data$name, .data$parent_id, 1),
-                       by = stats::setNames(c("id", .id), c("wbs_element_id", .id))) %>%
+                       by = stats::setNames(c("id"), c("wbs_element_id"))) %>%
       dplyr::left_join(dplyr::select(flexfile$ordersorlots,
                                      .data$id, .data$name, 1),
-                       by = stats::setNames(c("id", .id), c("order_or_lot_id", .id))) %>%
+                       by = stats::setNames(c("id"), c("order_or_lot_id"))) %>%
       dplyr::rename(wbs_parent = .data$parent_id,
                     wbs_name = .data$name.x,
                     wbs_level = .data$level,
