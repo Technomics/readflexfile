@@ -45,7 +45,7 @@ read_ff <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_b
     set_class_function <- new_flexfile
   } else if (file_type == "Quantity") {
     table_spec <- readflexfile::quantity_spec
-    #set_class_function <- new_quantityreport
+    set_class_function <- new_quantityreport
   }
 
   # read into a list of tables, dropping the FileType.txt input
