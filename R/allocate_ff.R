@@ -10,14 +10,19 @@
 #'
 #' @export
 #'
-#' @inheritParams flatten_lists
+#' @param flexfile A list of one or more FlexFiles imported through the \code{read_ff} function.
 #'
 #' @return A list of tibbles for the \code{file}.
 #'
-allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
+allocate_ff <- function(flexfile) {
 
-  # return the input if the allocation table is empty
-  if (nrow(flexfile$allocationcomponents) == 0) return(flexfile)
+  # set all percents to be 1 if no allocations
+  if (nrow(flexfile$allocationcomponents) == 0) {
+    flexfile$actualcosthourdata <- flexfile$actualcosthourdata %>%
+      dplyr::mutate(percent_value = 1)
+
+    return(flexfile)
+  }
 
   # check methods
   valid_methods <- c("PERCENT")

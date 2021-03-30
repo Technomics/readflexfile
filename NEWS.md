@@ -1,7 +1,8 @@
 # readflexfile (development version)
 
 * Added in S3 class for a FlexFile and Quantity Report to track the imported dataset.
-* Modified the workflow to flatten and combine data (#15). See the updated vignette.
+* Modified the workflow to flatten and combine data. The function `flatten_ff()` has been replaced with the generic function `flatten_data()`. See the updated vignette (#15).
+* Tables missing from the input JSON file will now be added in by `read_ff()` with zero rows of data. This ensures that a consistent result is returned (#17).
 
 # readflexfile 0.2.1
 

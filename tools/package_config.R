@@ -105,5 +105,11 @@ flexfile <- read_ff(file)
 is_flexfile_list(flexfiles)
 
 flexfiles %>%
-  flatten_ff() %>%
+  flatten_data() %>%
   dplyr::bind_rows(.id = "doc_id")
+
+file_p <- "P:/DOD/Army/DASA-CE/WTV/J1118-01-01 Army_DASA-CE_WTV/5.3 ACDB Hard Copy/Offline Database/Data Import/FlexFile/JSON Files/M88 HERCULES (WIP)"
+file <- file.path(file_p, "Cost-Hours Flexfile Export.zip")
+flexfile <- read_ff(file)
+
+flexfile$reportmetadata

@@ -4,14 +4,10 @@
 \alias{allocate_ff}
 \title{Apply allocation methodologies provided}
 \usage{
-allocate_ff(flexfile, .id = "doc_id", .silent = FALSE)
+allocate_ff(flexfile)
 }
 \arguments{
 \item{flexfile}{A list of one or more FlexFiles imported through the \code{read_ff} function.}
-
-\item{.id}{The name of the ID column which uniquely identifies a flexfile.}
-
-\item{.silent}{Logical whether to print information to the console about the allocation or not.}
 }
 \value{
 A list of tibbles for the \code{file}.
