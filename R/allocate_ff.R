@@ -11,23 +11,17 @@
 #' @export
 #'
 #' @inheritParams flatten_lists
-#' @param .silent Logical whether to print information to the console about the allocation or not.
 #'
 #' @return A list of tibbles for the \code{file}.
 #'
 allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
 
-  # return the input if the allocation table is not found
-  if (is.null(flexfile$allocationcomponents)) {
-    if (!(.silent) & interactive()) message("no allocation table available, returning input")
-    return(flexfile)
-  }
+  # return the input if the allocation table is empty
+  if (nrow(flexfile$allocationcomponents) == 0) return(flexfile)
 
   # check methods
   valid_methods <- c("PERCENT")
-  allocation_methods <- flexfile$allocationmethods %>%
-    dplyr::distinct(.data$allocation_method_type_id) %>%
-    dplyr::pull()
+  allocation_methods <- unique(flexfile$allocationmethods$allocation_method_type_id)
 
   if (!(all(allocation_methods %in% valid_methods))) {
     # then some allocation method is used that we do not recognize
@@ -46,10 +40,10 @@ allocate_ff <- function(flexfile, .id = "doc_id", .silent = FALSE) {
 
   new_actualcosthourdata <- flexfile$actualcosthourdata %>%
     dplyr::left_join(flexfile$allocationcomponents,
-                     by = c("allocation_method_id", .id),
+                     by = c("allocation_method_id"),
                      suffix = c("", "_allocations")) %>%
-    dplyr::left_join(dplyr::select(flexfile$allocationmethods, !!.id, .data$id, .data$allocation_method_type_id),
-                     by = c(allocation_method_id = "id", .id))
+    dplyr::left_join(dplyr::select(flexfile$allocationmethods, .data$id, .data$allocation_method_type_id),
+                     by = c(allocation_method_id = "id"))
 
   # iterate over the function to apply it across all allocation fields
   # reduce will take the output from iteration i and use it as input to i + 1
