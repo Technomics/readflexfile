@@ -69,7 +69,7 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
-devtools::check(vignettes = FALSE)
+devtools::check(vignettes = TRUE)
 
 usethis::use_version()
 rnomics::use_badge_version()
@@ -93,6 +93,8 @@ drat_repo <- file.path(setupr::get_dirs()$git_local, "costverse", "repo")
 rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
 
 ## ===== Scratch Work =====
+
+vignette(package = "readflexfile")
 
 file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 

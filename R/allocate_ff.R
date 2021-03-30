@@ -30,8 +30,8 @@ allocate_ff <- function(flexfile) {
 
   if (!(all(allocation_methods %in% valid_methods))) {
     # then some allocation method is used that we do not recognize
-    if (!(.silent)) warning(paste("unknown allocation method(s): "),
-                            paste(allocation_methods[!(allocation_methods %in% valid_methods)], collapse = ", "))
+    warning(paste("unknown allocation method(s): "),
+            paste(allocation_methods[!(allocation_methods %in% valid_methods)], collapse = ", "))
   }
 
   allocation_fields <- c("order_or_lot_id", "end_item_id", "wbs_element_id", "unit_or_sublot_id")

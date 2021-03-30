@@ -1,7 +1,7 @@
 #' Create a flat file from multiple data frames
 #'
-#' \code{flatten_data()} is a generic function that is used to create a single flat file
-#' from a list of data frames. This list is usually created by reading in a data format
+#' A generic function that is used to create a single flat file from a list of data
+#' frames. This list is usually created by reading in a data format
 #' with data spanning multiple tables.
 #'
 #' @param x A list of one or more collections of data frames to be flattened.
@@ -9,16 +9,22 @@
 #'
 #' @return A data frame with the flat file representation of the input data.
 #'
+#' @export
+#'
 flatten_data <- function(x, ...) {
   UseMethod("flatten_data")
 }
 
+#' Flatten list of data
 #'
-#' Flatten FlexFile data
+#' \code{flatten_data.list()} will check if each item in the list has the same class. If
+#' so, iterate over each item and let its method dispatch.
 #'
 #' @export
 #'
-flatten_data.list <- function(x) {
+#' @name flatten_data
+#'
+flatten_data.list <- function(x, ...) {
   all_class_equal <- length(unique.default(lapply(x, class))) == 1L
 
   if (all_class_equal) lapply(x, flatten_data) else x
@@ -34,6 +40,8 @@ flatten_data.list <- function(x) {
 #' @export
 #'
 #' @name flatten_data
+#' @param .allocate Logical whether or not to apply the allocations before flattening. In almost all
+#' cases this should be left as \code{TRUE}.
 #'
 #' @examples
 #' \dontrun{
@@ -52,7 +60,7 @@ flatten_data.list <- function(x) {
 #'   flatten_data()
 #'   bind_rows(.id = "doc_id")
 #'}
-flatten_data.flexfile <- function(x, .allocate = TRUE) {
+flatten_data.flexfile <- function(x, .allocate = TRUE, ...) {
 
   if (.allocate)
     x <- allocate_ff(x)
@@ -227,7 +235,7 @@ flexfile_order_columns <- function(flexfile, .all = TRUE) {
 #' flat_flex_file <- read_ff(file) %>%
 #'   flatten_data()
 #'}
-flatten_data.quantityreport <- function(x) {
+flatten_data.quantityreport <- function(x, ...) {
 
   quant_to_date <- x$quantitiestodate %>%
     dplyr::left_join(x$ordersorlots,

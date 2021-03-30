@@ -142,7 +142,7 @@ add_missing_spec_tables <- function(table_list, table_spec, checked_spec) {
 
     col_names <- table_spec$fields %>%
       dplyr::filter(.data$table == table_name) %>%
-      dplyr::pull(field)
+      dplyr::pull(.data$field)
 
     tibble::as_tibble(sapply(col_names, function(x) logical()))
   }

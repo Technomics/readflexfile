@@ -2,28 +2,37 @@
 % Please edit documentation in R/flatten_data.R
 \name{flatten_data}
 \alias{flatten_data}
+\alias{flatten_data.list}
 \alias{flatten_data.flexfile}
 \alias{flatten_data.quantityreport}
 \title{Create a flat file from multiple data frames}
 \usage{
 flatten_data(x, ...)
 
-\method{flatten_data}{flexfile}(x, .allocate = TRUE)
+\method{flatten_data}{list}(x, ...)
 
-\method{flatten_data}{quantityreport}(x)
+\method{flatten_data}{flexfile}(x, .allocate = TRUE, ...)
+
+\method{flatten_data}{quantityreport}(x, ...)
 }
 \arguments{
 \item{x}{A list of one or more collections of data frames to be flattened.}
 
 \item{...}{Arguments passed on to methods.}
+
+\item{.allocate}{Logical whether or not to apply the allocations before flattening. In almost all
+cases this should be left as \code{TRUE}.}
 }
 \value{
 A data frame with the flat file representation of the input data.
 }
 \description{
-\code{flatten_data()} is a generic function that is used to create a single flat file
-from a list of data frames. This list is usually created by reading in a data format
+A generic function that is used to create a single flat file from a list of data
+frames. This list is usually created by reading in a data format
 with data spanning multiple tables.
+
+\code{flatten_data.list()} will check if each item in the list has the same class. If
+so, iterate over each item and let its method dispatch.
 
 \code{flatten_data.flexfile()} creates a single flat file for working with FlexFile
 data. Input should be a list of one or more FlexFiles imported through the \code{read_ff} function.

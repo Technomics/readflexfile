@@ -1,17 +1,37 @@
+#' flexfile class utilities
+#'
+#' Functions to help with with the 'flexfile' class type.
+#'
+#' @name flexfile_class
+#'
+#' @param x An object to test or coerce to type 'flexfile'.
+#' @param .show_check Logical whether or not to show results from the check against
+#' the file specification
+#'
+NULL
 
 #' @keywords internal
 new_flexfile <- function(x) {
   structure(x, class = "flexfile")
 }
 
-#' Check is object is of type flexfile
+#' is_flexfile
+#'
+#' \code{is_flexfile()} checks if object is of type 'flexfile'
+#'
+#' @rdname flexfile_class
 #'
 #' @export
 is_flexfile <- function(x) {
   inherits(x, "flexfile")
 }
 
-#' Create object of type flexfile
+#' as_flexfile
+#'
+#' \code{as_flexfile()} creates object of type 'flexfile' and checks it against
+#' the file specification.
+#'
+#' @rdname flexfile_class
 #'
 #' @export
 as_flexfile <- function(x, .show_check = TRUE) {
@@ -20,19 +40,23 @@ as_flexfile <- function(x, .show_check = TRUE) {
   table_spec <- readflexfile::flexfile_spec
 
   table_spec$fields <- table_spec$fields %>%
-    dplyr::left_join(dplyr::select(table_spec$tables, table, snake_table), by = "table") %>%
-    dplyr::mutate(table = snake_table,
-                  field = snake_name)
+    dplyr::left_join(dplyr::select(table_spec$tables, .data$table, .data$snake_table), by = "table") %>%
+    dplyr::mutate(table = .data$snake_table,
+                  field = .data$snake_name)
 
   table_spec$tables <- table_spec$tables %>%
-    dplyr::mutate(table = snake_table)
+    dplyr::mutate(table = .data$snake_table)
 
   check <- check_spec(x, table_spec, file_type, .silent = isFALSE(.show_check))
 
   new_flexfile(x)
 }
 
-#' Check is object is a list of flexfiles
+#' is_flexfile_list
+#'
+#' \code{is_flexfile_list()} check if the object is a list where all members are of class 'flexfile'.
+#'
+#' @rdname flexfile_class
 #'
 #' @export
 is_flexfile_list <- function(x) {
