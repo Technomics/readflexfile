@@ -34,22 +34,14 @@ To import one FlexFile, first point `read_ff` to a .zip of JSON tables of a Flex
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
 file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 
-list_ff <- read_ff(file)
+raw_ff <- read_ff(file)
 ```
 
-Next, apply `add_id_col` to assign an ID value for the FlexFile. The default value is "1", but can be customized with the value argument.
+Next, use `flatten_data` to create a flat file. This joins all ID and name tables, stacks forecasts and actuals, and creates on data frame to work with. In this step, the allocations will also be applied to the actuals data.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
-list_ff_id <- list_ff %>% 
-  add_id_col(var = "doc_id")
-
-```
-
-Finally, apply `flatten_ff`. This joins all ID and name tables, stacks forecasts and actuals, and creates on data frame to work with.
-
-```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
-flexfile <- list_ff_id %>%
-  flatten_ff()
+flexfile <- raw_ff %>%
+  flatten_data()
 ```
 
 ## Importing multiple FlexFiles
@@ -59,39 +51,33 @@ To import multiple FlexFiles, point `read_folder` to a folder of FlexFile submis
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
 folder <- system.file("extdata", package = "flexample")
 
-list_ffs <- read_folder(folder, 
+raw_ffs <- read_folder(folder, 
                         read_function = read_ff)
 ```
 
-Next, apply `listindex_to_col` to add a unique ID for each FlexFile in the folder.
+Just like the single case, use `flatten_data` to create the flat file for each FlexFilein the list. The function will now return a list of flat files.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
-list_ffs_id <- list_ffs %>%
-  listindex_to_col(var = "doc_id")
+flexfiles <- raw_ffs %>%
+   flatten_data()
 ```
 
-`stack_ff` reads in a list of lists of FlexFile submissions and returns one list of stacked tibbles
+To create a simple flat file, simple stack all of the rows. This will stack them all, storing the file name in a column named `doc_id`.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
-list_ffs_stack <- list_ffs_id %>%
-  stack_ff()
-```
+suppressPackageStartupMessages(library(dplyr))
 
-Finally, use `flatten_ff` to create the data frame of dollars and hours.
-
-```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
-flexfiles <- list_ffs_stack %>%
-   flatten_ff()
+flexfiles_flat <- flexfiles %>% 
+  bind_rows(.id = "doc_id")
 ```
 
 ## Importing the Quantity Data Report
 
-`readflexfile` also provides functionality for the Quantity Data Report (QDR). The workflow for reading in the QDR is the same as for the FlexFile (and uses many of the same functions). However, instead of `flatten_ff`, use `flatten_qdr`.
+`readflexfile` also provides functionality for the Quantity Data Report (QDR). The workflow for reading in the QDR is the same as for the FlexFile (and uses many of the same functions).
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = FALSE}
 quantity_data <- system.file("extdata", "Sample_Quantity_A.zip", package = "flexample")
 
 qdr <- read_ff(quantity_data) %>%
-  add_id_col(var = "doc_id") %>%
-  flatten_qdr()
+  flatten_data()
 ```
