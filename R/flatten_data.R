@@ -92,51 +92,58 @@ flatten_data.flexfile <- function(x, .allocate = TRUE, ...) {
   actuals <- flatten_actuals(flexfile_sfc)
   forecasts <- flatten_forecasts(flexfile_sfc)
 
-  dplyr::bind_rows(actuals, forecasts) %>%
+  flatfile <- dplyr::bind_rows(actuals, forecasts) %>%
     flexfile_order_columns()
+
+  new_flexfile_flat(flatfile)
 }
 
 ## ===== Internal FlexFile Helpers =====
 
 #' @keywords internal
-flatten_actuals <- function(flexfile)  {
+flatten_actuals <- function(x)  {
 
-  flexfile$actualcosthourdata %>%
-    dplyr::mutate(program_name = flexfile$reportmetadata$program_name[1],
-                  reporting_organization_organization_name = flexfile$reporting_organization_organization_name[1]) %>%
-    dplyr::left_join(dplyr::select(flexfile$accounts,
-                                   .data$id, .data$name, 1),
+  # single row metadata
+  meta <- x$reportmetadata %>%
+    dplyr::select(.data$program_name, .data$approved_plan_number, .data$approved_plan_revision_number,
+                  .data$submission_event_number, .data$resubmission_number, .data$reporting_organization_organization_name)
+
+  # join in all of the information
+  x$actualcosthourdata %>%
+    tibble::add_column(meta, .before = 1) %>%
+    dplyr::left_join(dplyr::select(x$accounts,
+                                   .data$id, .data$name),
                      by = c(account_id = "id"),
                      suffix = c("", ".accounts")) %>%
-    dplyr::left_join(dplyr::select(flexfile$enditems,
-                                   .data$id, .data$name, 1),
+    dplyr::left_join(dplyr::select(x$enditems,
+                                   .data$id, .data$name),
                      by = c(end_item_id = "id"),
                      suffix = c("", ".enditems")) %>%
-    dplyr::left_join(dplyr::select(flexfile$ordersorlots,
-                                   .data$id, .data$name, 1),
+    dplyr::left_join(dplyr::select(x$ordersorlots,
+                                   .data$id, .data$name),
                      by = c(order_or_lot_id = "id"),
                      suffix = c("", ".ordersorlots")) %>%
-    dplyr::left_join(dplyr::select(flexfile$clins,
-                                   .data$id, .data$name, 1),
+    dplyr::left_join(dplyr::select(x$clins,
+                                   .data$id, .data$name),
                      by = c(clin_id = "id"),
                      suffix = c("", ".clins")) %>%
-    dplyr::left_join(dplyr::select(flexfile$wbs,
-                                   .data$level, .data$id, .data$name, .data$parent_id, 1),
+    dplyr::left_join(dplyr::select(x$wbs,
+                                   .data$level, .data$id, .data$name, .data$parent_id),
                      by = c(wbs_element_id = "id"),
                      suffix = c("", ".wbs")) %>%
-    dplyr::left_join(dplyr::select(flexfile$functionalcategories,
-                                   .data$id, .data$name, 1),
+    dplyr::left_join(dplyr::select(x$functionalcategories,
+                                   .data$id, .data$name),
                      by = c(functional_category_id = "id"),
                      suffix = c("", ".functionalcategories")) %>%
-    dplyr::left_join(dplyr::select(flexfile$functionaloverheadcategories,
-                                   .data$id, .data$name, 1),
+    dplyr::left_join(dplyr::select(x$functionaloverheadcategories,
+                                   .data$id, .data$name),
                      by = c(functional_overhead_category_id = "id"),
                      suffix = c("", ".overheadcategories")) %>%
-    dplyr::left_join(dplyr::select(flexfile$reportingcalendar,
-                                   .data$id, .data$start_date, .data$end_date, 1),
+    dplyr::left_join(dplyr::select(x$reportingcalendar,
+                                   .data$id, .data$start_date, .data$end_date),
                      by = c(reporting_period_id = "id"),
                      suffix = c("", ".reportingcalendar")) %>%
-    dplyr::left_join(flexfile$unitsorsublots,
+    dplyr::left_join(x$unitsorsublots,
                      by = c(unit_or_sublot_id = "id"),
                      suffix = c("", ".unitsorsublots")) %>%
     dplyr::mutate(start_date = lubridate::ymd(.data$start_date),
@@ -148,9 +155,9 @@ flatten_actuals <- function(flexfile)  {
                   clin_name = .data$name.clins,
                   wbs_parent = .data$parent_id,
                   wbs_name = .data$name.wbs,
+                  wbs_level = .data$level,
                   end_item_name = .data$name.enditems,
                   order_or_lot_name = .data$name.ordersorlots,
-                  wbs_level = .data$level,
                   functional_category_name = .data$name.functionalcategories,
                   functional_overhead_category_name = .data$name.overheadcategories) %>%
     costmisc::add_missing_column(first_unit_number = NA_integer_, last_unit_number = NA_integer_) %>%
@@ -159,23 +166,22 @@ flatten_actuals <- function(flexfile)  {
 }
 
 #' @keywords internal
-flatten_forecasts <- function(flexfile) {
+flatten_forecasts <- function(x) {
 
-  if (nrow(flexfile$forecastatcompletioncosthourdata) > 0) {
+  if (nrow(x$forecastatcompletioncosthourdata) > 0) {
 
-    flexfile$forecastatcompletioncosthourdata %>%
-      dplyr::left_join(dplyr::select(flexfile$wbs,
-                                     .data$level, .data$id, .data$name, .data$parent_id, 1),
-                       by = stats::setNames(c("id"), c("wbs_element_id"))) %>%
-      dplyr::left_join(dplyr::select(flexfile$ordersorlots,
-                                     .data$id, .data$name, 1),
-                       by = stats::setNames(c("id"), c("order_or_lot_id"))) %>%
-      dplyr::rename(wbs_parent = .data$parent_id,
-                    wbs_name = .data$name.x,
-                    wbs_level = .data$level,
-                    order_or_lot_name = .data$name.y) %>%
-      dplyr::mutate(atd_or_fac = "FAC",
-                    order_or_lot_id = .data$order_or_lot_id)
+    x$forecastatcompletioncosthourdata %>%
+      dplyr::left_join(dplyr::select(x$ordersorlots,
+                                     order_or_lot_id = .data$id,
+                                     order_or_lot_name = .data$name),
+                       by = "order_or_lot_id") %>%
+      dplyr::left_join(dplyr::select(x$wbs,
+                                     wbs_element_id = .data$id,
+                                     wbs_level = .data$level,
+                                     wbs_name = .data$name,
+                                     wbs_parent = .data$parent_id),
+                       by = "wbs_element_id") %>%
+      tibble::add_column(atd_or_fac = "FAC")
 
   } else {
     NULL
@@ -185,11 +191,13 @@ flatten_forecasts <- function(flexfile) {
 
 
 #' @keywords internal
-flexfile_order_columns <- function(flexfile, .all = TRUE) {
+flexfile_order_columns <- function(x, .all = TRUE) {
 
   select_fn <- ifelse(.all, tidyselect::all_of, tidyselect::any_of)
 
   select_cols <- c("program_name",
+                   "approved_plan_number", "approved_plan_revision_number",
+                   "submission_event_number", "resubmission_number", "reporting_organization_organization_name",
                    "order_or_lot_id", "order_or_lot_name",
                    "unit_or_sublot_id", "first_unit_number", "last_unit_number",
                    "clin_id", "clin_name",
@@ -206,7 +214,7 @@ flexfile_order_columns <- function(flexfile, .all = TRUE) {
                    "atd_or_fac",
                    "percent_value", "value_dollars", "value_hours")
 
-  flexfile %>%
+  x %>%
     dplyr::select(select_fn(select_cols),
                   tidyselect::starts_with("tag"),
                   tidyselect::everything()) #everything else isn't required by the data model
@@ -216,8 +224,6 @@ flexfile_order_columns <- function(flexfile, .all = TRUE) {
 ## ===== Flatten Quantity Data Report ----
 
 #' Create a cost and hour dataframe from a Quantity Data Report
-#'
-#' @description
 #'
 #' \code{flatten_data.quantityreport()} creates a single flat file for working with
 #' the Quantity Data Report. Input should be a list of one or more Quantity Data Reports
@@ -237,31 +243,63 @@ flexfile_order_columns <- function(flexfile, .all = TRUE) {
 #'}
 flatten_data.quantityreport <- function(x, ...) {
 
-  quant_to_date <- x$quantitiestodate %>%
-    dplyr::left_join(x$ordersorlots,
-                     by = c(order_or_lot_id = "id")) %>%
-    dplyr::left_join(x$wbs,
-                     by = c(wbs_element_id = "id")) %>%
-    dplyr::left_join(dplyr::select(x$wbselementremarks, -.data$order_or_lot_id),
-                     by = "wbs_element_id") %>%
-    dplyr::rename("dictionary_definition" = .data$text,
-                  "order_or_lot_name" = .data$name.x,
-                  "wbs_element_name" = .data$name.y) %>%
-    dplyr::mutate(atd_or_fac = "ATD")
+  # single row metadata
+  meta <- x$reportmetadata %>%
+    dplyr::select(.data$program_name, .data$approved_plan_number, .data$approved_plan_revision_number,
+                  .data$submission_event_number, .data$resubmission_number, .data$reporting_organization_organization_name)
 
-  quant_completion <- x$quantitiesatcompletion %>%
-    dplyr::left_join(x$ordersorlots,
-                     by = c(order_or_lot_id = "id")) %>%
-    dplyr::left_join(x$wbs,
-                     by = c(wbs_element_id = "id")) %>%
-    dplyr::left_join(dplyr::select(x$wbselementremarks, -.data$order_or_lot_id),
-                     by = "wbs_element_id") %>%
+  join_common_fields <- function(start_table) {
+    start_table %>%
+      dplyr::left_join(dplyr::select(x$ordersorlots,
+                                     order_or_lot_id = .data$id,
+                                     order_or_lot_name = .data$name),
+                       by = "order_or_lot_id") %>%
+      dplyr::left_join(dplyr::select(x$wbs,
+                                     wbs_element_id = .data$id,
+                                     wbs_level = .data$level,
+                                     wbs_name = .data$name,
+                                     wbs_parent = .data$parent_id),
+                       by = "wbs_element_id")
+  }
+
+  quant_to_date <- join_common_fields(x$quantitiestodate) %>%
+    tibble::add_column(atd_or_fac = "ATD")
+
+  quant_completion <- join_common_fields(x$quantitiesatcompletion) %>%
+    dplyr::left_join(dplyr::select(x$enditems,
+                                   end_item_id = .data$id,
+                                   end_item_name = .data$name),
+                     by = "end_item_id") %>%
     dplyr::left_join(x$productionsequence,
                      by = c("end_item_id", "order_or_lot_id")) %>%
-    dplyr::rename("dictionary_definition" = .data$text,
-                  "order_or_lot_name" = .data$name.x,
-                  "wbs_element_name" = .data$name.y) %>%
-    dplyr::mutate(atd_or_fac = "FAC")
+    tibble::add_column(atd_or_fac = "FAC")
 
-  dplyr::bind_rows(quant_to_date, quant_completion)
+  flatfile <- dplyr::bind_rows(quant_to_date, quant_completion) %>%
+    tibble::add_column(meta, .before = 1) %>%
+    quantityreport_order_columns()
+
+  new_quantityreport_flat(flatfile)
+}
+
+#' @keywords internal
+quantityreport_order_columns <- function(x, .all = TRUE) {
+
+  select_fn <- ifelse(.all, tidyselect::all_of, tidyselect::any_of)
+
+  select_cols <- c("program_name",
+                   "approved_plan_number", "approved_plan_revision_number",
+                   "submission_event_number", "resubmission_number", "reporting_organization_organization_name",
+                   "order_or_lot_id", "order_or_lot_name",
+                   "end_item_id", "end_item_name",
+                   "wbs_element_id", "wbs_name", "wbs_parent", "wbs_level",
+                   "atd_or_fac",
+                   "completed_quantity_to_date", "in_process_quantity",
+                   "delivered_quantity_at_completion", "internal_quantity_at_completion",
+                   "coproduction_or_concurrent_quantity_at_completion", "gfe_quantity_at_completion",
+                   "first_unit_number", "last_unit_number", "is_internal")
+
+  x %>%
+    dplyr::select(select_fn(select_cols),
+                  tidyselect::everything()) #everything else isn't required by the data model
+
 }

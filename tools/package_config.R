@@ -69,7 +69,7 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
-devtools::check(vignettes = TRUE)
+devtools::check(vignettes = FALSE)
 
 usethis::use_version()
 rnomics::use_badge_version()
@@ -96,22 +96,28 @@ rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
 
 vignette(package = "readflexfile")
 
+# single file
 file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
-
-files <- system.file("extdata", package = "flexample")
-
-flexfiles <- read_folder(files, read_ff)
-
 flexfile <- read_ff(file)
 
-is_flexfile_list(flexfiles)
+# multiple files
+files <- system.file("extdata", package = "flexample")
+flexfiles <- read_folder(files, read_ff)
 
-flexfiles %>%
-  flatten_data() %>%
-  dplyr::bind_rows(.id = "doc_id")
-
+# real test
 file_p <- "P:/DOD/Army/DASA-CE/WTV/J1118-01-01 Army_DASA-CE_WTV/5.3 ACDB Hard Copy/Offline Database/Data Import/FlexFile/JSON Files/M88 HERCULES (WIP)"
 file <- file.path(file_p, "Cost-Hours Flexfile Export.zip")
 flexfile <- read_ff(file)
 
-flexfile$reportmetadata
+ff_flat <- flexfile %>%
+  flatten_data() %>%
+  dplyr::bind_rows(.id = "doc_id")
+
+file_q <- file.path(file_p, "1921-Q.zip")
+qdr <- read_ff(file_q)
+
+qdr_flat <- qdr %>%
+  flatten_data() %>%
+  dplyr::bind_rows(.id = "doc_id")
+
+z <- c(flexfile, qdr)

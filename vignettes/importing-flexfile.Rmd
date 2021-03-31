@@ -55,7 +55,7 @@ raw_ffs <- read_folder(folder,
                         read_function = read_ff)
 ```
 
-Just like the single case, use `flatten_data` to create the flat file for each FlexFilein the list. The function will now return a list of flat files.
+Just like the single case, use `flatten_data` to create the flat file for each FlexFile in the list. The function will now return a list of flat files.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
 flexfiles <- raw_ffs %>%
