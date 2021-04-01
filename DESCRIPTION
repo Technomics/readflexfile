@@ -49,7 +49,7 @@ Suggests:
     rmarkdown,
     kableExtra (>= 1.1.0),
     scales (>= 1.1.0),
-    flexample (>= 1.0.0)
+    flexample (>= 1.1.1)
 VignetteBuilder: knitr
 Remotes: 
     technomics/costmisc,
