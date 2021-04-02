@@ -35,7 +35,6 @@ usethis::use_package("tidyr", min_version = "1.0.0")
 usethis::use_package("tibble", min_version = "2.0.0")
 usethis::use_package("purrr", min_version = "0.3.3")
 usethis::use_package("rlang", min_version = "0.4.2")
-usethis::use_package("costmisc", min_version = "0.6.1")
 usethis::use_package("stringr", min_version = "1.4.0")
 usethis::use_package("glue", min_version = "1.4.1")
 usethis::use_package("cli", min_version = "2.0.2")
@@ -46,13 +45,15 @@ usethis::use_package("janitor")
 usethis::use_package("readr")
 usethis::use_package("stats")
 
+usethis::use_package("costmisc", min_version = "0.6.2")
+
 # Set GitHub remote
 desc::desc_set_remotes("technomics/costmisc")
 
 # These are only in the vignettes
 usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
-usethis::use_package("flexample", min_version = "1.0.0", type = "Suggests")
+usethis::use_package("flexample", min_version = "1.1.1", type = "Suggests")
 
 ## ===== README & NEWS =====
 
@@ -108,6 +109,9 @@ flexfiles <- read_folder(files, read_ff)
 file_p <- "P:/DOD/Army/DASA-CE/WTV/J1118-01-01 Army_DASA-CE_WTV/5.3 ACDB Hard Copy/Offline Database/Data Import/FlexFile/JSON Files/M88 HERCULES (WIP)"
 file <- file.path(file_p, "Cost-Hours Flexfile Export.zip")
 flexfile <- read_ff(file)
+
+ff_allo <- flexfile %>%
+  allocate_ff()
 
 ff_flat <- flexfile %>%
   flatten_data() %>%

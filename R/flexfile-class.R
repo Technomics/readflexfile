@@ -11,8 +11,8 @@
 NULL
 
 #' @keywords internal
-new_flexfile <- function(x) {
-  structure(x, class = "flexfile")
+new_flexfile <- function(x, allocated = FALSE, rolledup = FALSE) {
+  structure(x, allocated = allocated, rolledup = rolledup, class = "flexfile")
 }
 
 #' is_flexfile
@@ -34,7 +34,7 @@ is_flexfile <- function(x) {
 #' @rdname flexfile_class
 #'
 #' @export
-as_flexfile <- function(x, .show_check = TRUE) {
+as_flexfile <- function(x, allocated = FALSE, rolledup = FALSE, .show_check = TRUE) {
 
   file_type = "FlexFile"
   table_spec <- readflexfile::flexfile_spec
@@ -49,7 +49,7 @@ as_flexfile <- function(x, .show_check = TRUE) {
 
   check <- check_spec(x, table_spec, file_type, .silent = isFALSE(.show_check))
 
-  new_flexfile(x)
+  new_flexfile(x, allocated = allocated, rolledup = rolledup)
 }
 
 #' is_flexfile_list

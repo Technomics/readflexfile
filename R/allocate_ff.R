@@ -21,6 +21,8 @@ allocate_ff <- function(flexfile) {
     flexfile$actualcosthourdata <- flexfile$actualcosthourdata %>%
       dplyr::mutate(percent_value = 1)
 
+    attr(flexfile, "allocated") <- TRUE
+
     return(flexfile)
   }
 
@@ -56,6 +58,8 @@ allocate_ff <- function(flexfile) {
     tidyr::replace_na(list(percent_value = 1)) %>%
     dplyr::mutate_at(dplyr::vars(tidyselect::starts_with("value_")), ~ . * .data$percent_value) %>% # need to handle other methods
     dplyr::select(-(tidyselect::ends_with("_allocations")), -.data$allocation_method_type_id)
+
+  attr(flexfile, "allocated") <- TRUE
 
   flexfile
 }

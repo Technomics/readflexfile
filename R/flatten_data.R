@@ -93,9 +93,52 @@ flatten_data.flexfile <- function(x, .allocate = TRUE, ...) {
   forecasts <- flatten_forecasts(flexfile_sfc)
 
   flatfile <- dplyr::bind_rows(actuals, forecasts) %>%
-    flexfile_order_columns()
+    flexfile_order_columns(.all = .allocate)
 
   new_flexfile_flat(flatfile)
+}
+
+#' Key columns for the flexfile
+#'
+#' \code{flexfile_key_columns()} returns a vector of column names that uniquely define
+#' a FlexFile and Quantity Data Report.
+#'
+#' @export
+flexfile_key_columns <- function() {
+  c("approved_plan_number", "approved_plan_revision_number",
+    "submission_event_number", "resubmission_number")
+}
+
+find_duplicates <- function(x) {
+
+  dups <- duplicated_report(x)
+
+  stacked_metadata <- x %>%
+    costmisc::listindex_to_col("list_index") %>%
+    purrr::map_dfr("reportmetadata", .id = "doc_id") %>%
+    dplyr::filter(dups) %>%
+    dplyr::select(list_index, doc_id, tidyselect::all_of(flexfile_key_columns()),
+                  program_name, reporting_organization_organization_name, report_as_of, date_prepared)
+
+  message(paste(flexfile_key_columns(), collapse = ", "))
+
+}
+
+#' Check for duplication in the metadata
+#'
+#' @param x A flexfile or quantityreport
+#'
+#' @keywords internal
+duplicated_report <- function(x) {
+
+  stacked_metadata <- x %>%
+    purrr::map_dfr("reportmetadata")
+
+  stacked_metadata %>%
+    dplyr::group_by(dplyr::across(tidyselect::all_of(flexfile_key_columns()))) %>%
+    dplyr::mutate(is_unique = (dplyr::n() > 1)) %>%
+    dplyr::pull(is_unique)
+
 }
 
 ## ===== Internal FlexFile Helpers =====
@@ -189,15 +232,14 @@ flatten_forecasts <- function(x) {
 
 }
 
-
 #' @keywords internal
 flexfile_order_columns <- function(x, .all = TRUE) {
 
   select_fn <- ifelse(.all, tidyselect::all_of, tidyselect::any_of)
 
   select_cols <- c("program_name",
-                   "approved_plan_number", "approved_plan_revision_number",
-                   "submission_event_number", "resubmission_number", "reporting_organization_organization_name",
+                   flexfile_key_columns(),
+                   "reporting_organization_organization_name",
                    "order_or_lot_id", "order_or_lot_name",
                    "unit_or_sublot_id", "first_unit_number", "last_unit_number",
                    "clin_id", "clin_name",
@@ -220,6 +262,8 @@ flexfile_order_columns <- function(x, .all = TRUE) {
                   tidyselect::everything()) #everything else isn't required by the data model
 
 }
+
+
 
 ## ===== Flatten Quantity Data Report ----
 
@@ -287,8 +331,8 @@ quantityreport_order_columns <- function(x, .all = TRUE) {
   select_fn <- ifelse(.all, tidyselect::all_of, tidyselect::any_of)
 
   select_cols <- c("program_name",
-                   "approved_plan_number", "approved_plan_revision_number",
-                   "submission_event_number", "resubmission_number", "reporting_organization_organization_name",
+                   flexfile_key_columns(),
+                   "reporting_organization_organization_name",
                    "order_or_lot_id", "order_or_lot_name",
                    "end_item_id", "end_item_name",
                    "wbs_element_id", "wbs_name", "wbs_parent", "wbs_level",
@@ -303,3 +347,5 @@ quantityreport_order_columns <- function(x, .all = TRUE) {
                   tidyselect::everything()) #everything else isn't required by the data model
 
 }
+
+

@@ -9,7 +9,7 @@
 \usage{
 is_flexfile(x)
 
-as_flexfile(x, .show_check = TRUE)
+as_flexfile(x, allocated = FALSE, rolledup = FALSE, .show_check = TRUE)
 
 is_flexfile_list(x)
 }
