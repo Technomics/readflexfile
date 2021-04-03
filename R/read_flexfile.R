@@ -2,7 +2,7 @@
 
 #' Read FlexFile or Quantity report
 #'
-#' \code{read_ff()} returns a list of tibbles from a zip folder submission of the FlexFiles.
+#' \code{read_flexfile()} returns a list of tibbles from a zip folder submission of the FlexFiles.
 #' Each tibble corresponds to its respective JSON table. This function can read both a FlexFile
 #' and a Quantity report.
 #'
@@ -17,25 +17,25 @@
 #' If \code{FALSE}, the types will be as detected upon read by the JSON parser.
 #' @inheritParams costmisc::read_json_zip
 #'
-#' @return A list of tibbles for the \code{file}.
+#' @return A list of tibbles for the \code{file}. Result will be either of class \code{flexfile} or
+#' of class \code{quantityreport}.
+#'
+#' @seealso [flexfile_class], [quantityreport_class]
 #'
 #' @examples
 #' \dontrun{
 #' # Read in one FlexFile
 #' file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 #'
-#' flexfile <- read_ff(file) %>%
-#'   add_id_col(var = "doc_id")
+#' flexfile <- read_flexfile(file)
 #'
 #' # Read in multiple FlexFiles by using read_folder
-#' files <- system.file("extdata", package = "flexample")
+#' folder <- system.file("extdata", package = "flexample")
 #'
-#' flexfiles <- read_folder(files, read_ff) %>%
-#'   listindex_to_col(var = "doc_id") %>%
-#'   stack_ff() %>%
-#'   flatten_ff()
+#' flexfiles <- read_folder(folder, read_flexfile)
 #'}
-read_ff <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_bom = TRUE) {
+read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_bom = TRUE) {
+
   # check the file type
   file_type <- check_filetype(file)
 
@@ -68,6 +68,21 @@ read_ff <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_b
   set_class_function(table_list)
 }
 
+#' Read FlexFile or Quantity report
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' \code{read_ff()} was renamed to \code{\link{read_flexfile}()} to be less ambiguous.
+#'
+#' @keywords internal
+#' @export
+read_ff <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_bom = TRUE) {
+  lifecycle::deprecate_warn(when = "0.3.0", what = "read_ff()", with = "read_flexfile()")
+
+  read_flexfile(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_bom = TRUE)
+}
+
 #' @keywords internal
 check_filetype <- function(file) {
   # read the FileType.txt without loading the entire file
@@ -87,10 +102,17 @@ check_filetype <- function(file) {
 
 #' Stack list of FlexFiles or Quantity Reports into one list
 #'
+#' @description
+#' `r lifecycle::badge('deprecated')`
+#'
+#' This function is depreciated because stacking individual JSON tables is no longer
+#' recommended. See \code{vignette("importing-flexfile")} for the preferred workflow.
+#' If the functionality is still required, use \code{\link[costmisc]{unnest_df}()} instead.
+#'
 #' \code{stack_ff()} reads in a list of lists of FlexFile or Quantity Report tibbles and returns a
 #' single list of stacked tibbles. The \code{data} list should not mix report type (i.e.,
-#' it should contain all FlexFiles or all Quantity Reports).\cr
-#' \cr
+#' it should contain all FlexFiles or all Quantity Reports).
+#'
 #' This is a thin wrapper around \code{\link[costmisc]{unnest_df}()}.
 #'
 #' @export
@@ -101,12 +123,16 @@ check_filetype <- function(file) {
 #'
 #' @examples
 #' \dontrun{
-#' files <- system.file("extdata", package = "flexample")
+#' folder <- system.file("extdata", package = "flexample")
 #'
-#' flexfiles <- read_folder(files, read_ff) %>%
+#' flexfiles <- read_folder(folder, read_flexfile) %>%
 #'   listindex_to_col() %>%
 #'   stack_ff()
 #'}
 stack_ff <- function(data) {
+  lifecycle::deprecate_warn(when = "0.3.0", what = "stack_ff()",
+                            details = c("Stacking individual JSON tables is no longer recommended.\n  See `vignette(\"importing-flexfile\")` for the preferred workflow",
+                                        "If the functionality is still required, use `costmisc::unnest_df()` instead."))
+
   costmisc::unnest_df(data)
 }

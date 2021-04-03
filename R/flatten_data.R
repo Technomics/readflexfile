@@ -35,7 +35,7 @@ flatten_data.list <- function(x, ...) {
 #' Create a cost and hour dataframe from a FlexFile
 #'
 #' \code{flatten_data.flexfile()} creates a single flat file for working with FlexFile
-#' data. Input should be a list of one or more FlexFiles imported through the \code{read_ff} function.
+#' data. Input should be a list of one or more FlexFiles imported through the \code{read_flexfile} function.
 #'
 #' @export
 #'
@@ -48,7 +48,7 @@ flatten_data.list <- function(x, ...) {
 #' # Flatten one FlexFile
 #' file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 #'
-#' flat_flex_file <- read_ff(file) %>%
+#' flat_flex_file <- read_flexfile(file) %>%
 #'   flatten_data()
 #'
 #' # Flatten multiple FlexFiles
@@ -56,14 +56,14 @@ flatten_data.list <- function(x, ...) {
 #'
 #' files <- system.file("extdata", package = "flexample")
 #'
-#' flat_flexfiles <- read_folder(files, read_ff) %>%
+#' flat_flexfiles <- read_folder(files, read_flexfile) %>%
 #'   flatten_data()
 #'   bind_rows(.id = "doc_id")
 #'}
 flatten_data.flexfile <- function(x, .allocate = TRUE, ...) {
 
   if (.allocate)
-    x <- allocate_ff(x)
+    x <- allocate_flexfile(x)
 
   # selects all, but provides a quick safety net in case of changes
   cats <- readflexfile::sfc_mapping %>%
@@ -271,7 +271,7 @@ flexfile_order_columns <- function(x, .all = TRUE) {
 #'
 #' \code{flatten_data.quantityreport()} creates a single flat file for working with
 #' the Quantity Data Report. Input should be a list of one or more Quantity Data Reports
-#' imported through the \code{read_ff} function.
+#' imported through the \code{read_flexfile} function.
 #'
 #' @export
 #'
@@ -282,7 +282,7 @@ flexfile_order_columns <- function(x, .all = TRUE) {
 #' # Flatten one Quantity Report
 #' file <- system.file("extdata", "Sample_Quantity_A.zip", package = "flexample")
 #'
-#' flat_flex_file <- read_ff(file) %>%
+#' flat_flex_file <- read_flexfile(file) %>%
 #'   flatten_data()
 #'}
 flatten_data.quantityreport <- function(x, ...) {
@@ -348,4 +348,19 @@ quantityreport_order_columns <- function(x, .all = TRUE) {
 
 }
 
+## ===== Depreciated =====
 
+#' Flatten a FlexFile report
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' \code{flatten_ff()} was removed in favor of \code{\link{flatten_data}()}. See
+#' `vignette("importing-flexfile")` for the preferred workflow.
+#'
+#' @keywords internal
+#' @export
+flatten_ff <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_bom = TRUE) {
+  lifecycle::deprecate_stop(when = "0.3.0", what = "flatten_ff()", with = "flatten_data()")
+
+}

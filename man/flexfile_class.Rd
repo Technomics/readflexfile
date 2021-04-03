@@ -29,3 +29,12 @@ the file specification.
 
 \code{is_flexfile_list()} check if the object is a list where all members are of class 'flexfile'.
 }
+\details{
+The \code{flexfile} class has the following attributes.
+\describe{
+\item{allocated}{Logical. Have the allocations been applied to the \code{actualcosthourdata}
+table.}
+\item{rolledup}{Logical. Has the WBS roll up been applied to the \code{actualcosthourdata}
+and \code{forecastatcompletioncosthourdata} tables.}
+}
+}

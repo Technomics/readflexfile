@@ -24,7 +24,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
-    lifecycle,
+    lifecycle (>= 1.0.0),
     magrittr,
     dplyr (>= 0.8.3),
     tidyr (>= 1.0.0),
@@ -36,11 +36,12 @@ Imports:
     lubridate,
     glue (>= 1.4.1),
     cli (>= 2.0.2),
-    janitor,
+    janitor (>= 2.1.0),
     readr,
     stats,
     tidyselect (>= 1.1.0)
-RdMacros: lifecycle
+RdMacros: 
+    lifecycle
 Depends: 
     R (>= 2.10)
 Suggests: 

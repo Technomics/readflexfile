@@ -1,5 +1,5 @@
 ---
-title: "Using readflexfile to import one or multiple FlexFiles"
+title: "Using readflexfile to import one or more FlexFiles"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{importing-flexfile}
@@ -34,7 +34,7 @@ To import one FlexFile, first point `read_ff` to a .zip of JSON tables of a Flex
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
 file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 
-raw_ff <- read_ff(file)
+raw_ff <- read_flexfile(file)
 ```
 
 Next, use `flatten_data` to create a flat file. This joins all ID and name tables, stacks forecasts and actuals, and creates on data frame to work with. In this step, the allocations will also be applied to the actuals data.
@@ -78,6 +78,6 @@ flexfiles_flat <- flexfiles %>%
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = FALSE}
 quantity_data <- system.file("extdata", "Sample_Quantity_A.zip", package = "flexample")
 
-qdr <- read_ff(quantity_data) %>%
+qdr <- read_flexfile(quantity_data) %>%
   flatten_data()
 ```

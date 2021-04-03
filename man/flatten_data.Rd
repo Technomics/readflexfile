@@ -35,18 +35,18 @@ with data spanning multiple tables.
 so, iterate over each item and let its method dispatch.
 
 \code{flatten_data.flexfile()} creates a single flat file for working with FlexFile
-data. Input should be a list of one or more FlexFiles imported through the \code{read_ff} function.
+data. Input should be a list of one or more FlexFiles imported through the \code{read_flexfile} function.
 
 \code{flatten_data.quantityreport()} creates a single flat file for working with
 the Quantity Data Report. Input should be a list of one or more Quantity Data Reports
-imported through the \code{read_ff} function.
+imported through the \code{read_flexfile} function.
 }
 \examples{
 \dontrun{
 # Flatten one FlexFile
 file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
 
-flat_flex_file <- read_ff(file) \%>\%
+flat_flex_file <- read_flexfile(file) \%>\%
   flatten_data()
 
 # Flatten multiple FlexFiles
@@ -54,7 +54,7 @@ library(dplyr)
 
 files <- system.file("extdata", package = "flexample")
 
-flat_flexfiles <- read_folder(files, read_ff) \%>\%
+flat_flexfiles <- read_folder(files, read_flexfile) \%>\%
   flatten_data()
   bind_rows(.id = "doc_id")
 }
@@ -62,7 +62,7 @@ flat_flexfiles <- read_folder(files, read_ff) \%>\%
 # Flatten one Quantity Report
 file <- system.file("extdata", "Sample_Quantity_A.zip", package = "flexample")
 
-flat_flex_file <- read_ff(file) \%>\%
+flat_flex_file <- read_flexfile(file) \%>\%
   flatten_data()
 }
 }

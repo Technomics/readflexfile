@@ -2,6 +2,15 @@
 #'
 #' Functions to help with with the 'flexfile' class type.
 #'
+#' @details
+#' The \code{flexfile} class has the following attributes.
+#' \describe{
+#'   \item{allocated}{Logical. Have the allocations been applied to the \code{actualcosthourdata}
+#'   table.}
+#'   \item{rolledup}{Logical. Has the WBS roll up been applied to the \code{actualcosthourdata}
+#'   and \code{forecastatcompletioncosthourdata} tables.}
+#' }
+#'
 #' @name flexfile_class
 #'
 #' @param x An object to test or coerce to type 'flexfile'.
