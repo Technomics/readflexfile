@@ -20,8 +20,11 @@
 NULL
 
 #' @keywords internal
-new_flexfile <- function(x, allocated = FALSE, rolledup = FALSE) {
-  structure(x, allocated = allocated, rolledup = rolledup, class = "flexfile")
+new_flexfile <- function(x, fileinfo = NULL, allocated = FALSE, rolledup = FALSE) {
+  if (is.null(fileinfo))
+    fileinfo <- fileinfo_proto()
+
+  structure(x, fileinfo = fileinfo, allocated = allocated, rolledup = rolledup, class = "flexfile")
 }
 
 #' is_flexfile
@@ -72,4 +75,9 @@ is_flexfile_list <- function(x) {
   all(vapply(x, is_flexfile, logical(1)))
 }
 
-
+#' @keywords internal
+fileinfo_proto <- function() {
+  list(path = character(),
+       name = character(),
+       name_ext = character())
+}

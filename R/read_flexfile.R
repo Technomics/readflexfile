@@ -65,7 +65,11 @@ read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_
                                         table_spec$tables$table)
   names(table_list) <- clean_table_names[names(table_list)]
 
-  set_class_function(table_list)
+  fileinfo <- list(path = normalizePath(dirname(file), winslash = "/"),
+                   name = sub(".zip$", "", basename(file)),
+                   name_ext = basename(file))
+
+  set_class_function(table_list, fileinfo = fileinfo)
 }
 
 #' Read FlexFile or Quantity report
