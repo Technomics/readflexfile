@@ -62,7 +62,8 @@ flatten_data.list <- function(x, ...) {
 #'}
 flatten_data.flexfile <- function(x, .allocate = TRUE, ...) {
 
-  if (.allocate)
+  # if it says to allocate and it hasn't been already
+  if (.allocate & !(attr(x, "allocated")))
     x <- allocate_flexfile(x)
 
   # selects all, but provides a quick safety net in case of changes
