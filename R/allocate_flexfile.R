@@ -68,7 +68,8 @@ allocate_flexfile <- function(flexfile) {
                      by = c("unit_or_sublot_id"),
                      suffix = c("", "_unitorsublot"))
 
-  flexfile$actualcosthourdata <- purrr::reduce(sublot_fields, coalesce_field, suffix = "_unitorsublot", .init = new_actualcosthourdata2)
+  flexfile$actualcosthourdata <- purrr::reduce(sublot_fields, coalesce_field, suffix = "_unitorsublot", .init = new_actualcosthourdata2) %>%
+    dplyr::select(-(tidyselect::ends_with("_unitorsublot")))
 
   attr(flexfile, "allocated") <- TRUE
 
