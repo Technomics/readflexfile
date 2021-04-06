@@ -38,8 +38,8 @@ allocate_flexfile <- function(flexfile) {
 
   allocation_fields <- c("order_or_lot_id", "end_item_id", "wbs_element_id", "unit_or_sublot_id")
 
-  coalesce_field <- function(df, field) {
-    field_list <- rlang::syms(list(paste0(field, "_allocations"), field))
+  coalesce_field <- function(df, field, suffix) {
+    field_list <- rlang::syms(list(paste0(field, suffix), field))
 
     df %>%
       dplyr::mutate(!!field := dplyr::coalesce(!!!field_list))
@@ -54,10 +54,21 @@ allocate_flexfile <- function(flexfile) {
 
   # iterate over the function to apply it across all allocation fields
   # reduce will take the output from iteration i and use it as input to i + 1
-  flexfile$actualcosthourdata <- purrr::reduce(allocation_fields, coalesce_field, .init = new_actualcosthourdata) %>%
+  flexfile$actualcosthourdata <- purrr::reduce(allocation_fields, coalesce_field, suffix = "_allocations", .init = new_actualcosthourdata) %>%
     tidyr::replace_na(list(percent_value = 1)) %>%
     dplyr::mutate_at(dplyr::vars(tidyselect::starts_with("value_")), ~ . * .data$percent_value) %>% # need to handle other methods
     dplyr::select(-(tidyselect::ends_with("_allocations")), -.data$allocation_method_type_id)
+
+  # join in the remaining 'order_or_lot_id' to fill in 'end_item_id' and 'order_or_lot_id'
+  sublot_fields <- c("order_or_lot_id", "end_item_id")
+
+  new_actualcosthourdata2 <- flexfile$actualcosthourdata %>%
+    dplyr::left_join(dplyr::select(flexfile$unitsorsublots,
+                                   unit_or_sublot_id = .data$id, .data$end_item_id, .data$order_or_lot_id),
+                     by = c("unit_or_sublot_id"),
+                     suffix = c("", "_unitorsublot"))
+
+  flexfile$actualcosthourdata <- purrr::reduce(sublot_fields, coalesce_field, suffix = "_unitorsublot", .init = new_actualcosthourdata2)
 
   attr(flexfile, "allocated") <- TRUE
 
