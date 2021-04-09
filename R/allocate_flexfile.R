@@ -14,7 +14,21 @@
 #'
 #' @return A list of tibbles for the \code{file}.
 #'
+
 allocate_flexfile <- function(flexfile) {
+
+  if (is_flexfile(flexfile)) {
+    allocate_flexfile_single(flexfile)
+  } else if (is_flexfile_list(flexfile)) {
+    purrr::modify(flexfile, allocate_flexfile_single)
+  } else {
+    stop("One or more elements of 'flexfile' is not of class 'flexfile'")
+  }
+
+}
+
+#' @keywords internal
+allocate_flexfile_single <- function(flexfile) {
 
   # set all percents to be 1 if no allocations
   if (nrow(flexfile$allocationcomponents) == 0) {
