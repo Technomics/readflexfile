@@ -14,7 +14,6 @@
 #'
 #' @return A list of tibbles for the \code{file}.
 #'
-
 allocate_flexfile <- function(flexfile) {
 
   if (is_flexfile(flexfile)) {
