@@ -50,8 +50,9 @@ Suggests:
     rmarkdown,
     kableExtra (>= 1.1.0),
     scales (>= 1.1.0),
-    flexample (>= 1.1.1)
+    flexample (>= 1.1.1),
+    markdown (>= 1.1)
 VignetteBuilder: knitr
-Remotes:  
+Remotes: 
     technomics/costmisc,
     technomics/flexample
