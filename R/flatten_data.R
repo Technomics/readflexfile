@@ -118,8 +118,9 @@ find_duplicates <- function(x) {
     costmisc::listindex_to_col("list_index") %>%
     purrr::map_dfr("reportmetadata", .id = "doc_id") %>%
     dplyr::filter(dups) %>%
-    dplyr::select(list_index, doc_id, tidyselect::all_of(flexfile_key_columns()),
-                  program_name, reporting_organization_organization_name, report_as_of, date_prepared)
+    dplyr::select(.data$list_index, .data$doc_id, tidyselect::all_of(flexfile_key_columns()),
+                  .data$program_name, .data$reporting_organization_organization_name,
+                  .data$report_as_of, .data$date_prepared)
 
   message(paste(flexfile_key_columns(), collapse = ", "))
 
@@ -138,7 +139,7 @@ duplicated_report <- function(x) {
   stacked_metadata %>%
     dplyr::group_by(dplyr::across(tidyselect::all_of(flexfile_key_columns()))) %>%
     dplyr::mutate(is_unique = (dplyr::n() > 1)) %>%
-    dplyr::pull(is_unique)
+    dplyr::pull(.data$is_unique)
 
 }
 

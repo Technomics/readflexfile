@@ -16,6 +16,10 @@ is_flexfile_list(x)
 \arguments{
 \item{x}{An object to test or coerce to type 'flexfile'.}
 
+\item{allocated}{Logical whether the flexfile has been allocated.}
+
+\item{rolledup}{Logical whether the flexfile WBS has been rolled up.}
+
 \item{.show_check}{Logical whether or not to show results from the check against
 the file specification}
 }

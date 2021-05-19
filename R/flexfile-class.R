@@ -14,6 +14,8 @@
 #' @name flexfile_class
 #'
 #' @param x An object to test or coerce to type 'flexfile'.
+#' @param allocated Logical whether the flexfile has been allocated.
+#' @param rolledup Logical whether the flexfile WBS has been rolled up.
 #' @param .show_check Logical whether or not to show results from the check against
 #' the file specification
 #'

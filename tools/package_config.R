@@ -107,24 +107,3 @@ flexfile <- read_flexfile(file)
 # multiple files
 files <- system.file("extdata", package = "flexample")
 flexfiles <- read_folder(files, read_flexfile)
-
-# real test
-file_p <- "P:/DOD/Army/DASA-CE/WTV/J1118-01-01 Army_DASA-CE_WTV/5.3 ACDB Hard Copy/Offline Database/Data Import/FlexFile/JSON Files/M88 HERCULES (WIP)"
-file <- file.path(file_p, "Cost-Hours Flexfile Export.zip")
-flexfile <- read_flexfile(file)
-
-ff_allo <- flexfile %>%
-  allocate_flexfile()
-
-ff_flat <- flexfile %>%
-  flatten_data() %>%
-  dplyr::bind_rows(.id = "doc_id")
-
-file_q <- file.path(file_p, "1921-Q.zip")
-qdr <- read_flexfile(file_q)
-
-qdr_flat <- qdr %>%
-  flatten_data() %>%
-  dplyr::bind_rows(.id = "doc_id")
-
-z <- c(flexfile, qdr)

@@ -1,7 +1,7 @@
-# readflexfile (development version)
+# readflexfile 0.3.0
 
 * Added in S3 class for a FlexFile and Quantity Report to track the imported dataset.
-* Modified the workflow to flatten and combine data. The function `flatten_ff()` is now depreciated and has been replaced with the generic function `flatten_data()`. See the updated vignettes in `browseVignettes(package = "readflexfile")` (#15). The generic may be relocated to another package in the costverse later, but there should not be a change to the user (#16).
+* Modified the workflow to flatten and combine data. The function `flatten_ff()` is now deprecated and has been replaced with the generic function `flatten_data()`. See the updated vignettes in `browseVignettes(package = "readflexfile")` (#15). The generic may be relocated to another package in the costverse later, but there should not be a change to the user (#16).
 * The `read_ff()` function has been superseded by `read_flexfile()` to be less ambiguous in name.
 * Tables missing from the input JSON file will now be added in by `read_flexfile()` with zero rows of data. This ensures that a consistent result is returned (#17).
 * Tweaked the FlexFile and Quantity Data Report flatfiles to be more consistent and concise.

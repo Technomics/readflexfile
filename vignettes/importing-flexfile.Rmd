@@ -62,7 +62,7 @@ flexfiles <- raw_ffs %>%
    flatten_data()
 ```
 
-To create a simple flat file, simple stack all of the rows. This will stack them all, storing the file name in a column named `doc_id`.
+To create a single flat file, simple stack all of the rows from the flattened data. This will stack them all, storing the file name in a column named `doc_id`.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
 suppressPackageStartupMessages(library(dplyr))
