@@ -48,7 +48,8 @@ usethis::use_package("stats")
 usethis::use_package("costmisc", min_version = "0.6.2")
 
 # Set GitHub remote
-desc::desc_set_remotes("technomics/costmisc")
+desc::desc_set_remotes(c("technomics/costmisc",
+                         "technomics/flexample"))
 
 # These are only in the vignettes
 usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
@@ -70,7 +71,7 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
-devtools::check(vignettes = FALSE)
+devtools::check(vignettes = TRUE)
 
 # next version will be 0.3.0
 usethis::use_version()
