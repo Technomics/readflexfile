@@ -66,6 +66,9 @@ flatten_data.flexfile <- function(x, .allocate = TRUE, ...) {
   if (.allocate & !(attr(x, "allocated")))
     x <- allocate_flexfile(x)
 
+  x_allocated <- attr(x, "allocated")
+  x_rolledup <- attr(x, "rolledup")
+
   # selects all, but provides a quick safety net in case of changes
   cats <- readflexfile::sfc_mapping %>%
     dplyr::distinct(.data$standard_category_id, .data$detailed_standard_category_id, .data$direct_or_overhead) %>%
@@ -94,7 +97,7 @@ flatten_data.flexfile <- function(x, .allocate = TRUE, ...) {
   forecasts <- flatten_forecasts(flexfile_sfc)
 
   flatfile <- dplyr::bind_rows(actuals, forecasts) %>%
-    flexfile_order_columns(.all = .allocate)
+    flexfile_order_columns(.all = (x_allocated & !x_rolledup))
 
   new_flexfile_flat(flatfile)
 }
