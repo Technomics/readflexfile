@@ -35,24 +35,27 @@ usethis::use_package("tidyr", min_version = "1.0.0")
 usethis::use_package("tibble", min_version = "2.0.0")
 usethis::use_package("purrr", min_version = "0.3.3")
 usethis::use_package("rlang", min_version = "0.4.2")
-usethis::use_package("costmisc", min_version = "0.6.1")
 usethis::use_package("stringr", min_version = "1.4.0")
 usethis::use_package("glue", min_version = "1.4.1")
 usethis::use_package("cli", min_version = "2.0.2")
-usethis::use_package("lifecycle")
+usethis::use_package("lifecycle", min_version = "1.0.0")
 usethis::use_package("magrittr")
 usethis::use_package("lubridate")
-usethis::use_package("janitor")
+usethis::use_package("janitor", min_version = "2.1.0")
 usethis::use_package("readr")
 usethis::use_package("stats")
 
+usethis::use_package("costmisc", min_version = "0.6.2")
+
 # Set GitHub remote
-desc::desc_set_remotes("technomics/costmisc")
+desc::desc_set_remotes(c("technomics/costmisc",
+                         "technomics/flexample"))
 
 # These are only in the vignettes
 usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
+usethis::use_package("markdown", min_version = "1.1", type = "Suggests")
 usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
-usethis::use_package("flexample", min_version = "1.0.0", type = "Suggests")
+usethis::use_package("flexample", min_version = "1.1.1", type = "Suggests")
 
 ## ===== README & NEWS =====
 
@@ -69,12 +72,15 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
-devtools::check(vignettes = FALSE)
+devtools::check(vignettes = TRUE)
 
+# next version will be 0.3.0
 usethis::use_version()
 rnomics::use_badge_version()
 
 devtools::load_all()
+
+devtools::install(build_vignettes = TRUE)
 
 detach("package:readflexfile", unload = TRUE)
 
@@ -94,4 +100,12 @@ rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
 
 ## ===== Scratch Work =====
 
+vignette("importing-flexfile", package = "readflexfile")
 
+# single file
+file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
+flexfile <- read_flexfile(file)
+
+# multiple files
+files <- system.file("extdata", package = "flexample")
+flexfiles <- read_folder(files, read_flexfile)
