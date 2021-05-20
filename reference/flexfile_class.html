@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • readflexfile</title>
+<title>flexfile class utilities — flexfile_class • readflexfile</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,12 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="flexfile class utilities — flexfile_class" />
+<meta property="og:description" content="Functions to help with with the 'flexfile' class type.
+is_flexfile() checks if object is of type 'flexfile'
+as_flexfile() creates object of type 'flexfile' and checks it against
+the file specification.
+is_flexfile_list() check if the object is a list where all members are of class 'flexfile'." />
 
 
 
@@ -68,7 +73,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -132,18 +137,63 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>flexfile class utilities</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Technomics/readflexfile/blob/master/R/flexfile-class.R'><code>R/flexfile-class.R</code></a></small>
+    <div class="hidden name"><code>flexfile_class.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="importing-flexfile.html">Using readflexfile to import one or more FlexFiles</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p>Functions to help with with the 'flexfile' class type.</p>
+<p><code>is_flexfile()</code> checks if object is of type 'flexfile'</p>
+<p><code>as_flexfile()</code> creates object of type 'flexfile' and checks it against
+the file specification.</p>
+<p><code>is_flexfile_list()</code> check if the object is a list where all members are of class 'flexfile'.</p>
     </div>
+
+    <pre class="usage"><span class='fu'>is_flexfile</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>as_flexfile</span><span class='op'>(</span><span class='va'>x</span>, allocated <span class='op'>=</span> <span class='cn'>FALSE</span>, rolledup <span class='op'>=</span> <span class='cn'>FALSE</span>, .show_check <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'>is_flexfile_list</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>An object to test or coerce to type 'flexfile'.</p></td>
+    </tr>
+    <tr>
+      <th>allocated</th>
+      <td><p>Logical whether the flexfile has been allocated.</p></td>
+    </tr>
+    <tr>
+      <th>rolledup</th>
+      <td><p>Logical whether the flexfile WBS has been rolled up.</p></td>
+    </tr>
+    <tr>
+      <th>.show_check</th>
+      <td><p>Logical whether or not to show results from the check against
+the file specification</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code>flexfile</code> class has the following attributes.</p><dl>
+<dt>allocated</dt><dd><p>Logical. Have the allocations been applied to the <code>actualcosthourdata</code>
+table.</p></dd>
+<dt>rolledup</dt><dd><p>Logical. Has the WBS roll up been applied to the <code>actualcosthourdata</code>
+and <code>forecastatcompletioncosthourdata</code> tables.</p></dd>
+
+</dl>
+
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

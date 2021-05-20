@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/importing-flexfile.html">Using readflexfile to import one or multiple FlexFiles</a>
+      <a href="../articles/importing-flexfile.html">Using readflexfile to import one or more FlexFiles</a>
     </li>
   </ul>
 </li>
@@ -136,13 +136,24 @@
       <small>Source: <a href='https://github.com/Technomics/readflexfile/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="readflexfile-030" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.0">
+<a href="#readflexfile-030" class="anchor"></a>readflexfile 0.3.0</h1>
+<ul>
+<li>Added in S3 class for a FlexFile and Quantity Report to track the imported dataset.</li>
+<li>Modified the workflow to flatten and combine data. The function <code><a href="../reference/flatten_ff.html">flatten_ff()</a></code> is now deprecated and has been replaced with the generic function <code><a href="../reference/flatten_data.html">flatten_data()</a></code>. See the updated vignettes in <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes(package = "readflexfile")</a></code> (<a href='https://github.com/Technomics/readflexfile/issues/15'>#15</a>). The generic may be relocated to another package in the costverse later, but there should not be a change to the user (<a href='https://github.com/Technomics/readflexfile/issues/16'>#16</a>).</li>
+<li>The <code><a href="../reference/read_ff.html">read_ff()</a></code> function has been superseded by <code><a href="../reference/read_flexfile.html">read_flexfile()</a></code> to be less ambiguous in name.</li>
+<li>Tables missing from the input JSON file will now be added in by <code><a href="../reference/read_flexfile.html">read_flexfile()</a></code> with zero rows of data. This ensures that a consistent result is returned (<a href='https://github.com/Technomics/readflexfile/issues/17'>#17</a>).</li>
+<li>Tweaked the FlexFile and Quantity Data Report flatfiles to be more consistent and concise.</li>
+</ul>
+</div>
     <div id="readflexfile-021" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.1">
 <a href="#readflexfile-021" class="anchor"></a>readflexfile 0.2.1</h1>
 <ul>
 <li>Corrected typo <code>period_of_performance_end_data</code> to <code>period_of_performance_end_date</code> in the <code>ordersorlots table</code> (<a href='https://github.com/Technomics/readflexfile/issues/10'>#10</a>).</li>
 <li>Swapped to a JSON parser in <code>costmisc</code>. This should correct errors in tables with value ‘null’ in the raw file.</li>
-<li>Added in the <code>.coerce_spec</code> option to <code><a href="../reference/read_ff.html">read_ff()</a></code> to coerce data types to those from the data model (<a href='https://github.com/Technomics/readflexfile/issues/11'>#11</a>)</li>
+<li>Added in the <code>.coerce_spec</code> option to <code><a href="../reference/read_ff.html">read_ff()</a></code> to coerce data types to those from the data model (<a href='https://github.com/Technomics/readflexfile/issues/11'>#11</a>).</li>
 </ul>
 </div>
     <div id="readflexfile-020" class="section level1">

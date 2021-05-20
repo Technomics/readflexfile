@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • readflexfile</title>
+<title>Apply allocation methodologies provided — allocate_flexfile • readflexfile</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,12 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Apply allocation methodologies provided — allocate_flexfile" />
+<meta property="og:description" content="allocate_flexfile() applies the allocations provided in the Allocation Methodology table to
+the Actual Cost Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
+Each tibble corresponds to its respective JSON table. 
+
+Currently this is implemented for allocation_method_type_id == &quot;PERCENT&quot;." />
 
 
 
@@ -68,7 +73,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -132,18 +137,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Apply allocation methodologies provided</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Technomics/readflexfile/blob/master/R/allocate_flexfile.R'><code>R/allocate_flexfile.R</code></a></small>
+    <div class="hidden name"><code>allocate_flexfile.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="importing-flexfile.html">Using readflexfile to import one or more FlexFiles</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p><code>allocate_flexfile()</code> applies the allocations provided in the Allocation Methodology table to
+the Actual Cost Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
+Each tibble corresponds to its respective JSON table. <br />
+<br />
+Currently this is implemented for <code>allocation_method_type_id == "PERCENT"</code>.</p>
     </div>
+
+    <pre class="usage"><span class='fu'>allocate_flexfile</span><span class='op'>(</span><span class='va'>flexfile</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>flexfile</th>
+      <td><p>A list of one or more FlexFiles imported through the <code>read_flexfile</code> function.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list of tibbles for the <code>file</code>.</p>
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

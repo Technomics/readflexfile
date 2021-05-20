@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/importing-flexfile.html">Using readflexfile to import one or multiple FlexFiles</a>
+      <a href="../articles/importing-flexfile.html">Using readflexfile to import one or more FlexFiles</a>
     </li>
   </ul>
 </li>
@@ -158,21 +158,39 @@
       <tr>
         
         <td>
-          <p><code><a href="allocate_ff.html">allocate_ff()</a></code> </p>
+          <p><code><a href="allocate_flexfile.html">allocate_flexfile()</a></code> </p>
         </td>
         <td><p>Apply allocation methodologies provided</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="flatten_lists.html">flatten_ff()</a></code> <code><a href="flatten_lists.html">flatten_qdr()</a></code> </p>
+          <p><code><a href="flat_class.html">is_flexfile_flat()</a></code> <code><a href="flat_class.html">is_quantityreport_flat()</a></code> </p>
         </td>
-        <td><p>Flatten FlexFile and Quantity Data Report</p></td>
+        <td><p>*_flat class utilities</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="flatten_data.html">flatten_data()</a></code> </p>
+        </td>
+        <td><p>Create a flat file from multiple data frames</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="flexfile_class.html">is_flexfile()</a></code> <code><a href="flexfile_class.html">as_flexfile()</a></code> <code><a href="flexfile_class.html">is_flexfile_list()</a></code> </p>
+        </td>
+        <td><p>flexfile class utilities</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="flexfile_enum.html">flexfile_enum</a></code> </p>
         </td>
         <td><p>FlexFile enumeration tables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="flexfile_key_columns.html">flexfile_key_columns()</a></code> </p>
+        </td>
+        <td><p>Key columns for the flexfile</p></td>
       </tr><tr>
         
         <td>
@@ -188,7 +206,13 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="read_ff.html">read_ff()</a></code> </p>
+          <p><code><a href="quantityreport_class.html">is_quantityreport()</a></code> <code><a href="quantityreport_class.html">as_quantityreport()</a></code> <code><a href="quantityreport_class.html">is_quantityreport_list()</a></code> </p>
+        </td>
+        <td><p>quantityreport class utilities</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="read_flexfile.html">read_flexfile()</a></code> </p>
         </td>
         <td><p>Read FlexFile or Quantity report</p></td>
       </tr><tr>
