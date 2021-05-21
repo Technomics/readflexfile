@@ -55,10 +55,13 @@ read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_
   check <- check_spec(table_list, table_spec, file_type, .silent = isFALSE(.show_check))
 
   table_list <- add_missing_spec_tables(table_list, table_spec, check)
-  table_list <- add_missing_spec_cols(table_list, table_spec, new_name = "snake_name")
+  table_list <- add_missing_spec_cols(table_list, table_spec, new_name = "field")
 
   # coerce to the data model data types if desired
   if (.coerce_spec) table_list <- coerce_to_spec(table_list, table_spec)
+
+  # convert to snake_case (done after the coercing)
+  table_list <- add_missing_spec_cols(table_list, table_spec, new_name = "snake_name")
 
   # clean up table names
   clean_table_names <- rlang::set_names(table_spec$tables$snake_table,
