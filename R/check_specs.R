@@ -106,7 +106,7 @@ coerce_to_spec <- function(table_list, table_spec) {
 
   }
 
-  purrr::imodify(table_list, coerce_table)
+  purrr::imap(table_list, coerce_table)
 
 }
 
@@ -135,7 +135,7 @@ add_missing_spec_cols <- function(table_list, table_spec, new_name = "snake_name
 #' @keywords internal
 add_missing_spec_tables <- function(table_list, table_spec, checked_spec) {
 
-  missing_tables <- checked_spec$tables$missing
+  missing_tables <- purrr::set_names(checked_spec$tables$missing)
 
   # create the missing tables
   create_missing_table <- function(table_name) {
@@ -148,7 +148,7 @@ add_missing_spec_tables <- function(table_list, table_spec, checked_spec) {
   }
 
   # set the data types
-  new_tables <- coerce_to_spec(sapply(missing_tables, create_missing_table), table_spec)
+  new_tables <- coerce_to_spec(lapply(missing_tables, create_missing_table), table_spec)
 
   # append and return
   c(table_list, new_tables)

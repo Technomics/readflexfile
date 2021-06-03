@@ -109,3 +109,4 @@ flexfile <- read_flexfile(file)
 # multiple files
 files <- system.file("extdata", package = "flexample")
 flexfiles <- read_folder(files, read_flexfile)
+
