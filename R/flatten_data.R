@@ -158,7 +158,7 @@ flatten_actuals <- function(x)  {
 
   # join in all of the information
   x$actualcosthourdata %>%
-    tibble::add_column(meta, .before = 1) %>%
+    tibble::add_column(!!!meta, .before = 1) %>%
     dplyr::left_join(dplyr::select(x$accounts,
                                    .data$id, .data$name),
                      by = c(account_id = "id"),
@@ -324,7 +324,7 @@ flatten_data.quantityreport <- function(x, ...) {
     tibble::add_column(atd_or_fac = "FAC")
 
   flatfile <- dplyr::bind_rows(quant_to_date, quant_completion) %>%
-    tibble::add_column(meta, .before = 1) %>%
+    tibble::add_column(!!!meta, .before = 1) %>%
     quantityreport_order_columns()
 
   new_quantityreport_flat(flatfile)

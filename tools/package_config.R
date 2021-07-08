@@ -74,7 +74,6 @@ devtools::document()
 devtools::spell_check()
 devtools::check(vignettes = TRUE)
 
-# next version will be 0.3.0
 usethis::use_version()
 rnomics::use_badge_version()
 
@@ -109,3 +108,4 @@ flexfile <- read_flexfile(file)
 # multiple files
 files <- system.file("extdata", package = "flexample")
 flexfiles <- read_folder(files, read_flexfile)
+

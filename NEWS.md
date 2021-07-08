@@ -1,3 +1,7 @@
+# readflexfile 0.3.1
+
+* Minor bug fixes based on updates to other packages (#23).
+
 # readflexfile 0.3.0
 
 * Added in S3 class for a FlexFile and Quantity Report to track the imported dataset.
