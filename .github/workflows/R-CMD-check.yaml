@@ -24,6 +24,8 @@ jobs:
         config:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-18.04, r: 'release'}
+          - {os: windows-latest, r: '3.6'}
+          - {os: ubuntu-18.04, r: '3.6'}
 
     steps:
       - uses: actions/checkout@v2
@@ -61,6 +63,7 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
+        
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
