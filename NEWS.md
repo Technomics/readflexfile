@@ -1,3 +1,7 @@
+# readflexfile (development version)
+
+* Corrected bug with names not being joined in for `units_or_sublots` (#28).
+
 # readflexfile 0.3.1
 
 * Minor bug fixes based on updates to other packages (#23).
