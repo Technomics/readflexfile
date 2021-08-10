@@ -157,12 +157,18 @@ flatten_actuals <- function(x)  {
                   .data$submission_event_number, .data$resubmission_number, .data$reporting_organization_organization_name)
 
   # join in all of the information
+  # note: the order matters! for example unitsorsublots must come before end_item and order_or_lot
   x$actualcosthourdata %>%
     tibble::add_column(!!!meta, .before = 1) %>%
     dplyr::left_join(dplyr::select(x$accounts,
                                    .data$id, .data$name),
                      by = c(account_id = "id"),
                      suffix = c("", ".accounts")) %>%
+    dplyr::left_join(x$unitsorsublots,
+                     by = c(unit_or_sublot_id = "id"),
+                     suffix = c("", ".unitsorsublots")) %>%
+    dplyr::mutate(order_or_lot_id = dplyr::coalesce(.data$order_or_lot_id, .data$order_or_lot_id.unitsorsublots),
+                  end_item_id = dplyr::coalesce(.data$end_item_id, .data$end_item_id.unitsorsublots)) %>%
     dplyr::left_join(dplyr::select(x$enditems,
                                    .data$id, .data$name),
                      by = c(end_item_id = "id"),
@@ -191,14 +197,9 @@ flatten_actuals <- function(x)  {
                                    .data$id, .data$start_date, .data$end_date),
                      by = c(reporting_period_id = "id"),
                      suffix = c("", ".reportingcalendar")) %>%
-    dplyr::left_join(x$unitsorsublots,
-                     by = c(unit_or_sublot_id = "id"),
-                     suffix = c("", ".unitsorsublots")) %>%
     dplyr::mutate(start_date = lubridate::ymd(.data$start_date),
                   end_date = lubridate::ymd(.data$end_date),
-                  atd_or_fac = "ATD",
-                  order_or_lot_id = dplyr::coalesce(.data$order_or_lot_id, .data$order_or_lot_id.unitsorsublots),
-                  end_item_id = dplyr::coalesce(.data$end_item_id, .data$end_item_id.unitsorsublots)) %>%
+                  atd_or_fac = "ATD") %>%
     dplyr::rename(account_name = .data$name,
                   clin_name = .data$name.clins,
                   wbs_parent = .data$parent_id,
