@@ -11,8 +11,7 @@
 #' @export
 #'
 #' @param file Path to a FlexFile or Quantity Report .zip archive.
-#' @param .show_check Logical whether to print information to the console about the
-#' file check to the console or not.
+#' @param .show_check Logical whether to print information about the file check to the console or not.
 #' @param .coerce_spec Logical whether to coerce all column data types to those from the data models.
 #' If \code{FALSE}, the types will be as detected upon read by the JSON parser.
 #' @inheritParams costmisc::read_json_zip
