@@ -1,7 +1,7 @@
 Package: readflexfile
 Title: Read FlexFile data
 URL: https://github.com/Technomics/readflexfile
-Version: 0.3.1.9000
+Version: 0.3.2
 Authors@R: 
     c(person(given = "Adam H.",
              family = "James",
@@ -31,7 +31,7 @@ Imports:
     tibble (>= 2.0.0),
     purrr (>= 0.3.3),
     rlang (>= 0.4.2),
-    costmisc (>= 0.6.2),
+    costmisc (>= 0.6.3),
     stringr (>= 1.4.0),
     lubridate,
     glue (>= 1.4.1),

@@ -1,6 +1,7 @@
-# readflexfile (development version)
+# readflexfile 0.3.2
 
 * Corrected bug with names not being joined in for `units_or_sublots` (#28).
+* Moved `flatten_data()` generic to costmisc. This should have no impact on the user.
 
 # readflexfile 0.3.1
 

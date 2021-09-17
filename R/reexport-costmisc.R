@@ -1,4 +1,8 @@
 
+#' @importFrom costmisc flatten_data
+#' @export
+costmisc::flatten_data
+
 #' @importFrom costmisc read_folder
 #' @export
 costmisc::read_folder

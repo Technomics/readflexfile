@@ -1,29 +1,12 @@
-#' Create a flat file from multiple data frames
-#'
-#' A generic function that is used to create a single flat file from a list of data
-#' frames. This list is usually created by reading in a data format
-#' with data spanning multiple tables.
-#'
-#' @param x A list of one or more collections of data frames to be flattened.
-#' @param ... Arguments passed on to methods.
-#'
-#' @return A data frame with the flat file representation of the input data.
-#'
-#' @export
-#'
-flatten_data <- function(x, ...) {
-  UseMethod("flatten_data")
-}
 
 #' Flatten list of data
 #'
 #' \code{flatten_data.list()} will check if each item in the list has the same class. If
 #' so, iterate over each item and let its method dispatch.
 #'
+#' @inheritParams costmisc::flatten_data
+#'
 #' @export
-#'
-#' @name flatten_data
-#'
 flatten_data.list <- function(x, ...) {
   all_class_equal <- length(unique.default(lapply(x, class))) == 1L
 
@@ -39,7 +22,7 @@ flatten_data.list <- function(x, ...) {
 #'
 #' @export
 #'
-#' @name flatten_data
+#' @inheritParams costmisc::flatten_data
 #' @param .allocate Logical whether or not to apply the allocations before flattening. In almost all
 #' cases this should be left as \code{TRUE}.
 #'
@@ -281,7 +264,7 @@ flexfile_order_columns <- function(x, .all = TRUE) {
 #'
 #' @export
 #'
-#' @name flatten_data
+#' @inheritParams costmisc::flatten_data
 #'
 #' @examples
 #' \dontrun{
