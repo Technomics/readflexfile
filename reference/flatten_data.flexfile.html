@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apply allocation methodologies provided — allocate_flexfile • readflexfile</title>
+<title>Create a cost and hour dataframe from a FlexFile — flatten_data.flexfile • readflexfile</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,9 @@
 
 
 
-<meta property="og:title" content="Apply allocation methodologies provided — allocate_flexfile" />
-<meta property="og:description" content="allocate_flexfile() applies the allocations provided in the Allocation Methodology table to
-the Actual Cost Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
-Each tibble corresponds to its respective JSON table. 
-
-Currently this is implemented for allocation_method_type_id == &quot;PERCENT&quot;." />
+<meta property="og:title" content="Create a cost and hour dataframe from a FlexFile — flatten_data.flexfile" />
+<meta property="og:description" content="flatten_data.flexfile() creates a single flat file for working with FlexFile
+data. Input should be a list of one or more FlexFiles imported through the read_flexfile function." />
 
 
 
@@ -137,34 +134,56 @@ Currently this is implemented for allocation_method_type_id == &quot;PERCENT&quo
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Apply allocation methodologies provided</h1>
-    <small class="dont-index">Source: <a href='https://github.com/Technomics/readflexfile/blob/master/R/allocate_flexfile.R'><code>R/allocate_flexfile.R</code></a></small>
-    <div class="hidden name"><code>allocate_flexfile.Rd</code></div>
+    <h1>Create a cost and hour dataframe from a FlexFile</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Technomics/readflexfile/blob/master/R/flatten_data.R'><code>R/flatten_data.R</code></a></small>
+    <div class="hidden name"><code>flatten_data.flexfile.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>allocate_flexfile()</code> applies the allocations provided in the Allocation Methodology table to
-the Actual Cost Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
-Each tibble corresponds to its respective JSON table. <br />
-<br />
-Currently this is implemented for <code>allocation_method_type_id == "PERCENT"</code>.</p>
+    <p><code>flatten_data.flexfile()</code> creates a single flat file for working with FlexFile
+data. Input should be a list of one or more FlexFiles imported through the <code>read_flexfile</code> function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>allocate_flexfile</span><span class='op'>(</span><span class='va'>flexfile</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for flexfile</span>
+<span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/flatten_data.html'>flatten_data</a></span><span class='op'>(</span><span class='va'>x</span>, .allocate <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>flexfile</th>
-      <td><p>A list of one or more FlexFiles imported through the <code>read_flexfile</code> function.</p></td>
+      <th>x</th>
+      <td><p>A list of one or more collections of data frames to be flattened.</p></td>
+    </tr>
+    <tr>
+      <th>.allocate</th>
+      <td><p>Logical whether or not to apply the allocations before flattening. In almost all
+cases this should be left as <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed on to methods.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of tibbles for the <code>file</code>.</p>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># Flatten one FlexFile</span>
+<span class='va'>file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"Sample_FlexFile_A.zip"</span>, package <span class='op'>=</span> <span class='st'>"flexample"</span><span class='op'>)</span>
 
+<span class='va'>flat_flex_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='read_flexfile.html'>read_flexfile</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/flatten_data.html'>flatten_data</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># Flatten multiple FlexFiles</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+
+<span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, package <span class='op'>=</span> <span class='st'>"flexample"</span><span class='op'>)</span>
+
+<span class='va'>flat_flexfiles</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/read_folder.html'>read_folder</a></span><span class='op'>(</span><span class='va'>files</span>, <span class='va'>read_flexfile</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/costmisc/man/flatten_data.html'>flatten_data</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span>.id <span class='op'>=</span> <span class='st'>"doc_id"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

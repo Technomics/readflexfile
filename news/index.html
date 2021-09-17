@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -136,6 +136,14 @@
       <small>Source: <a href='https://github.com/Technomics/readflexfile/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="readflexfile-032" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.2">
+<a href="#readflexfile-032" class="anchor"></a>readflexfile 0.3.2</h1>
+<ul>
+<li>Corrected bug with names not being joined in for <code>units_or_sublots</code> (<a href='https://github.com/Technomics/readflexfile/issues/28'>#28</a>).</li>
+<li>Moved <code><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html">flatten_data()</a></code> generic to costmisc. This should have no impact on the user.</li>
+</ul>
+</div>
     <div id="readflexfile-031" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.1">
 <a href="#readflexfile-031" class="anchor"></a>readflexfile 0.3.1</h1>
@@ -148,7 +156,7 @@
 <a href="#readflexfile-030" class="anchor"></a>readflexfile 0.3.0</h1>
 <ul>
 <li>Added in S3 class for a FlexFile and Quantity Report to track the imported dataset.</li>
-<li>Modified the workflow to flatten and combine data. The function <code><a href="../reference/flatten_ff.html">flatten_ff()</a></code> is now deprecated and has been replaced with the generic function <code><a href="../reference/flatten_data.html">flatten_data()</a></code>. See the updated vignettes in <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes(package = "readflexfile")</a></code> (<a href='https://github.com/Technomics/readflexfile/issues/15'>#15</a>). The generic may be relocated to another package in the costverse later, but there should not be a change to the user (<a href='https://github.com/Technomics/readflexfile/issues/16'>#16</a>).</li>
+<li>Modified the workflow to flatten and combine data. The function <code><a href="../reference/flatten_ff.html">flatten_ff()</a></code> is now deprecated and has been replaced with the generic function <code><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html">flatten_data()</a></code>. See the updated vignettes in <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes(package = "readflexfile")</a></code> (<a href='https://github.com/Technomics/readflexfile/issues/15'>#15</a>). The generic may be relocated to another package in the costverse later, but there should not be a change to the user (<a href='https://github.com/Technomics/readflexfile/issues/16'>#16</a>).</li>
 <li>The <code><a href="../reference/read_ff.html">read_ff()</a></code> function has been superseded by <code><a href="../reference/read_flexfile.html">read_flexfile()</a></code> to be less ambiguous in name.</li>
 <li>Tables missing from the input JSON file will now be added in by <code><a href="../reference/read_flexfile.html">read_flexfile()</a></code> with zero rows of data. This ensures that a consistent result is returned (<a href='https://github.com/Technomics/readflexfile/issues/17'>#17</a>).</li>
 <li>Tweaked the FlexFile and Quantity Data Report flatfiles to be more consistent and concise.</li>
