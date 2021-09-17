@@ -3,6 +3,7 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{flatten_data}
 \alias{read_folder}
 \alias{add_id_col}
 \alias{listindex_to_col}
@@ -13,6 +14,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{costmisc}{\code{\link[costmisc]{add_id_col}}, \code{\link[costmisc:add_id_col]{listindex_to_col}}, \code{\link[costmisc]{read_folder}}}
+  \item{costmisc}{\code{\link[costmisc]{add_id_col}}, \code{\link[costmisc]{flatten_data}}, \code{\link[costmisc:add_id_col]{listindex_to_col}}, \code{\link[costmisc]{read_folder}}}
 }}
 

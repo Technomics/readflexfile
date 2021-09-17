@@ -1,29 +1,12 @@
-#' Create a flat file from multiple data frames
-#'
-#' A generic function that is used to create a single flat file from a list of data
-#' frames. This list is usually created by reading in a data format
-#' with data spanning multiple tables.
-#'
-#' @param x A list of one or more collections of data frames to be flattened.
-#' @param ... Arguments passed on to methods.
-#'
-#' @return A data frame with the flat file representation of the input data.
-#'
-#' @export
-#'
-flatten_data <- function(x, ...) {
-  UseMethod("flatten_data")
-}
 
 #' Flatten list of data
 #'
 #' \code{flatten_data.list()} will check if each item in the list has the same class. If
 #' so, iterate over each item and let its method dispatch.
 #'
+#' @inheritParams costmisc::flatten_data
+#'
 #' @export
-#'
-#' @name flatten_data
-#'
 flatten_data.list <- function(x, ...) {
   all_class_equal <- length(unique.default(lapply(x, class))) == 1L
 
@@ -39,7 +22,7 @@ flatten_data.list <- function(x, ...) {
 #'
 #' @export
 #'
-#' @name flatten_data
+#' @inheritParams costmisc::flatten_data
 #' @param .allocate Logical whether or not to apply the allocations before flattening. In almost all
 #' cases this should be left as \code{TRUE}.
 #'
@@ -157,12 +140,18 @@ flatten_actuals <- function(x)  {
                   .data$submission_event_number, .data$resubmission_number, .data$reporting_organization_organization_name)
 
   # join in all of the information
+  # note: the order matters! for example unitsorsublots must come before end_item and order_or_lot
   x$actualcosthourdata %>%
     tibble::add_column(!!!meta, .before = 1) %>%
     dplyr::left_join(dplyr::select(x$accounts,
                                    .data$id, .data$name),
                      by = c(account_id = "id"),
                      suffix = c("", ".accounts")) %>%
+    dplyr::left_join(x$unitsorsublots,
+                     by = c(unit_or_sublot_id = "id"),
+                     suffix = c("", ".unitsorsublots")) %>%
+    dplyr::mutate(order_or_lot_id = dplyr::coalesce(.data$order_or_lot_id, .data$order_or_lot_id.unitsorsublots),
+                  end_item_id = dplyr::coalesce(.data$end_item_id, .data$end_item_id.unitsorsublots)) %>%
     dplyr::left_join(dplyr::select(x$enditems,
                                    .data$id, .data$name),
                      by = c(end_item_id = "id"),
@@ -191,14 +180,9 @@ flatten_actuals <- function(x)  {
                                    .data$id, .data$start_date, .data$end_date),
                      by = c(reporting_period_id = "id"),
                      suffix = c("", ".reportingcalendar")) %>%
-    dplyr::left_join(x$unitsorsublots,
-                     by = c(unit_or_sublot_id = "id"),
-                     suffix = c("", ".unitsorsublots")) %>%
     dplyr::mutate(start_date = lubridate::ymd(.data$start_date),
                   end_date = lubridate::ymd(.data$end_date),
-                  atd_or_fac = "ATD",
-                  order_or_lot_id = dplyr::coalesce(.data$order_or_lot_id, .data$order_or_lot_id.unitsorsublots),
-                  end_item_id = dplyr::coalesce(.data$end_item_id, .data$end_item_id.unitsorsublots)) %>%
+                  atd_or_fac = "ATD") %>%
     dplyr::rename(account_name = .data$name,
                   clin_name = .data$name.clins,
                   wbs_parent = .data$parent_id,
@@ -280,7 +264,7 @@ flexfile_order_columns <- function(x, .all = TRUE) {
 #'
 #' @export
 #'
-#' @name flatten_data
+#' @inheritParams costmisc::flatten_data
 #'
 #' @examples
 #' \dontrun{

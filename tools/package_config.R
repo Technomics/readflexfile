@@ -45,7 +45,7 @@ usethis::use_package("janitor", min_version = "2.1.0")
 usethis::use_package("readr")
 usethis::use_package("stats")
 
-usethis::use_package("costmisc", min_version = "0.6.2")
+usethis::use_package("costmisc", min_version = "0.6.3")
 
 # Set GitHub remote
 desc::desc_set_remotes(c("technomics/costmisc",

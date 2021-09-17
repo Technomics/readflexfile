@@ -16,7 +16,7 @@ status](https://github.com/Technomics/readflexfile/workflows/R-CMD-check/badge.s
 [![coverage:
 1.5%25](https://img.shields.io/badge/coverage-1.5%25-red.svg)](https://cran.r-project.org/web/packages/covr/vignettes/how_it_works.html)
 [![version:
-0.3.1](https://img.shields.io/badge/version-0.3.1-blue.svg)]()
+0.3.2](https://img.shields.io/badge/version-0.3.2-blue.svg)]()
 <!-- badges: end -->
 
 The goal of readflexfile is to facilitate the reading of the FlexFile
