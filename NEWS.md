@@ -1,3 +1,7 @@
+# readflexfile (development version)
+
+* Added in a new function `normalize_functional_categories()`. This function will add the standard functional categories to the `actualcosthourdata` and `forecastatcompletioncosthourdata` tables when the detailed functional categories are provided. This functionality always occurred when flattening the data using `flatten_data()`, but is now exported as its own function to support other use cases.
+
 # readflexfile 0.3.2
 
 * Corrected bug with names not being joined in for `units_or_sublots` (#28).
