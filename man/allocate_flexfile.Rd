@@ -7,10 +7,7 @@
 allocate_flexfile(flexfile)
 }
 \arguments{
-\item{flexfile}{A list of one or more FlexFiles imported through the \code{read_flexfile} function.}
-}
-\value{
-A list of tibbles for the \code{file}.
+\item{flexfile}{A single flexfile or a list of flexfiles imported through the \code{read_flexfile} function.}
 }
 \description{
 \code{allocate_flexfile()} applies the allocations provided in the Allocation Methodology table to

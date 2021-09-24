@@ -4,16 +4,16 @@
 \alias{normalize_functional_categories}
 \title{Join in standard functional categories}
 \usage{
-normalize_functional_categories(x, direct_or_oh_mapping = FALSE)
+normalize_functional_categories(flexfile, direct_or_oh_mapping = FALSE)
 }
 \arguments{
-\item{x}{A flexfile imported through the \code{read_flexfile} function.}
+\item{flexfile}{A single flexfile or a list of flexfiles imported through the \code{read_flexfile} function.}
 
-\item{direct_or_oh_mapping}{Logical whether not not to join in the direct or overhead
+\item{direct_or_oh_mapping}{Logical whether not not to join in the direct or overhead.
 attributes.}
 }
 \description{
 \code{normalize_functional_categories()} joins in the standard functional categories
 from the detailed function categories when not provided in the original data. Input
-should a single FlexFile imported through the \code{read_flexfile} function.
+should be one or more FlexFiles imported through the \code{read_flexfile} function.
 }

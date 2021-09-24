@@ -3,14 +3,21 @@
 #'
 #' \code{normalize_functional_categories()} joins in the standard functional categories
 #' from the detailed function categories when not provided in the original data. Input
-#' should a single FlexFile imported through the \code{read_flexfile} function.
+#' should be one or more FlexFiles imported through the \code{read_flexfile} function.
 #'
-#' @param x A flexfile imported through the \code{read_flexfile} function.
-#' @param direct_or_oh_mapping Logical whether not not to join in the direct or overhead
+#' @inheritParams apply_flexfile
+#' @param direct_or_oh_mapping Logical whether not not to join in the direct or overhead.
 #' attributes.
 #'
 #' @export
-normalize_functional_categories <- function(x, direct_or_oh_mapping = FALSE) {
+normalize_functional_categories <- function(flexfile, direct_or_oh_mapping = FALSE) {
+
+  apply_flexfile(flexfile, normalize_functional_categories_single, direct_or_oh_mapping = direct_or_oh_mapping)
+
+}
+
+#' @keywords internal
+normalize_functional_categories_single <- function(flexfile, direct_or_oh_mapping = FALSE) {
 
   # selects all, but provides a quick safety net in case of changes
   cats <- readflexfile::sfc_mapping %>%
@@ -40,6 +47,6 @@ normalize_functional_categories <- function(x, direct_or_oh_mapping = FALSE) {
   join_sfc_tables <- c("actualcosthourdata", "forecastatcompletioncosthourdata")
 
   # for the tables where relevant, join in the sfc mappings
-  purrr::modify_at(x, join_sfc_tables, join_sfc)
+  purrr::modify_at(flexfile, join_sfc_tables, join_sfc)
 
 }
