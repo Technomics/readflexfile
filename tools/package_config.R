@@ -42,10 +42,11 @@ usethis::use_package("lifecycle", min_version = "1.0.0")
 usethis::use_package("magrittr")
 usethis::use_package("lubridate")
 usethis::use_package("janitor", min_version = "2.1.0")
+usethis::use_package("zip", min_version = "2.1.1")
 usethis::use_package("readr")
 usethis::use_package("stats")
 
-usethis::use_package("costmisc", min_version = "0.6.3")
+usethis::use_package("costmisc", min_version = "0.6.4")
 
 # Set GitHub remote
 desc::desc_set_remotes(c("technomics/costmisc",

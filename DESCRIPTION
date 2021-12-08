@@ -31,7 +31,7 @@ Imports:
     tibble (>= 2.0.0),
     purrr (>= 0.3.3),
     rlang (>= 0.4.2),
-    costmisc (>= 0.6.3),
+    costmisc (>= 0.6.4),
     stringr (>= 1.4.0),
     lubridate,
     glue (>= 1.4.1),
@@ -39,7 +39,8 @@ Imports:
     janitor (>= 2.1.0),
     readr,
     stats,
-    tidyselect (>= 1.1.0)
+    tidyselect (>= 1.1.0),
+    zip (>= 2.1.1)
 RdMacros: 
     lifecycle
 Depends: 
