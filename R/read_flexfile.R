@@ -59,13 +59,16 @@ read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_
   # coerce to the data model data types if desired
   if (.coerce_spec) table_list <- coerce_to_spec(table_list, table_spec)
 
-  # convert to snake_case (done after the coercing)
-  table_list <- add_missing_spec_cols(table_list, table_spec, new_name = "snake_name")
+  # # convert to snake_case (done after the coercing)
+  # table_list <- add_missing_spec_cols(table_list, table_spec, new_name = "snake_name")
+  #
+  # # clean up table names
+  # clean_table_names <- rlang::set_names(table_spec$tables$snake_table,
+  #                                       table_spec$tables$table)
+  # names(table_list) <- clean_table_names[names(table_list)]
 
-  # clean up table names
-  clean_table_names <- rlang::set_names(table_spec$tables$snake_table,
-                                        table_spec$tables$table)
-  names(table_list) <- clean_table_names[names(table_list)]
+  # convert tables and fields to snake_case (done after the coercing)
+  table_list <- data_model_to_snake(table_list, table_spec)
 
   fileinfo <- list(path = normalizePath(dirname(file), winslash = "/"),
                    name = sub(".zip$", "", basename(file)),

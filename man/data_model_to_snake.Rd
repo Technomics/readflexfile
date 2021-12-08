@@ -15,7 +15,8 @@ snake_to_data_model(table_list, table_spec)
 \item{table_spec}{Data model specification object.}
 }
 \description{
-\code{data_model_to_snake()} renames from the data model notation to snake_case.\cr
+\code{data_model_to_snake()} renames from the data model notation to snake_case. This
+function will also add any missing columns from the spec to the model. \cr
 \cr
 Note that this function set may move to another location in a future version.
 

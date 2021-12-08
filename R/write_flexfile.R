@@ -13,15 +13,26 @@ write_flexfile <- function(x, file) {
 
   if (is_flexfile(x)) {
     file_type <- "CSDR_COST_HOUR_REPORT/1.0"
+    table_spec <- readflexfile::flexfile_spec
   } else if (is_quantityreport(x)) {
     file_type <- "CSDR_QUANTITY_REPORT/1.0"
+    table_spec <- readflexfile::quantitydata_spec
   } else {
     stop("'x' must be an object of class 'flexfile' or 'quantityreport'.")
   }
 
-  ff <- costmisc::write_json_zip(x, file, na = "null")
+  data_model <- snake_to_data_model(x, table_spec)
 
-  invisible(append_textfile_zip(ff, "FileType.txt", file_type))
+  # remove columns which are all NA
+  data_model_pruned <- purrr::map(data_model, ~ purrr::discard(.x, ~ all(is.na(.x))))
+
+  # write the json package
+  ff <- costmisc::write_json_zip(data_model_pruned, file, na = "null")
+
+  # write the file type
+  ff <- append_textfile_zip(ff, "FileType.txt", file_type)
+
+  invisible(ff)
 }
 
 #' @keywords internal
