@@ -11,9 +11,6 @@ write_flexfile(x, file)
 
 \item{file}{Path to a FlexFile or Quantity Report .zip archive.}
 }
-\value{
-
-}
 \description{
 \code{write_flexfile()} writes a list of tibbles into a zip folder of JSON files.
 Each tibble corresponds to its respective JSON table. This function can write both a FlexFile
