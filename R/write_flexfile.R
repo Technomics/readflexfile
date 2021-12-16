@@ -16,7 +16,7 @@ write_flexfile <- function(x, file) {
     table_spec <- readflexfile::flexfile_spec
   } else if (is_quantityreport(x)) {
     file_type <- "CSDR_QUANTITY_REPORT/1.0"
-    table_spec <- readflexfile::quantitydata_spec
+    table_spec <- readflexfile::quantity_spec
   } else {
     stop("'x' must be an object of class 'flexfile' or 'quantityreport'.")
   }
