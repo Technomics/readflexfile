@@ -1,9 +1,10 @@
 # readflexfile (development version)
 
 * Added in a new function `normalize_functional_categories()`. This function will add the standard functional categories to the `actualcosthourdata` and `forecastatcompletioncosthourdata` tables when the detailed functional categories are provided. This functionality always occurred when flattening the data using `flatten_data()`, but is now exported as its own function to support other use cases.
-* Added in a new function `apply_flexfile()`. This function allows you to apply a function over a single or a list of flexfiles. This provides a convenient way to apply a function without knowing in advance whether the input is a single object of type 'flexfile' or a list of objects. The function is used internally with functions such as \code{allocate_flexfile()} but is now exported to the user.
+* Added in a new function `apply_flexfile()`. This function allows you to apply a function over a single or a list of flexfiles. This provides a convenient way to apply a function without knowing in advance whether the input is a single object of type 'flexfile' or a list of objects. The function is used internally with functions such as `allocate_flexfile()` but is now exported to the user.
 * Added in a new function `write_flexfile()`. This function will write an object of class 'flexfile' or 'quantityreport' into the zipped collected of JSON files.
 * Added in two new functions (`data_model_to_snake()` and `snake_to_data_model()`) to interchange between naming conventions (native data model notation and snake_case). Note that the formal S3 object at this time must still remain in snake_case or else the downstream functions will not know what to do. Future iterations may support either case.
+* Updated the `as_*()` functions so that missing fields and tables are added into the model during the coercion.
 
 # readflexfile 0.3.2
 

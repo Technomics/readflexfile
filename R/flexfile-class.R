@@ -63,7 +63,11 @@ as_flexfile <- function(x, allocated = FALSE, rolledup = FALSE, .show_check = TR
 
   check <- check_spec(x, table_spec, file_type, .silent = isFALSE(.show_check))
 
-  new_flexfile(x, allocated = allocated, rolledup = rolledup)
+  # add missing tables and columns and create flexfile object
+  x %>%
+    add_missing_spec_tables(table_spec, check) %>%
+    add_missing_spec_cols(table_spec, new_name = "field") %>%
+    new_flexfile(allocated = allocated, rolledup = rolledup)
 }
 
 #' is_flexfile_list

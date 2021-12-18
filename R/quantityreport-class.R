@@ -51,7 +51,11 @@ as_quantityreport <- function(x, .show_check = TRUE) {
 
   check <- check_spec(x, table_spec, file_type, .silent = isFALSE(.show_check))
 
-  new_quantityreport(x)
+  # add missing tables and columns and create quantityreport object
+  x %>%
+    add_missing_spec_tables(table_spec, check) %>%
+    add_missing_spec_cols(table_spec, new_name = "field") %>%
+    new_quantityreport()
 }
 
 #' is_quantityreport_list
