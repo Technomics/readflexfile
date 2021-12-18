@@ -111,12 +111,19 @@ duplicated_report <- function(x) {
 ## ===== Internal FlexFile Helpers =====
 
 #' @keywords internal
+flatten_metadata <- function(x) {
+
+  # single row metadata
+  x$reportmetadata %>%
+    dplyr::select(.data$program_name, .data$approved_plan_number, .data$approved_plan_revision_number,
+                  .data$submission_event_number, .data$resubmission_number, .data$reporting_organization_organization_name)
+}
+
+#' @keywords internal
 flatten_actuals <- function(x)  {
 
   # single row metadata
-  meta <- x$reportmetadata %>%
-    dplyr::select(.data$program_name, .data$approved_plan_number, .data$approved_plan_revision_number,
-                  .data$submission_event_number, .data$resubmission_number, .data$reporting_organization_organization_name)
+  meta <- flatten_metadata(x)
 
   # join in all of the information
   # note: the order matters! for example unitsorsublots must come before end_item and order_or_lot
@@ -181,7 +188,11 @@ flatten_forecasts <- function(x) {
 
   if (nrow(x$forecastatcompletioncosthourdata) > 0) {
 
+    # single row metadata
+    meta <- flatten_metadata(x)
+
     x$forecastatcompletioncosthourdata %>%
+      tibble::add_column(!!!meta, .before = 1) %>%
       dplyr::left_join(dplyr::select(x$ordersorlots,
                                      order_or_lot_id = .data$id,
                                      order_or_lot_name = .data$name),
