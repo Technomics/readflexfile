@@ -57,7 +57,7 @@ as_quantityreport <- function(x, .show_check = TRUE) {
     add_missing_spec_tables(table_spec_mod, check) %>%
     add_missing_spec_cols(table_spec_mod, new_name = "field") %>%
     drop_na_optional_spec_tables(table_spec) %>%
-    new_flexfile(allocated = allocated, rolledup = rolledup)
+    new_quantityreport()
 }
 
 #' is_quantityreport_list
