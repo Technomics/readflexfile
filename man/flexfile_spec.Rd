@@ -26,7 +26,7 @@ A list containing two data frames: \code{fields} and \code{tables}.
 
 \section{fields}{
 
-\code{fields} is a data frame with 171 rows and 8 variables:
+\code{fields} is a data frame with 171 rows and 9 variables:
 \describe{
 \item{table}{The table name in the specification}
 \item{field}{The field name in the specification}
@@ -36,6 +36,7 @@ A list containing two data frames: \code{fields} and \code{tables}.
 \item{pk}{Boolean if the field is a primary key}
 \item{fk_table}{Foreign key constraint table, if applicable}
 \item{fk_field}{Foreign key constraint field, if applicable}
+\item{optional}{Boolean if the field is optional or not}
 }
 }
 

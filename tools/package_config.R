@@ -111,5 +111,6 @@ files <- system.file("extdata", package = "flexample")
 flexfiles <- read_folder(files, read_flexfile)
 
 flexfile %>%
-  normalize_functional_categories()
+  normalize_functional_categories() %>%
+  flatten_data()
 

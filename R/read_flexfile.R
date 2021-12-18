@@ -70,6 +70,9 @@ read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_
   # convert tables and fields to snake_case (done after the coercing)
   table_list <- data_model_to_snake(table_list, table_spec)
 
+  # remove optional fields
+  table_list <- drop_na_optional_spec_tables(table_list, table_spec)
+
   fileinfo <- list(path = normalizePath(dirname(file), winslash = "/"),
                    name = sub(".zip$", "", basename(file)),
                    name_ext = basename(file))

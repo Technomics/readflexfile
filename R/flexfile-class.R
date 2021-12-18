@@ -67,6 +67,7 @@ as_flexfile <- function(x, allocated = FALSE, rolledup = FALSE, .show_check = TR
   x %>%
     add_missing_spec_tables(table_spec, check) %>%
     add_missing_spec_cols(table_spec, new_name = "field") %>%
+    drop_na_optional_spec_tables(table_spec) %>%
     new_flexfile(allocated = allocated, rolledup = rolledup)
 }
 

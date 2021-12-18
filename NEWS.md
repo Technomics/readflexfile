@@ -5,6 +5,7 @@
 * Added in a new function `write_flexfile()`. This function will write an object of class 'flexfile' or 'quantityreport' into the zipped collected of JSON files.
 * Added in two new functions (`data_model_to_snake()` and `snake_to_data_model()`) to interchange between naming conventions (native data model notation and snake_case). Note that the formal S3 object at this time must still remain in snake_case or else the downstream functions will not know what to do. Future iterations may support either case.
 * Updated the `as_*()` functions so that missing fields and tables are added into the model during the coercion.
+* Optional tables (i.e., the Tags) will not be included in the data model if they are empty (#31).
 
 # readflexfile 0.3.2
 
