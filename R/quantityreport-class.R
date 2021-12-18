@@ -40,23 +40,24 @@ as_quantityreport <- function(x, .show_check = TRUE) {
 
   file_type = "Quantity"
   table_spec <- readflexfile::quantity_spec
+  table_spec_mod <- table_spec
 
-  table_spec$fields <- table_spec$fields %>%
+  table_spec_mod$fields <- table_spec$fields %>%
     dplyr::left_join(dplyr::select(table_spec$tables, .data$table, .data$snake_table), by = "table") %>%
     dplyr::mutate(table = .data$snake_table,
                   field = .data$snake_name)
 
-  table_spec$tables <- table_spec$tables %>%
+  table_spec_mod$tables <- table_spec$tables %>%
     dplyr::mutate(table = .data$snake_table)
 
-  check <- check_spec(x, table_spec, file_type, .silent = isFALSE(.show_check))
+  check <- check_spec(x, table_spec_mod, file_type, .silent = isFALSE(.show_check))
 
   # add missing tables and columns and create quantityreport object
   x %>%
-    add_missing_spec_tables(table_spec, check) %>%
-    add_missing_spec_cols(table_spec, new_name = "field") %>%
+    add_missing_spec_tables(table_spec_mod, check) %>%
+    add_missing_spec_cols(table_spec_mod, new_name = "field") %>%
     drop_na_optional_spec_tables(table_spec) %>%
-    new_quantityreport()
+    new_flexfile(allocated = allocated, rolledup = rolledup)
 }
 
 #' is_quantityreport_list
