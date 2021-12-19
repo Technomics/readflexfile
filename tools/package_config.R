@@ -114,3 +114,7 @@ flexfile %>%
   normalize_functional_categories() %>%
   flatten_data()
 
+flexfile %>%
+  snake_to_data_model(flexfile_spec) %>%
+  data_model_to_snake(flexfile_spec)
+

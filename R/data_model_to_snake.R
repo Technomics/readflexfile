@@ -42,7 +42,7 @@ snake_to_data_model <- function(table_list, table_spec) {
     new_names <- rlang::set_names(field_spec$snake_name, field_spec$field)
 
     table %>%
-      dplyr::rename(tidyselect::all_of(new_names))
+      dplyr::rename(tidyselect::any_of(new_names))
   }
 
   # clean up table names
