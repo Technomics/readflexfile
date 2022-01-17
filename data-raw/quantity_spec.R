@@ -4,7 +4,7 @@ library(magrittr)
 
 quantity_tables <- readxl::read_excel("data-raw/quantity-tables.xlsx",
                                       sheet = "tables",
-                                      col_types = rep("text", 4))
+                                      col_types = c(rep("text", 4), "logical"))
 
 quantity_fields <- readxl::read_excel("data-raw/quantity-tables.xlsx",
                                       sheet = "fields",

@@ -14,6 +14,7 @@
 #' @name flexfile_class
 #'
 #' @param x An object to test or coerce to type 'flexfile'.
+#' @param names_case Case of the object being passed in.
 #' @param allocated Logical whether the flexfile has been allocated.
 #' @param rolledup Logical whether the flexfile WBS has been rolled up.
 #' @param .show_check Logical whether or not to show results from the check against
@@ -48,11 +49,20 @@ is_flexfile <- function(x) {
 #' @rdname flexfile_class
 #'
 #' @export
-as_flexfile <- function(x, allocated = FALSE, rolledup = FALSE, .show_check = TRUE) {
+as_flexfile <- function(x, names_case = c("snake_case", "data_model"),
+                        allocated = FALSE, rolledup = FALSE, .show_check = TRUE) {
+
+  names_case <- names_case[1]
 
   file_type = "FlexFile"
   table_spec <- readflexfile::flexfile_spec
   table_spec_mod <- table_spec
+
+  if (names_case == "data_model") {
+    x <- x %>%
+      coerce_to_spec(table_spec) %>%
+      data_model_to_snake(table_spec)
+  }
 
   table_spec_mod$fields <- table_spec$fields %>%
     dplyr::left_join(dplyr::select(table_spec$tables, .data$table, .data$snake_table), by = "table") %>%

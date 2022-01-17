@@ -4,7 +4,7 @@ library(magrittr)
 
 flexfile_tables <- readxl::read_excel("data-raw/flexfile-tables.xlsx",
                                       sheet = "tables",
-                                      col_types = rep("text", 4))
+                                      col_types = c(rep("text", 4), "logical"))
 
 flexfile_fields <- readxl::read_excel("data-raw/flexfile-tables.xlsx",
                                       sheet = "fields",

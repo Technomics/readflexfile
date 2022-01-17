@@ -36,11 +36,17 @@ is_quantityreport <- function(x) {
 #' @rdname quantityreport_class
 #'
 #' @export
-as_quantityreport <- function(x, .show_check = TRUE) {
+as_quantityreport <- function(x, names_case = c("snake_case", "data_model"), .show_check = TRUE) {
 
   file_type = "Quantity"
   table_spec <- readflexfile::quantity_spec
   table_spec_mod <- table_spec
+
+  if (names_case == "data_model") {
+    x <- x %>%
+      coerce_to_spec(table_spec) %>%
+      data_model_to_snake(table_spec)
+  }
 
   table_spec_mod$fields <- table_spec$fields %>%
     dplyr::left_join(dplyr::select(table_spec$tables, .data$table, .data$snake_table), by = "table") %>%

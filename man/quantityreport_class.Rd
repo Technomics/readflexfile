@@ -9,12 +9,18 @@
 \usage{
 is_quantityreport(x)
 
-as_quantityreport(x, .show_check = TRUE)
+as_quantityreport(
+  x,
+  names_case = c("snake_case", "data_model"),
+  .show_check = TRUE
+)
 
 is_quantityreport_list(x)
 }
 \arguments{
 \item{x}{An object to test or coerce to type 'quantityreport'.}
+
+\item{names_case}{Case of the object being passed in.}
 
 \item{.show_check}{Logical whether or not to show results from the check against
 the file specification}

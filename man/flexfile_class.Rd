@@ -9,12 +9,20 @@
 \usage{
 is_flexfile(x)
 
-as_flexfile(x, allocated = FALSE, rolledup = FALSE, .show_check = TRUE)
+as_flexfile(
+  x,
+  names_case = c("snake_case", "data_model"),
+  allocated = FALSE,
+  rolledup = FALSE,
+  .show_check = TRUE
+)
 
 is_flexfile_list(x)
 }
 \arguments{
 \item{x}{An object to test or coerce to type 'flexfile'.}
+
+\item{names_case}{Case of the object being passed in.}
 
 \item{allocated}{Logical whether the flexfile has been allocated.}
 

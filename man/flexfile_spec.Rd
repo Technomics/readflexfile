@@ -15,12 +15,13 @@ A list containing two data frames: \code{fields} and \code{tables}.
 }
 \section{tables}{
 
-\code{tables} is a data frame with 29 rows and 4 variables:
+\code{tables} is a data frame with 29 rows and 5 variables:
 \describe{
 \item{table}{The table name in the specification}
 \item{entity}{The entity name in the specification}
 \item{snake_table}{A snake_case version of table}
 \item{type}{Either submission or enumeration}
+\item{is_scalar}{Boolean whether the table is a list of scalars or a data table}
 }
 }
 

@@ -23,11 +23,25 @@ write_flexfile <- function(x, file) {
 
   data_model <- snake_to_data_model(x, table_spec)
 
-  # remove columns which are all NA
-  data_model_pruned <- purrr::map(data_model, ~ purrr::discard(.x, ~ all(is.na(.x))))
+  # make sure all fields are in the data model (will become null)
+  # convert dates to strings
+  # remove empty tables
+  data_model_pruned <- data_model %>%
+    #add_missing_spec_cols(table_spec, new_name = "field") %>%
+    purrr::modify(purrr::modify_if, lubridate::is.Date, as.character) %>%
+    #purrr::map(~ purrr::discard(.x, ~ all(is.na(.x)))) %>%
+    purrr::discard(~ nrow(.) == 0)
+
+  # convert any scalar tables into lists
+  scalar_tables <- table_spec$tables %>%
+    dplyr::filter(.data$is_scalar) %>%
+    dplyr::pull(.data$table)
+
+  # unbox will safely convert the tables to scalars
+  data_model_final <- purrr::map_at(data_model_pruned, scalar_tables, jsonlite::unbox)
 
   # write the json package
-  ff <- costmisc::write_json_zip(data_model_pruned, file, na = "null")
+  ff <- costmisc::write_json_zip(data_model_final, file, na = "null", pretty = TRUE)
 
   # write the file type
   ff <- append_textfile_zip(ff, "FileType.txt", file_type)
