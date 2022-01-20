@@ -18,7 +18,8 @@
 #' @param allocated Logical whether the flexfile has been allocated.
 #' @param rolledup Logical whether the flexfile WBS has been rolled up.
 #' @param .show_check Logical whether or not to show results from the check against
-#' the file specification
+#' the file specification.
+#' @inheritParams read_flexfile
 #'
 NULL
 
@@ -50,7 +51,7 @@ is_flexfile <- function(x) {
 #'
 #' @export
 as_flexfile <- function(x, names_case = c("snake_case", "data_model"),
-                        allocated = FALSE, rolledup = FALSE, .show_check = TRUE) {
+                        allocated = FALSE, rolledup = FALSE, .drop_optional = TRUE, .show_check = TRUE) {
 
   names_case <- names_case[1]
 
@@ -75,11 +76,13 @@ as_flexfile <- function(x, names_case = c("snake_case", "data_model"),
   check <- check_spec(x, table_spec_mod, file_type, .silent = isFALSE(.show_check))
 
   # add missing tables and columns and create flexfile object
-  x %>%
+  x <- x %>%
     add_missing_spec_tables(table_spec_mod, check) %>%
-    add_missing_spec_cols(table_spec_mod, new_name = "field") %>%
-    drop_na_optional_spec_tables(table_spec) %>%
-    new_flexfile(allocated = allocated, rolledup = rolledup)
+    add_missing_spec_cols(table_spec_mod, new_name = "field")
+
+  if (.drop_optional) x <- drop_na_optional_spec_tables(x, table_spec)
+
+  new_flexfile(x, allocated = allocated, rolledup = rolledup)
 }
 
 #' is_flexfile_list

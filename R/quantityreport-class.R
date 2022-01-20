@@ -36,7 +36,8 @@ is_quantityreport <- function(x) {
 #' @rdname quantityreport_class
 #'
 #' @export
-as_quantityreport <- function(x, names_case = c("snake_case", "data_model"), .show_check = TRUE) {
+as_quantityreport <- function(x, names_case = c("snake_case", "data_model"),
+                              .drop_optional = TRUE, .show_check = TRUE) {
 
   file_type = "Quantity"
   table_spec <- readflexfile::quantity_spec
@@ -59,11 +60,13 @@ as_quantityreport <- function(x, names_case = c("snake_case", "data_model"), .sh
   check <- check_spec(x, table_spec_mod, file_type, .silent = isFALSE(.show_check))
 
   # add missing tables and columns and create quantityreport object
-  x %>%
+  x <- x %>%
     add_missing_spec_tables(table_spec_mod, check) %>%
-    add_missing_spec_cols(table_spec_mod, new_name = "field") %>%
-    drop_na_optional_spec_tables(table_spec) %>%
-    new_quantityreport()
+    add_missing_spec_cols(table_spec_mod, new_name = "field")
+
+  if (.drop_optional) x <- drop_na_optional_spec_tables(x, table_spec)
+
+  new_quantityreport(x)
 }
 
 #' is_quantityreport_list
