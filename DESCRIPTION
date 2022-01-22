@@ -1,7 +1,7 @@
 Package: readflexfile
 Title: Read FlexFile data
 URL: https://github.com/Technomics/readflexfile
-Version: 0.3.2.9005
+Version: 0.3.2.9006
 Authors@R: 
     c(person(given = "Adam H.",
              family = "James",
