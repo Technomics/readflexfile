@@ -14,6 +14,7 @@ as_flexfile(
   names_case = c("snake_case", "data_model"),
   allocated = FALSE,
   rolledup = FALSE,
+  .drop_optional = TRUE,
   .show_check = TRUE
 )
 
@@ -28,8 +29,10 @@ is_flexfile_list(x)
 
 \item{rolledup}{Logical whether the flexfile WBS has been rolled up.}
 
+\item{.drop_optional}{Logical whether to drop optional columns or not.}
+
 \item{.show_check}{Logical whether or not to show results from the check against
-the file specification}
+the file specification.}
 }
 \description{
 Functions to help with with the 'flexfile' class type.

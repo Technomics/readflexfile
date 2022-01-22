@@ -5,12 +5,13 @@
 \alias{sfc_mapping}
 \title{Standard functional category mapping table}
 \format{
-\code{sfc_mapping} is a data frame with 26 rows and 4 variables:
+\code{sfc_mapping} is a data frame with 26 rows and 5 variables:
 \describe{
-\item{standard_category_id}{The standard category identifier}
-\item{standard_category}{The standard category}
-\item{detailed_standard_category_id}{The detailed category identifier}
-\item{ direct_or_overhead}{Either "direct" or "overhead"}
+\item{standard_category_id}{The standard category identifier.}
+\item{detailed_standard_category_id}{The detailed category identifier.}
+\item{functional_category}{The overarching functional category grouping.}
+\item{direct_or_overhead}{Either "direct" or "overhead".}
+\item{direct_or_overhead}{Either "labor", "material", or "other".}
 }
 }
 \usage{
