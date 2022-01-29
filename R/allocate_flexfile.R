@@ -8,21 +8,12 @@
 #' \cr
 #' Currently this is implemented for \code{allocation_method_type_id == "PERCENT"}.
 #'
+#' @inheritParams apply_flexfile
+#'
 #' @export
-#'
-#' @param flexfile A list of one or more FlexFiles imported through the \code{read_flexfile} function.
-#'
-#' @return A list of tibbles for the \code{file}.
-#'
 allocate_flexfile <- function(flexfile) {
 
-  if (is_flexfile(flexfile)) {
-    allocate_flexfile_single(flexfile)
-  } else if (is_flexfile_list(flexfile)) {
-    purrr::modify(flexfile, allocate_flexfile_single)
-  } else {
-    stop("One or more elements of 'flexfile' is not of class 'flexfile'")
-  }
+  apply_flexfile(flexfile, allocate_flexfile_single)
 
 }
 

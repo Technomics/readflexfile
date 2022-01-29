@@ -14,6 +14,7 @@
 #' @param .show_check Logical whether to print information about the file check to the console or not.
 #' @param .coerce_spec Logical whether to coerce all column data types to those from the data models.
 #' If \code{FALSE}, the types will be as detected upon read by the JSON parser.
+#' @param .drop_optional Logical whether to drop optional columns or not.
 #' @inheritParams costmisc::read_json_zip
 #'
 #' @return A list of tibbles for the \code{file}. Result will be either of class \code{flexfile} or
@@ -33,7 +34,7 @@
 #'
 #' flexfiles <- read_folder(folder, read_flexfile)
 #'}
-read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_bom = TRUE) {
+read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .drop_optional = TRUE, .warn_utf8_bom = TRUE) {
 
   # check the file type
   file_type <- check_filetype(file)
@@ -59,13 +60,19 @@ read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_
   # coerce to the data model data types if desired
   if (.coerce_spec) table_list <- coerce_to_spec(table_list, table_spec)
 
-  # convert to snake_case (done after the coercing)
-  table_list <- add_missing_spec_cols(table_list, table_spec, new_name = "snake_name")
+  # # convert to snake_case (done after the coercing)
+  # table_list <- add_missing_spec_cols(table_list, table_spec, new_name = "snake_name")
+  #
+  # # clean up table names
+  # clean_table_names <- rlang::set_names(table_spec$tables$snake_table,
+  #                                       table_spec$tables$table)
+  # names(table_list) <- clean_table_names[names(table_list)]
 
-  # clean up table names
-  clean_table_names <- rlang::set_names(table_spec$tables$snake_table,
-                                        table_spec$tables$table)
-  names(table_list) <- clean_table_names[names(table_list)]
+  # convert tables and fields to snake_case (done after the coercing)
+  table_list <- data_model_to_snake(table_list, table_spec)
+
+  # remove optional fields
+  if (.drop_optional) table_list <- drop_na_optional_spec_tables(table_list, table_spec)
 
   fileinfo <- list(path = normalizePath(dirname(file), winslash = "/"),
                    name = sub(".zip$", "", basename(file)),

@@ -3,16 +3,17 @@
 #' A list containing two data frames: \code{fields} and \code{tables}.
 #'
 #' @section tables:
-#' \code{tables} is a data frame with 13 rows and 4 variables:
+#' \code{tables} is a data frame with 13 rows and 5 variables:
 #' \describe{
 #'   \item{table}{The table name in the specification}
 #'   \item{entity}{The entity name in the specification}
 #'   \item{snake_table}{A snake_case version of table}
 #'   \item{type}{Either submission or enumeration}
+#'   \item{is_scalar}{Boolean whether the table is a list of scalars or a data table}
 #' }
 #'
 #' @section fields:
-#' \code{fields} is a data frame with 71 rows and 8 variables:
+#' \code{fields} is a data frame with 71 rows and 9 variables:
 #' \describe{
 #'   \item{table}{The table name in the specification}
 #'   \item{field}{The field name in the specification}
@@ -22,6 +23,7 @@
 #'   \item{pk}{Boolean if the field is a primary key}
 #'   \item{fk_table}{Foreign key constraint table, if applicable}
 #'   \item{fk_field}{Foreign key constraint field, if applicable}
+#'   \item{optional}{Boolean if the field is optional or not}
 #' }
 #'
 "quantity_spec"

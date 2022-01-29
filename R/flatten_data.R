@@ -52,29 +52,8 @@ flatten_data.flexfile <- function(x, .allocate = TRUE, ...) {
   x_allocated <- attr(x, "allocated")
   x_rolledup <- attr(x, "rolledup")
 
-  # selects all, but provides a quick safety net in case of changes
-  cats <- readflexfile::sfc_mapping %>%
-    dplyr::distinct(.data$standard_category_id, .data$detailed_standard_category_id, .data$direct_or_overhead) %>%
-    dplyr::mutate(detailed_standard_category_id = as.character(.data$detailed_standard_category_id))
-
-  dir_oh <- readflexfile::sfc_mapping %>%
-    dplyr::distinct(.data$standard_category_id, .data$direct_or_overhead)
-
-  # function to join in the sfc category
-  join_sfc <- function(the_table) {
-    the_table %>%
-      dplyr::mutate(detailed_standard_category_id = as.character(.data$detailed_standard_category_id)) %>%
-      dplyr::left_join(cats, by = "detailed_standard_category_id", suffix = c("", "_sfc")) %>%
-      dplyr::mutate(standard_category_id = dplyr::coalesce(.data$standard_category_id,
-                                                           .data$standard_category_id_sfc)) %>%
-      dplyr::select(-.data$direct_or_overhead, -.data$standard_category_id_sfc) %>%
-      dplyr::left_join(dir_oh, by = "standard_category_id")
-  }
-
-  join_sfc_tables <- c("actualcosthourdata", "forecastatcompletioncosthourdata")
-
-  # for the tables where relevant, join in the sfc mappings
-  flexfile_sfc <- purrr::modify_at(x, join_sfc_tables, join_sfc)
+  # join in the sfc mappings
+  flexfile_sfc <- normalize_functional_categories(x, direct_or_oh_mapping = TRUE)
 
   actuals <- flatten_actuals(flexfile_sfc)
   forecasts <- flatten_forecasts(flexfile_sfc)
@@ -132,12 +111,19 @@ duplicated_report <- function(x) {
 ## ===== Internal FlexFile Helpers =====
 
 #' @keywords internal
+flatten_metadata <- function(x) {
+
+  # single row metadata
+  x$reportmetadata %>%
+    dplyr::select(.data$program_name, .data$approved_plan_number, .data$approved_plan_revision_number,
+                  .data$submission_event_number, .data$resubmission_number, .data$reporting_organization_organization_name)
+}
+
+#' @keywords internal
 flatten_actuals <- function(x)  {
 
   # single row metadata
-  meta <- x$reportmetadata %>%
-    dplyr::select(.data$program_name, .data$approved_plan_number, .data$approved_plan_revision_number,
-                  .data$submission_event_number, .data$resubmission_number, .data$reporting_organization_organization_name)
+  meta <- flatten_metadata(x)
 
   # join in all of the information
   # note: the order matters! for example unitsorsublots must come before end_item and order_or_lot
@@ -202,7 +188,11 @@ flatten_forecasts <- function(x) {
 
   if (nrow(x$forecastatcompletioncosthourdata) > 0) {
 
+    # single row metadata
+    meta <- flatten_metadata(x)
+
     x$forecastatcompletioncosthourdata %>%
+      tibble::add_column(!!!meta, .before = 1) %>%
       dplyr::left_join(dplyr::select(x$ordersorlots,
                                      order_or_lot_id = .data$id,
                                      order_or_lot_name = .data$name),

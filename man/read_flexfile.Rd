@@ -8,6 +8,7 @@ read_flexfile(
   file,
   .show_check = FALSE,
   .coerce_spec = TRUE,
+  .drop_optional = TRUE,
   .warn_utf8_bom = TRUE
 )
 }
@@ -18,6 +19,8 @@ read_flexfile(
 
 \item{.coerce_spec}{Logical whether to coerce all column data types to those from the data models.
 If \code{FALSE}, the types will be as detected upon read by the JSON parser.}
+
+\item{.drop_optional}{Logical whether to drop optional columns or not.}
 
 \item{.warn_utf8_bom}{Logical whether to report UTF8 byte-order-mark errors.}
 }

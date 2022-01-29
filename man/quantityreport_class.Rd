@@ -9,15 +9,24 @@
 \usage{
 is_quantityreport(x)
 
-as_quantityreport(x, .show_check = TRUE)
+as_quantityreport(
+  x,
+  names_case = c("snake_case", "data_model"),
+  .drop_optional = TRUE,
+  .show_check = TRUE
+)
 
 is_quantityreport_list(x)
 }
 \arguments{
 \item{x}{An object to test or coerce to type 'quantityreport'.}
 
+\item{names_case}{Case of the object being passed in.}
+
+\item{.drop_optional}{Logical whether to drop optional columns or not.}
+
 \item{.show_check}{Logical whether or not to show results from the check against
-the file specification}
+the file specification.}
 }
 \description{
 Functions to help with with the 'quantityreport' class type.

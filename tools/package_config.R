@@ -42,10 +42,12 @@ usethis::use_package("lifecycle", min_version = "1.0.0")
 usethis::use_package("magrittr")
 usethis::use_package("lubridate")
 usethis::use_package("janitor", min_version = "2.1.0")
+usethis::use_package("zip", min_version = "2.1.1")
+usethis::use_package("jsonlite", min_version = "1.7.2")
 usethis::use_package("readr")
 usethis::use_package("stats")
 
-usethis::use_package("costmisc", min_version = "0.6.3")
+usethis::use_package("costmisc", min_version = "0.6.4")
 
 # Set GitHub remote
 desc::desc_set_remotes(c("technomics/costmisc",
@@ -108,4 +110,12 @@ flexfile <- read_flexfile(file)
 # multiple files
 files <- system.file("extdata", package = "flexample")
 flexfiles <- read_folder(files, read_flexfile)
+
+flexfile %>%
+  normalize_functional_categories() %>%
+  flatten_data()
+
+flexfile %>%
+  snake_to_data_model(flexfile_spec) %>%
+  data_model_to_snake(flexfile_spec)
 

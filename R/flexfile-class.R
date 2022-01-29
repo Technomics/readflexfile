@@ -14,10 +14,12 @@
 #' @name flexfile_class
 #'
 #' @param x An object to test or coerce to type 'flexfile'.
+#' @param names_case Case of the object being passed in.
 #' @param allocated Logical whether the flexfile has been allocated.
 #' @param rolledup Logical whether the flexfile WBS has been rolled up.
 #' @param .show_check Logical whether or not to show results from the check against
-#' the file specification
+#' the file specification.
+#' @inheritParams read_flexfile
 #'
 NULL
 
@@ -48,20 +50,37 @@ is_flexfile <- function(x) {
 #' @rdname flexfile_class
 #'
 #' @export
-as_flexfile <- function(x, allocated = FALSE, rolledup = FALSE, .show_check = TRUE) {
+as_flexfile <- function(x, names_case = c("snake_case", "data_model"),
+                        allocated = FALSE, rolledup = FALSE, .drop_optional = TRUE, .show_check = TRUE) {
+
+  names_case <- names_case[1]
 
   file_type = "FlexFile"
   table_spec <- readflexfile::flexfile_spec
+  table_spec_mod <- table_spec
 
-  table_spec$fields <- table_spec$fields %>%
+  if (names_case == "data_model") {
+    x <- x %>%
+      coerce_to_spec(table_spec) %>%
+      data_model_to_snake(table_spec)
+  }
+
+  table_spec_mod$fields <- table_spec$fields %>%
     dplyr::left_join(dplyr::select(table_spec$tables, .data$table, .data$snake_table), by = "table") %>%
     dplyr::mutate(table = .data$snake_table,
                   field = .data$snake_name)
 
-  table_spec$tables <- table_spec$tables %>%
+  table_spec_mod$tables <- table_spec$tables %>%
     dplyr::mutate(table = .data$snake_table)
 
-  check <- check_spec(x, table_spec, file_type, .silent = isFALSE(.show_check))
+  check <- check_spec(x, table_spec_mod, file_type, .silent = isFALSE(.show_check))
+
+  # add missing tables and columns and create flexfile object
+  x <- x %>%
+    add_missing_spec_tables(table_spec_mod, check) %>%
+    add_missing_spec_cols(table_spec_mod, new_name = "field")
+
+  if (.drop_optional) x <- drop_na_optional_spec_tables(x, table_spec)
 
   new_flexfile(x, allocated = allocated, rolledup = rolledup)
 }
