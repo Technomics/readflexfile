@@ -43,6 +43,7 @@ usethis::use_package("magrittr")
 usethis::use_package("lubridate")
 usethis::use_package("janitor", min_version = "2.1.0")
 usethis::use_package("zip", min_version = "2.1.1")
+usethis::use_package("jsonlite", min_version = "1.7.2")
 usethis::use_package("readr")
 usethis::use_package("stats")
 

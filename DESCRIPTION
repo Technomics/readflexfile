@@ -1,7 +1,7 @@
 Package: readflexfile
 Title: Read FlexFile data
 URL: https://github.com/Technomics/readflexfile
-Version: 0.3.2.9006
+Version: 0.4.0
 Authors@R: 
     c(person(given = "Adam H.",
              family = "James",
@@ -40,7 +40,8 @@ Imports:
     readr,
     stats,
     tidyselect (>= 1.1.0),
-    zip (>= 2.1.1)
+    zip (>= 2.1.1),
+    jsonlite (>= 1.7.2)
 RdMacros: 
     lifecycle
 Depends: 

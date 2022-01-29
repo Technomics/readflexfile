@@ -1,4 +1,4 @@
-# readflexfile (development version)
+# readflexfile 0.4.0
 
 * Added in a new function `normalize_functional_categories()`. This function will add the standard functional categories to the `actualcosthourdata` and `forecastatcompletioncosthourdata` tables when the detailed functional categories are provided. This functionality always occurred when flattening the data using `flatten_data()`, but is now exported as its own function to support other use cases.
 * Added in a new function `apply_flexfile()`. This function allows you to apply a function over a single or a list of flexfiles. This provides a convenient way to apply a function without knowing in advance whether the input is a single object of type 'flexfile' or a list of objects. The function is used internally with functions such as `allocate_flexfile()` but is now exported to the user.
