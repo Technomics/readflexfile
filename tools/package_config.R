@@ -119,3 +119,13 @@ flexfile %>%
   snake_to_data_model(flexfile_spec) %>%
   data_model_to_snake(flexfile_spec)
 
+#############
+z <- change_case(flexfile, flexfile_spec, "snake")
+
+change_case(z, flexfile_spec, NULL, "snake", FALSE)
+
+ff_3pt <- change_case(flexfile, flexfile_spec, "snake", "excel_3part")
+
+split_3pt_tables <- flexfile_spec$tables %>%
+  split(.$excel_3part) %>%
+  purrr::map(~ ff_3pt[.x$excel_3part_table])
