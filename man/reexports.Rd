@@ -5,8 +5,8 @@
 \alias{reexports}
 \alias{flatten_data}
 \alias{read_folder}
-\alias{add_id_col}
-\alias{listindex_to_col}
+\alias{data_model_to_snake}
+\alias{snake_to_data_model}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -14,6 +14,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{costmisc}{\code{\link[costmisc]{add_id_col}}, \code{\link[costmisc]{flatten_data}}, \code{\link[costmisc:add_id_col]{listindex_to_col}}, \code{\link[costmisc]{read_folder}}}
+  \item{costmisc}{\code{\link[costmisc:change_case_from_spec]{data_model_to_snake}}, \code{\link[costmisc]{flatten_data}}, \code{\link[costmisc]{read_folder}}, \code{\link[costmisc:change_case_from_spec]{snake_to_data_model}}}
 }}
 

@@ -1,3 +1,8 @@
+# readflexfile (development version)
+
+* Removed `add_id_col()` and `listindex_to_col()` re-exports from `costmisc` which were required for the legacy workflow.
+* Moved `data_model_to_snake()` and `snake_to_data_model()` to `costmisc` and re-exported. Added a more general `change_case_from_spec()` to costmisc as well, also re-exported in `readflexfile`.
+
 # readflexfile 0.4.0
 
 * Added in a new function `normalize_functional_categories()`. This function will add the standard functional categories to the `actualcosthourdata` and `forecastatcompletioncosthourdata` tables when the detailed functional categories are provided. This functionality always occurred when flattening the data using `flatten_data()`, but is now exported as its own function to support other use cases.
