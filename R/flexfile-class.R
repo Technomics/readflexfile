@@ -73,7 +73,9 @@ as_flexfile <- function(x, names_case = c("snake_case", "data_model"),
   table_spec_mod$tables <- table_spec$tables %>%
     dplyr::mutate(table = .data$snake_table)
 
-  check <- costmisc::check_spec(x, table_spec_mod, file_type, .silent = isFALSE(.show_check))
+  check <- costmisc::check_spec(x, table_spec_mod, file_type,
+                                .silent = isFALSE(.show_check),
+                                .include_table_type = "submission")
 
   # add missing tables and columns and create flexfile object
   x <- x %>%

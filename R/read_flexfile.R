@@ -153,25 +153,22 @@ read_flexfile_3part <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
 spec_cleanup <- function(table_list, table_spec, file_type,
                          .show_check, .coerce_spec, .drop_optional, .fn_date) {
 
-  # only check for the submission tables (not enums)
-  table_spec_mod <- table_spec
-  table_spec_mod$tables <- table_spec_mod$tables %>%
-    dplyr::filter(.data$type == "submission")
-
   # check file against the spec
-  check <- costmisc::check_spec(table_list, table_spec_mod, file_type, .silent = isFALSE(.show_check))
+  check <- costmisc::check_spec(table_list, table_spec, file_type,
+                                .silent = isFALSE(.show_check),
+                                .include_table_type = "submission")
 
-  table_list <- costmisc::add_missing_spec_tables(table_list, table_spec_mod, check)
-  table_list <- costmisc::add_missing_spec_cols(table_list, table_spec_mod, new_name = "field")
+  table_list <- costmisc::add_missing_spec_tables(table_list, table_spec, check)
+  table_list <- costmisc::add_missing_spec_cols(table_list, table_spec, new_name = "field")
 
   # coerce to the data model data types if desired
-  if (.coerce_spec) table_list <- costmisc::coerce_to_spec(table_list, table_spec_mod, .fn_date)
+  if (.coerce_spec) table_list <- costmisc::coerce_to_spec(table_list, table_spec, .fn_date)
 
   # convert tables and fields to snake_case (done after the coercing)
-  table_list <- data_model_to_snake(table_list, table_spec_mod)
+  table_list <- data_model_to_snake(table_list, table_spec)
 
   # remove optional fields
-  if (.drop_optional) table_list <- drop_na_optional_spec_tables(table_list, table_spec_mod)
+  if (.drop_optional) table_list <- drop_na_optional_spec_tables(table_list, table_spec)
 
   table_list
 

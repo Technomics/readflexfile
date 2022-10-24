@@ -3,7 +3,7 @@
 #' A list containing two data frames: \code{fields} and \code{tables}.
 #'
 #' @section tables:
-#' \code{tables} is a data frame with 20 rows and 5 variables:
+#' \code{tables} is a data frame with 29 rows and 5 variables:
 #' \describe{
 #'   \item{table}{The table name in the specification}
 #'   \item{entity}{The entity name in the specification}
@@ -15,7 +15,7 @@
 #' }
 #'
 #' @section fields:
-#' \code{fields} is a data frame with 153 rows and 10 variables:
+#' \code{fields} is a data frame with 171 rows and 10 variables:
 #' \describe{
 #'   \item{table}{The table name in the specification}
 #'   \item{field}{The field name in the specification}

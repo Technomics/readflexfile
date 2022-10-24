@@ -43,7 +43,6 @@ A list containing two data frames: \code{fields} and \code{tables}.
 
 \seealso{
 Other Data Specs: 
-\code{\link{flexfile_enum_spec}},
 \code{\link{flexfile_spec}}
 }
 \concept{Data Specs}
