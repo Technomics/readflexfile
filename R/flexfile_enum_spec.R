@@ -26,4 +26,6 @@
 #'   \item{optional}{Boolean if the field is optional or not}
 #' }
 #'
+#' @family Data Specs
+#'
 "flexfile_enum_spec"

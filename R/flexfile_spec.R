@@ -29,4 +29,6 @@
 #'   \item{excel_3part_name}{The field name in the 3-Part Template}
 #' }
 #'
+#' @family Data Specs
+#'
 "flexfile_spec"
