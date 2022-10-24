@@ -1,7 +1,7 @@
 Package: readflexfile
 Title: Read FlexFile data
 URL: https://github.com/Technomics/readflexfile
-Version: 0.4.0
+Version: 0.4.0.9000
 Authors@R: 
     c(person(given = "Adam H.",
              family = "James",
@@ -22,7 +22,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports: 
     lifecycle (>= 1.0.0),
     magrittr,
@@ -31,7 +31,7 @@ Imports:
     tibble (>= 2.0.0),
     purrr (>= 0.3.3),
     rlang (>= 0.4.2),
-    costmisc (>= 0.6.4),
+    costmisc (>= 0.7.0),
     stringr (>= 1.4.0),
     lubridate,
     glue (>= 1.4.1),
@@ -53,7 +53,8 @@ Suggests:
     kableExtra (>= 1.1.0),
     scales (>= 1.1.0),
     flexample (>= 1.1.1),
-    markdown (>= 1.1)
+    markdown (>= 1.1),
+    openxlsx (>= 4.2.5)
 VignetteBuilder: knitr
 Remotes: 
     technomics/costmisc,

@@ -45,7 +45,7 @@ as_quantityreport <- function(x, names_case = c("snake_case", "data_model"),
 
   if (names_case == "data_model") {
     x <- x %>%
-      coerce_to_spec(table_spec) %>%
+      costmisc::coerce_to_spec(table_spec) %>%
       data_model_to_snake(table_spec)
   }
 
@@ -57,12 +57,12 @@ as_quantityreport <- function(x, names_case = c("snake_case", "data_model"),
   table_spec_mod$tables <- table_spec$tables %>%
     dplyr::mutate(table = .data$snake_table)
 
-  check <- check_spec(x, table_spec_mod, file_type, .silent = isFALSE(.show_check))
+  check <- costmisc::check_spec(x, table_spec_mod, file_type, .silent = isFALSE(.show_check))
 
   # add missing tables and columns and create quantityreport object
   x <- x %>%
-    add_missing_spec_tables(table_spec_mod, check) %>%
-    add_missing_spec_cols(table_spec_mod, new_name = "field")
+    costmisc::add_missing_spec_tables(table_spec_mod, check) %>%
+    costmisc::add_missing_spec_cols(table_spec_mod, new_name = "field")
 
   if (.drop_optional) x <- drop_na_optional_spec_tables(x, table_spec)
 
