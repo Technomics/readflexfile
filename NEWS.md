@@ -1,7 +1,8 @@
-# readflexfile (development version)
+# readflexfile 0.4.1
 
 * Removed `add_id_col()` and `listindex_to_col()` re-exports from `costmisc` which were required for the legacy workflow.
 * Moved `data_model_to_snake()` and `snake_to_data_model()` to `costmisc` and re-exported. Added a more general `change_case_from_spec()` to costmisc as well, also re-exported in `readflexfile`.
+* Added functionality to read data from the 3-Part Template using `read_flexfile_3part()`.
 
 # readflexfile 0.4.0
 

@@ -58,7 +58,7 @@ usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("markdown", min_version = "1.1", type = "Suggests")
 usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("flexample", min_version = "1.1.1", type = "Suggests")
-usethis::use_package("openxlsx", min_version = "4.2.5", type = "Suggests")
+usethis::use_package("readxl", min_version = "1.4.0", type = "Suggests")
 
 ## ===== README & NEWS =====
 

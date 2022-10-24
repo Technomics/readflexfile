@@ -102,10 +102,14 @@ read_flexfile_3part <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
 
   if (!right_parts) stop("Expecting 'file' to contain each of section of the 3-Part Template.")
 
+  table_spec <- readflexfile::flexfile_spec
+  set_class_function <- new_flexfile
+  file_type <- "FlexFile 3-Part Template"
+
   file_ordered <- rlang::set_names(file[order(file_parts)],
                                    c("part_1", "part_2", "part_3"))
 
-  tables_to_read <- flexfile_spec$tables %>%
+  tables_to_read <- table_spec$tables %>%
     dplyr::filter(!is.na(.data$excel_3part)) %>%
     dplyr::select(.data$table, .data$excel_3part, .data$excel_3part_table) %>%
     dplyr::group_split(.data$excel_3part) %>%
@@ -118,10 +122,6 @@ read_flexfile_3part <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
                                                                                   skip = 1,
                                                                                   col_types = "text"),
                                                               NULL))
-
-  table_spec <- readflexfile::flexfile_spec
-  set_class_function <- new_flexfile
-  file_type <- "FlexFile 3-Part Template"
 
   table_list <- purrr::map2(file_ordered, tables_to_read, read_template_single)
 
