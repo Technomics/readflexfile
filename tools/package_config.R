@@ -47,7 +47,7 @@ usethis::use_package("jsonlite", min_version = "1.7.2")
 usethis::use_package("readr")
 usethis::use_package("stats")
 
-usethis::use_package("costmisc", min_version = "0.6.4")
+usethis::use_package("costmisc", min_version = "0.7.0")
 
 # Set GitHub remote
 desc::desc_set_remotes(c("technomics/costmisc",
@@ -58,6 +58,7 @@ usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("markdown", min_version = "1.1", type = "Suggests")
 usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("flexample", min_version = "1.1.1", type = "Suggests")
+usethis::use_package("openxlsx", min_version = "4.2.5", type = "Suggests")
 
 ## ===== README & NEWS =====
 
@@ -118,6 +119,9 @@ flexfile %>%
 flexfile %>%
   snake_to_data_model(flexfile_spec) %>%
   data_model_to_snake(flexfile_spec)
+
+# ff_dir <- "C:/Users/ajames/OneDrive - Technomics/Stryker/Task 0003 - Stryker CSDR and Contracts CY21-25/Technical/Validation/57290_STS_0046/GDLS FF Outputs/9-21-2021"
+# file <- list.files(ff_dir, full.names = TRUE)
 
 #############
 z <- change_case(flexfile, flexfile_spec, "snake")
