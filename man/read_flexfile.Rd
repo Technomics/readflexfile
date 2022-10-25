@@ -2,6 +2,7 @@
 % Please edit documentation in R/read_flexfile.R
 \name{read_flexfile}
 \alias{read_flexfile}
+\alias{read_flexfile_3part}
 \title{Read FlexFile or Quantity report}
 \usage{
 read_flexfile(
@@ -11,9 +12,17 @@ read_flexfile(
   .drop_optional = TRUE,
   .warn_utf8_bom = TRUE
 )
+
+read_flexfile_3part(
+  file,
+  .show_check = FALSE,
+  .coerce_spec = TRUE,
+  .drop_optional = TRUE
+)
 }
 \arguments{
-\item{file}{Path to a FlexFile or Quantity Report .zip archive.}
+\item{file}{Path to a FlexFile or Quantity Report .zip archive. For the 3-Part Template,
+a character vector of the three Excel files to read.}
 
 \item{.show_check}{Logical whether to print information about the file check to the console or not.}
 
@@ -32,6 +41,9 @@ of class \code{quantityreport}.
 \code{read_flexfile()} returns a list of tibbles from a zip folder submission of the FlexFiles.
 Each tibble corresponds to its respective JSON table. This function can read both a FlexFile
 and a Quantity report.
+
+\code{read_flexfile_3part()} reads the Excel 3-Part Template into the same structure
+as from the JSON.
 }
 \details{
 Can be used with \code{\link[costmisc:read_folder]{read_folder}} as in example.

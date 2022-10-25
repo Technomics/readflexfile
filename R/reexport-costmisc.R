@@ -7,10 +7,10 @@ costmisc::flatten_data
 #' @export
 costmisc::read_folder
 
-#' @importFrom costmisc add_id_col
+#' @importFrom costmisc data_model_to_snake
 #' @export
-costmisc::add_id_col
+costmisc::data_model_to_snake
 
-#' @importFrom costmisc listindex_to_col
+#' @importFrom costmisc snake_to_data_model
 #' @export
-costmisc::listindex_to_col
+costmisc::snake_to_data_model

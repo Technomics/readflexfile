@@ -47,7 +47,7 @@ usethis::use_package("jsonlite", min_version = "1.7.2")
 usethis::use_package("readr")
 usethis::use_package("stats")
 
-usethis::use_package("costmisc", min_version = "0.6.4")
+usethis::use_package("costmisc", min_version = "0.7.0")
 
 # Set GitHub remote
 desc::desc_set_remotes(c("technomics/costmisc",
@@ -58,6 +58,7 @@ usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("markdown", min_version = "1.1", type = "Suggests")
 usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("flexample", min_version = "1.1.1", type = "Suggests")
+usethis::use_package("readxl", min_version = "1.4.0", type = "Suggests")
 
 ## ===== README & NEWS =====
 
@@ -74,7 +75,7 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
-devtools::check(vignettes = TRUE)
+devtools::check(vignettes = FALSE)
 
 usethis::use_version()
 rnomics::use_badge_version()

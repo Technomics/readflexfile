@@ -9,7 +9,8 @@ write_flexfile(x, file)
 \arguments{
 \item{x}{An object of class \link{flexfile_class} or \link{quantityreport_class}.}
 
-\item{file}{Path to a FlexFile or Quantity Report .zip archive.}
+\item{file}{Path to a FlexFile or Quantity Report .zip archive. For the 3-Part Template,
+a character vector of the three Excel files to read.}
 }
 \description{
 \code{write_flexfile()} writes a list of tibbles into a zip folder of JSON files.
