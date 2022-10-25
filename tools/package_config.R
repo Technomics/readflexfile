@@ -89,7 +89,7 @@ detach("package:readflexfile", unload = TRUE)
 ## ===== Build =====
 
 build_path_root <- file.path(setupr::get_dirs()$git_local, "costverse", "_builds")
-build_path <- list(bin = file.path(build_path_root, "bin", "3.5"),
+build_path <- list(bin = file.path(build_path_root, "bin", rnomics::r_version()),
                    src = file.path(build_path_root, "src"))
 
 fs::dir_create(unlist(build_path))
