@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -49,7 +49,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -87,7 +87,6 @@
 <div class="page-header"><h1 id="readflexfile">readflexfile<a class="anchor" aria-label="anchor" href="#readflexfile"></a>
 </h1></div>
 <!-- badges: start -->
-
 <p>The goal of readflexfile is to facilitate the reading of the FlexFile from the original JSON format into R. The package also includes helpful functions to flatten the schema into a single table.</p>
 <p>View the <a href="https://technomics.github.io/readflexfile" class="external-link">package site</a> to explore the features!</p>
 <p>If you find a bug or have an idea for a new feature, please use the <a href="https://github.com/Technomics/readflexfile/issues" class="external-link">issue board</a>.</p>
@@ -99,7 +98,6 @@
 <ul>
 <li><a href="https://github.com/Technomics/costmisc/" class="external-link">costmisc</a></li>
 <li><a href="https://github.com/Technomics/readflexfile/" class="external-link">readflexfile</a></li>
-<li><a href="https://github.com/Technomics/flexample/" class="external-link">flexample</a></li>
 </ul>
 <p>Do not hesitate to contact us if you have questions about what else is in the works!</p>
 </div>
@@ -108,14 +106,14 @@
 </h2>
 <p>You can download and install directly from our GitHub repository. If this does not work or does not have a build for your version of R, try using <code>install_github()</code> instead (see Development version instructions).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"readflexfile"</span>, repos <span class="op">=</span> <span class="st">"https://technomics.github.io/repo/"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"readflexfile"</span>, repos <span class="op">=</span> <span class="st">"https://technomics.github.io/repo/"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
 </h3>
 <p>To get a bug fix, or to use a feature from the development version, you can install readflexfile using the following.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">dev_mode</span><span class="op">(</span>on <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Technomics/readflexfile"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">dev_mode</span><span class="op">(</span>on <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Technomics/readflexfile"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -163,7 +161,7 @@
 <li><a href="https://www.gnu.org/licenses/gpl-3.0" class="external-link"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License: GPL v3"></a></li>
 <li><a href="https://github.com/Technomics/readflexfile/actions" class="external-link"><img src="https://github.com/Technomics/readflexfile/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://cran.r-project.org/web/packages/covr/vignettes/how_it_works.html" class="external-link"><img src="https://img.shields.io/badge/coverage-1.5%25-red.svg" alt="coverage: 1.5%25"></a></li>
-<li><a href=""><img src="https://img.shields.io/badge/version-0.4.0-blue.svg" alt="version: 0.4.0"></a></li>
+<li><a href=""><img src="https://img.shields.io/badge/version-0.4.1-blue.svg" alt="version: 0.4.1"></a></li>
 </ul>
 </div>
 
@@ -178,7 +176,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

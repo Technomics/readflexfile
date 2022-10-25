@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -64,11 +64,17 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="0.4.1" id="readflexfile-041">readflexfile 0.4.1<a class="anchor" aria-label="anchor" href="#readflexfile-041"></a></h2>
+<ul><li>Removed <code>add_id_col()</code> and <code>listindex_to_col()</code> re-exports from <code>costmisc</code> which were required for the legacy workflow.</li>
+<li>Moved <code><a href="https://rdrr.io/pkg/costmisc/man/change_case_from_spec.html" class="external-link">data_model_to_snake()</a></code> and <code><a href="https://rdrr.io/pkg/costmisc/man/change_case_from_spec.html" class="external-link">snake_to_data_model()</a></code> to <code>costmisc</code> and re-exported. Added a more general <code>change_case_from_spec()</code> to costmisc as well, also re-exported in <code>readflexfile</code>.</li>
+<li>Added functionality to read data from the 3-Part Template using <code><a href="../reference/read_flexfile.html">read_flexfile_3part()</a></code>.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.0" id="readflexfile-040">readflexfile 0.4.0<a class="anchor" aria-label="anchor" href="#readflexfile-040"></a></h2>
 <ul><li>Added in a new function <code><a href="../reference/normalize_functional_categories.html">normalize_functional_categories()</a></code>. This function will add the standard functional categories to the <code>actualcosthourdata</code> and <code>forecastatcompletioncosthourdata</code> tables when the detailed functional categories are provided. This functionality always occurred when flattening the data using <code><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html" class="external-link">flatten_data()</a></code>, but is now exported as its own function to support other use cases.</li>
 <li>Added in a new function <code><a href="../reference/apply_flexfile.html">apply_flexfile()</a></code>. This function allows you to apply a function over a single or a list of flexfiles. This provides a convenient way to apply a function without knowing in advance whether the input is a single object of type ‘flexfile’ or a list of objects. The function is used internally with functions such as <code><a href="../reference/allocate_flexfile.html">allocate_flexfile()</a></code> but is now exported to the user.</li>
 <li>Added in a new function <code><a href="../reference/write_flexfile.html">write_flexfile()</a></code>. This function will write an object of class ‘flexfile’ or ‘quantityreport’ into the zipped collected of JSON files.</li>
-<li>Added in two new functions (<code><a href="../reference/data_model_to_snake.html">data_model_to_snake()</a></code> and <code><a href="../reference/data_model_to_snake.html">snake_to_data_model()</a></code>) to interchange between naming conventions (native data model notation and snake_case). Note that the formal S3 object at this time must still remain in snake_case or else the downstream functions will not know what to do. Future iterations may support either case.</li>
+<li>Added in two new functions (<code><a href="https://rdrr.io/pkg/costmisc/man/change_case_from_spec.html" class="external-link">data_model_to_snake()</a></code> and <code><a href="https://rdrr.io/pkg/costmisc/man/change_case_from_spec.html" class="external-link">snake_to_data_model()</a></code>) to interchange between naming conventions (native data model notation and snake_case). Note that the formal S3 object at this time must still remain in snake_case or else the downstream functions will not know what to do. Future iterations may support either case.</li>
 <li>Updated the <code>as_*()</code> functions so that missing fields and tables are added into the model during the coercion.</li>
 <li>Optional fields (i.e., the Tags) will not be included in the data model if they are empty (<a href="https://github.com/Technomics/readflexfile/issues/31" class="external-link">#31</a>). This is controlled using the <code>.drop_optional = TRUE</code> default in <code><a href="../reference/read_flexfile.html">read_flexfile()</a></code> and the <code>as_*()</code> functions.</li>
 </ul></div>
@@ -79,8 +85,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.1" id="readflexfile-031">readflexfile 0.3.1<a class="anchor" aria-label="anchor" href="#readflexfile-031"></a></h2>
-<ul><li>Minor bug fixes based on updates to other packages (<a href="https://github.com/Technomics/readflexfile/issues/23" class="external-link">#23</a>).</li>
-</ul></div>
+<ul><li>Minor bug fixes based on updates to other packages (<a href="https://github.com/Technomics/readflexfile/issues/23" class="external-link">#23</a>).</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.0" id="readflexfile-030">readflexfile 0.3.0<a class="anchor" aria-label="anchor" href="#readflexfile-030"></a></h2>
 <ul><li>Added in S3 class for a FlexFile and Quantity Report to track the imported dataset.</li>
@@ -102,8 +107,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.0" id="readflexfile-010">readflexfile 0.1.0<a class="anchor" aria-label="anchor" href="#readflexfile-010"></a></h2>
-<ul><li>First external release of readflexfile!</li>
-</ul></div>
+<ul><li>First external release of readflexfile!</li></ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -118,7 +122,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

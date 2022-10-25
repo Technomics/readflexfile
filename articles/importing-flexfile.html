@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -49,7 +49,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -95,10 +95,10 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Technomics/readflexfile" class="external-link">readflexfile</a></span><span class="op">)</span>
-<span class="co">#&gt; costverse::readflexfile. Copyright © 2022 by Technomics, Inc. Licensed under GPLv3.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Run 'citation("readflexfile")' for information on how to cite in your own work.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Technomics/readflexfile" class="external-link">readflexfile</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; costverse::readflexfile. Copyright © 2022 by Technomics, Inc. Licensed under GPLv3.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Run 'citation("readflexfile")' for information on how to cite in your own work.</span></span></code></pre></div>
 <p>One of the core functions of <code>readflexfile</code> is to import the FlexFile into the R environment. <code>readflexfile</code> supports importing both one FlexFile or a folder of multiple FlexFiles into R. The functions:</p>
 <ul>
 <li>Import the JSON format of the FlexFile into a list of tibbles</li>
@@ -112,43 +112,43 @@
 </h2>
 <p>To import one FlexFile, first point <code>read_ff</code> to a .zip of JSON tables of a FlexFile.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Sample_FlexFile_A.zip"</span>, package <span class="op">=</span> <span class="st">"flexample"</span><span class="op">)</span>
-
-<span class="va">raw_ff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_flexfile.html">read_flexfile</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Sample_FlexFile_A.zip"</span>, package <span class="op">=</span> <span class="st">"flexample"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">raw_ff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_flexfile.html">read_flexfile</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></code></pre></div>
 <p>Next, use <code>flatten_data</code> to create a flat file. This joins all ID and name tables, stacks forecasts and actuals, and creates on data frame to work with. In this step, the allocations will also be applied to the actuals data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">flexfile</span> <span class="op">&lt;-</span> <span class="va">raw_ff</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html" class="external-link">flatten_data</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">flexfile</span> <span class="op">&lt;-</span> <span class="va">raw_ff</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html" class="external-link">flatten_data</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="importing-multiple-flexfiles">Importing multiple FlexFiles<a class="anchor" aria-label="anchor" href="#importing-multiple-flexfiles"></a>
 </h2>
 <p>To import multiple FlexFiles, point <code>read_folder</code> to a folder of FlexFile submissions. <code>read_function = read_ff</code> applies the <code>read_ff</code> function to each FlexFile in the folder.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">folder</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"flexample"</span><span class="op">)</span>
-
-<span class="va">raw_ffs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/read_folder.html" class="external-link">read_folder</a></span><span class="op">(</span><span class="va">folder</span>, 
-                        read_function <span class="op">=</span> <span class="va">read_ff</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">folder</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"flexample"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">raw_ffs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/read_folder.html" class="external-link">read_folder</a></span><span class="op">(</span><span class="va">folder</span>, </span>
+<span>                        read_function <span class="op">=</span> <span class="va">read_ff</span><span class="op">)</span></span></code></pre></div>
 <p>Just like the single case, use <code>flatten_data</code> to create the flat file for each FlexFile in the list. The function will now return a list of flat files.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">flexfiles</span> <span class="op">&lt;-</span> <span class="va">raw_ffs</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-   <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html" class="external-link">flatten_data</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">flexfiles</span> <span class="op">&lt;-</span> <span class="va">raw_ffs</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html" class="external-link">flatten_data</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>To create a single flat file, simple stack all of the rows from the flattened data. This will stack them all, storing the file name in a column named <code>doc_id</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">flexfiles_flat</span> <span class="op">&lt;-</span> <span class="va">flexfiles</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"doc_id"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">flexfiles_flat</span> <span class="op">&lt;-</span> <span class="va">flexfiles</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"doc_id"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="importing-the-quantity-data-report">Importing the Quantity Data Report<a class="anchor" aria-label="anchor" href="#importing-the-quantity-data-report"></a>
 </h2>
 <p><code>readflexfile</code> also provides functionality for the Quantity Data Report (QDR). The workflow for reading in the QDR is the same as for the FlexFile (and uses many of the same functions).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">quantity_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Sample_Quantity_A.zip"</span>, package <span class="op">=</span> <span class="st">"flexample"</span><span class="op">)</span>
-
-<span class="va">qdr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_flexfile.html">read_flexfile</a></span><span class="op">(</span><span class="va">quantity_data</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html" class="external-link">flatten_data</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">quantity_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Sample_Quantity_A.zip"</span>, package <span class="op">=</span> <span class="st">"flexample"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">qdr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_flexfile.html">read_flexfile</a></span><span class="op">(</span><span class="va">quantity_data</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html" class="external-link">flatten_data</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
   </div>
 
@@ -169,7 +169,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
