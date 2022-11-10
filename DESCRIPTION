@@ -5,13 +5,13 @@ Version: 0.4.1
 Authors@R: 
     c(person(given = "Adam H.",
              family = "James",
-             role = c("cre", "aut"),
+             role = c("cre", "aut")),
       person(given = "Ben",
              family = "Berkman",
-             role = "aut",
+             role = "aut"),
       person(given = "Justin",
              family = "Cooper",
-             role = "aut",
+             role = "aut"),
       person(given = "Technomics, Inc",
              role = "cph"))
 Description: Read the FlexFile data from the JSON specification into R. This includes simply reading the FlexFile into a list, and joining the individual tables together into a single flat file. These functions can also handle nuances of the FlexFile, such as allocations and optional fields.
