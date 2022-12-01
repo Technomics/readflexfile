@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.2</span>
       </span>
     </div>
 
@@ -63,6 +63,9 @@
       <small>Source: <a href="https://github.com/Technomics/readflexfile/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.4.2" id="readflexfile-042">readflexfile 0.4.2<a class="anchor" aria-label="anchor" href="#readflexfile-042"></a></h2>
+<ul><li>Added in a new function <code><a href="../reference/normalize_units_or_sublots.html">normalize_units_or_sublots()</a></code>. This function will add the EndItemID and OrderOrLotID fields to <code>actualcosthourdata</code> and <code>forecastatcompletioncosthourdata</code> tables when the UnitOrSublotID is provided instead. This functionality always occurred when flattening the data using <code><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html" class="external-link">flatten_data()</a></code>, but is now exported as its own function to support other use cases.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.1" id="readflexfile-041">readflexfile 0.4.1<a class="anchor" aria-label="anchor" href="#readflexfile-041"></a></h2>
 <ul><li>Removed <code>add_id_col()</code> and <code>listindex_to_col()</code> re-exports from <code>costmisc</code> which were required for the legacy workflow.</li>
