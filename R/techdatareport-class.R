@@ -13,11 +13,7 @@
 #'
 #' @name techdatareport_class
 #'
-#' @param x An object to test or coerce to type 'techdatareport'.
-#' @param names_case Case of the object being passed in.
-#' @param .show_check Logical whether or not to show results from the check against
-#' the file specification.
-#' @inheritParams read_techdatareport
+#' @param x An object to test or coerce to type 'quantityreport'.
 #'
 NULL
 
@@ -89,16 +85,9 @@ is_techdatareport <- function(x) {
 #'
 #' \code{is_techdatareport_list()} check if the object is a list where all members are of class 'techdatareport'.
 #'
-#' @rdname techdatareport
+#' @rdname techdatareport_class
 #'
 #' @export
 is_techdatareport_list <- function(x) {
   all(vapply(x, is_techdatareport, logical(1)))
-}
-
-#' @keywords internal
-fileinfo_proto <- function() {
-  list(path = character(),
-       name = character(),
-       name_ext = character())
 }

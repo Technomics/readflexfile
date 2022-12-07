@@ -1,13 +1,14 @@
 
-# file_dir <- "C:\Users\ameade\OneDrive - Technomics\Task 0003 - Stryker CSDR and Contracts CY21-25\Technical\TDR M&R Dev\Read Files\TDR"
-# file <- file.path(file_dir, "15 - Cerberus TDR Interim_Annual Submission 2019.xlsx")
-
-
 #' Read Technical Data report
 #'
-#' \code{read_techdatareport()} returns a list of tibbles from an Excel submission of the Technical Data report. Each tibble corresponds to its Excel sheet.
+#' @description
+#' `r lifecycle::badge('experimental')`
 #'
-#' Can be used with \code{\link[costmisc:read_folder]{read_folder}} as in example.
+#' \code{read_techdatareport()} returns a list of tibbles from an Excel submission of the Technical
+#' Data Report. Each tibble corresponds to its Excel sheet.\cr
+#' \cr
+#' This function is currently experimental because it reads from the Excel template, which is
+#' may not be stable.
 #'
 #' @export
 #'
@@ -27,8 +28,8 @@ read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE){
 
   tables_to_read <- table_spec$tables$table
   scalar_tables <- table_spec$tables %>%
-    dplyr::filter(is_scalar) %>%
-    dplyr::pull(table)
+    dplyr::filter(.data$is_scalar) %>%
+    dplyr::pull(.data$table)
 
   table_list <- tables_to_read %>%
     rlang::set_names() %>%
