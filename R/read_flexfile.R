@@ -35,7 +35,7 @@
 #'
 #' flexfiles <- read_folder(folder, read_flexfile)
 #'}
-read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .drop_optional = TRUE, .warn_utf8_bom = TRUE) {
+read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .drop_optional = TRUE, .warn_utf8_bom = FALSE) {
 
   # check the file type
   file_type <- check_filetype(file)
