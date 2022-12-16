@@ -10,7 +10,7 @@ read_flexfile(
   .show_check = FALSE,
   .coerce_spec = TRUE,
   .drop_optional = TRUE,
-  .warn_utf8_bom = TRUE
+  .warn_utf8_bom = FALSE
 )
 
 read_flexfile_3part(
