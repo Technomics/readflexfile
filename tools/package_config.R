@@ -90,8 +90,8 @@ build_path <- list(bin = file.path(build_path_root, "bin", rnomics::r_version())
 
 fs::dir_create(unlist(build_path))
 
-bin_build_file <- devtools::build(binary = TRUE, path = build_path$bin)
 src_build_file <- devtools::build(path = build_path$src)
+bin_build_file <- devtools::build(src_build_file, binary = TRUE, path = build_path$bin)
 
 drat_repo <- file.path(setupr::get_dirs()$git_local, "costverse", "repo")
 rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
