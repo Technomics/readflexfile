@@ -10,11 +10,13 @@
 NULL
 
 #' @keywords internal
-new_quantityreport <- function(x, fileinfo = NULL) {
+new_quantityreport <- function(x, fileinfo = NULL, data_case = data_case) {
   if (is.null(fileinfo))
     fileinfo <- fileinfo_proto()
 
-  structure(x, fileinfo = fileinfo, class = "quantityreport")
+  structure(x,
+            fileinfo = fileinfo, data_case = data_case,
+            class = "quantityreport")
 }
 
 #' is_quantityreport

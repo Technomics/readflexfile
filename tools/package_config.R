@@ -43,7 +43,7 @@ usethis::use_package("zip", min_version = "2.1.1")
 usethis::use_package("jsonlite", min_version = "1.7.2")
 usethis::use_package("readr")
 
-usethis::use_package("costmisc", min_version = "0.7.0")
+usethis::use_package("costmisc", min_version = "0.7.1")
 
 # Set GitHub remote
 desc::desc_set_remotes(c("technomics/costmisc",
@@ -101,12 +101,30 @@ rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
 vignette("importing-flexfile", package = "readflexfile")
 
 # single file
-file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
-flexfile <- read_flexfile(file)
+#file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
+file <- "C:/Users/ajames/OneDrive - Technomics/JLTV/_Training/Cerberus/Contract Complete_flexfile.zip"
+
+flexfile <- read_flexfile(file, .data_case = "native")
+
+flatten_data(flexfile) %>% View()
 
 # multiple files
 files <- system.file("extdata", package = "flexample")
 flexfiles <- read_folder(files, read_flexfile)
+
+assert_case <- function(x, to_case = "snake") {
+  current_case <- costmisc::data_case(x)
+  if (is.null(to_case)) to_case <- "native"
+
+  if (current_case == to_case) return(x)
+
+  # the native case is passed in as NULL
+  if (current_case == "native") current_case <- NULL
+  if (to_case == "native") to_case <- NULL
+
+  table_spec <- costmisc::data_spec(x)
+  costmisc::change_case_from_spec(x, table_spec, current_case, to_case)
+}
 
 flexfile %>%
   normalize_functional_categories() %>%

@@ -18,7 +18,10 @@ flatten_data.list <- function(x, ...) {
 #' Create a cost and hour dataframe from a FlexFile
 #'
 #' \code{flatten_data.flexfile()} creates a single flat file for working with FlexFile
-#' data. Input should be a list of one or more FlexFiles imported through the \code{read_flexfile} function.
+#' data. Input should be a list of one or more FlexFiles imported through the \code{read_flexfile} function.\cr
+#' \cr
+#' All fields retain their original names from the data model unless they are added in the flattening process. These
+#' new fields are in 'snake_case' rather than ProperCase.
 #'
 #' @export
 #'
@@ -44,6 +47,8 @@ flatten_data.list <- function(x, ...) {
 #'   bind_rows(.id = "doc_id")
 #'}
 flatten_data.flexfile <- function(x, .allocate = TRUE, ...) {
+
+  x <- costmisc::assert_case(x, target_case = "native")
 
   # if it says to allocate and it hasn't been already
   if (.allocate & !(attr(x, "allocated")))
@@ -71,25 +76,25 @@ flatten_data.flexfile <- function(x, .allocate = TRUE, ...) {
 #'
 #' @export
 flexfile_key_columns <- function() {
-  c("approved_plan_number", "approved_plan_revision_number",
-    "submission_event_number", "resubmission_number")
+  c("ApprovedPlanNumber", "ApprovedPlanRevisionNumber",
+    "SubmissionEvent_Number", "ResubmissionNumber")
 }
 
-find_duplicates <- function(x) {
-
-  dups <- duplicated_report(x)
-
-  stacked_metadata <- x %>%
-    costmisc::listindex_to_col("list_index") %>%
-    purrr::map_dfr("reportmetadata", .id = "doc_id") %>%
-    dplyr::filter(dups) %>%
-    dplyr::select(.data$list_index, .data$doc_id, tidyselect::all_of(flexfile_key_columns()),
-                  .data$program_name, .data$reporting_organization_organization_name,
-                  .data$report_as_of, .data$date_prepared)
-
-  message(paste(flexfile_key_columns(), collapse = ", "))
-
-}
+# find_duplicates <- function(x) {
+#
+#   dups <- duplicated_report(x)
+#
+#   stacked_metadata <- x %>%
+#     costmisc::listindex_to_col("list_index") %>%
+#     purrr::map_dfr("ReportMetadata", .id = "doc_id") %>%
+#     dplyr::filter(dups) %>%
+#     dplyr::select(.data$list_index, .data$doc_id, tidyselect::all_of(flexfile_key_columns()),
+#                   .data$ProgramName, .data$ReportingOrganization_OrganizationName,
+#                   .data$report_as_of, .data$date_prepared)
+#
+#   message(paste(flexfile_key_columns(), collapse = ", "))
+#
+# }
 
 #' Check for duplication in the metadata
 #'
@@ -99,7 +104,7 @@ find_duplicates <- function(x) {
 duplicated_report <- function(x) {
 
   stacked_metadata <- x %>%
-    purrr::map_dfr("reportmetadata")
+    purrr::map_dfr("ReportMetadata")
 
   stacked_metadata %>%
     dplyr::group_by(dplyr::across(tidyselect::all_of(flexfile_key_columns()))) %>%
@@ -114,9 +119,9 @@ duplicated_report <- function(x) {
 flatten_metadata <- function(x) {
 
   # single row metadata
-  x$reportmetadata %>%
-    dplyr::select(.data$program_name, .data$approved_plan_number, .data$approved_plan_revision_number,
-                  .data$submission_event_number, .data$resubmission_number, .data$reporting_organization_organization_name)
+  x$ReportMetadata %>%
+    dplyr::select(.data$ProgramName, .data$ApprovedPlanNumber, .data$ApprovedPlanRevisionNumber,
+                  .data$SubmissionEvent_Number, .data$ResubmissionNumber, .data$ReportingOrganization_OrganizationName)
 }
 
 #' @keywords internal
@@ -126,59 +131,59 @@ flatten_actuals <- function(x)  {
   meta <- flatten_metadata(x)
 
   # join in all of the information
-  # note: the order matters! for example unitsorsublots must come before end_item and order_or_lot
-  x$actualcosthourdata %>%
+  # note: the order matters! for example UnitsOrSublots must come before EndItems and OrderOrLots
+  x$ActualCostHourData %>%
     tibble::add_column(!!!meta, .before = 1) %>%
-    dplyr::left_join(dplyr::select(x$accounts,
-                                   .data$id, .data$name),
-                     by = c(account_id = "id"),
+    dplyr::left_join(dplyr::select(x$Accounts,
+                                   .data$ID, .data$Name),
+                     by = c(AccountID = "ID"),
                      suffix = c("", ".accounts")) %>%
-    dplyr::left_join(x$unitsorsublots,
-                     by = c(unit_or_sublot_id = "id"),
+    dplyr::left_join(x$UnitsOrSublots,
+                     by = c(UnitOrSublotID = "ID"),
                      suffix = c("", ".unitsorsublots")) %>%
-    dplyr::mutate(order_or_lot_id = dplyr::coalesce(.data$order_or_lot_id, .data$order_or_lot_id.unitsorsublots),
-                  end_item_id = dplyr::coalesce(.data$end_item_id, .data$end_item_id.unitsorsublots)) %>%
-    dplyr::left_join(dplyr::select(x$enditems,
-                                   .data$id, .data$name),
-                     by = c(end_item_id = "id"),
+    dplyr::mutate(OrderOrLotID = dplyr::coalesce(.data$OrderOrLotID, .data$OrderOrLotID.unitsorsublots),
+                  EndItemID = dplyr::coalesce(.data$EndItemID, .data$EndItemID.unitsorsublots)) %>%
+    dplyr::left_join(dplyr::select(x$EndItems,
+                                   .data$ID, .data$Name),
+                     by = c(EndItemID = "ID"),
                      suffix = c("", ".enditems")) %>%
-    dplyr::left_join(dplyr::select(x$ordersorlots,
-                                   .data$id, .data$name),
-                     by = c(order_or_lot_id = "id"),
+    dplyr::left_join(dplyr::select(x$OrdersOrLots,
+                                   .data$ID, .data$Name),
+                     by = c(OrderOrLotID = "ID"),
                      suffix = c("", ".ordersorlots")) %>%
-    dplyr::left_join(dplyr::select(x$clins,
-                                   .data$id, .data$name),
-                     by = c(clin_id = "id"),
+    dplyr::left_join(dplyr::select(x$CLINs,
+                                   .data$ID, .data$Name),
+                     by = c(CLIN_ID = "ID"),
                      suffix = c("", ".clins")) %>%
-    dplyr::left_join(dplyr::select(x$wbs,
-                                   .data$level, .data$id, .data$name, .data$parent_id),
-                     by = c(wbs_element_id = "id"),
+    dplyr::left_join(dplyr::select(x$WBS,
+                                   .data$Level, .data$ID, .data$Name, .data$ParentID),
+                     by = c(WBSElementID = "ID"),
                      suffix = c("", ".wbs")) %>%
-    dplyr::left_join(dplyr::select(x$functionalcategories,
-                                   .data$id, .data$name),
-                     by = c(functional_category_id = "id"),
+    dplyr::left_join(dplyr::select(x$FunctionalCategories,
+                                   .data$ID, .data$Name),
+                     by = c(FunctionalCategoryID = "ID"),
                      suffix = c("", ".functionalcategories")) %>%
-    dplyr::left_join(dplyr::select(x$functionaloverheadcategories,
-                                   .data$id, .data$name),
-                     by = c(functional_overhead_category_id = "id"),
+    dplyr::left_join(dplyr::select(x$FunctionalOverheadCategories,
+                                   .data$ID, .data$Name),
+                     by = c(FunctionalOverheadCategoryID = "ID"),
                      suffix = c("", ".overheadcategories")) %>%
-    dplyr::left_join(dplyr::select(x$reportingcalendar,
-                                   .data$id, .data$start_date, .data$end_date),
-                     by = c(reporting_period_id = "id"),
+    dplyr::left_join(dplyr::select(x$ReportingCalendar,
+                                   .data$ID, .data$StartDate, .data$EndDate),
+                     by = c(ReportingPeriodID = "ID"),
                      suffix = c("", ".reportingcalendar")) %>%
-    dplyr::mutate(start_date = lubridate::ymd(.data$start_date),
-                  end_date = lubridate::ymd(.data$end_date),
+    dplyr::mutate(StartDate = lubridate::ymd(.data$StartDate),
+                  EndDate = lubridate::ymd(.data$EndDate),
                   atd_or_fac = "ATD") %>%
-    dplyr::rename(account_name = .data$name,
-                  clin_name = .data$name.clins,
-                  wbs_parent = .data$parent_id,
-                  wbs_name = .data$name.wbs,
-                  wbs_level = .data$level,
-                  end_item_name = .data$name.enditems,
-                  order_or_lot_name = .data$name.ordersorlots,
-                  functional_category_name = .data$name.functionalcategories,
-                  functional_overhead_category_name = .data$name.overheadcategories) %>%
-    costmisc::add_missing_column(first_unit_number = NA_integer_, last_unit_number = NA_integer_) %>%
+    dplyr::rename(AccountName = .data$Name,
+                  CLIN_Name = .data$Name.clins,
+                  WBSParentID = .data$ParentID,
+                  WBSName = .data$Name.wbs,
+                  WBSLevel = .data$Level,
+                  EndItemName = .data$Name.enditems,
+                  OrderOrLotName = .data$Name.ordersorlots,
+                  FunctionalCategoryName = .data$Name.functionalcategories,
+                  FunctionalOverheadCategoryName = .data$Name.overheadcategories) %>%
+    costmisc::add_missing_column(FirstUnitNumber = NA_integer_, LastUnitNumber = NA_integer_) %>%
     dplyr::select(!tidyselect::contains("."))
 
 }
@@ -186,23 +191,23 @@ flatten_actuals <- function(x)  {
 #' @keywords internal
 flatten_forecasts <- function(x) {
 
-  if (nrow(x$forecastatcompletioncosthourdata) > 0) {
+  if (nrow(x$ForecastAtCompletionCostHourData) > 0) {
 
     # single row metadata
     meta <- flatten_metadata(x)
 
-    x$forecastatcompletioncosthourdata %>%
+    x$ForecastAtCompletionCostHourData %>%
       tibble::add_column(!!!meta, .before = 1) %>%
-      dplyr::left_join(dplyr::select(x$ordersorlots,
-                                     order_or_lot_id = .data$id,
-                                     order_or_lot_name = .data$name),
-                       by = "order_or_lot_id") %>%
-      dplyr::left_join(dplyr::select(x$wbs,
-                                     wbs_element_id = .data$id,
-                                     wbs_level = .data$level,
-                                     wbs_name = .data$name,
-                                     wbs_parent = .data$parent_id),
-                       by = "wbs_element_id") %>%
+      dplyr::left_join(dplyr::select(x$OrdersOrLots,
+                                     OrderOrLotID = .data$ID,
+                                     OrderOrLotName = .data$Name),
+                       by = "OrderOrLotID") %>%
+      dplyr::left_join(dplyr::select(x$WBS,
+                                     WBSElementID = .data$ID,
+                                     WBSLevel = .data$Level,
+                                     WBSName = .data$Name,
+                                     WBSParentID = .data$ParentID),
+                       by = "WBSElementID") %>%
       tibble::add_column(atd_or_fac = "FAC")
 
   } else {
@@ -216,28 +221,28 @@ flexfile_order_columns <- function(x, .all = TRUE) {
 
   select_fn <- ifelse(.all, tidyselect::all_of, tidyselect::any_of)
 
-  select_cols <- c("program_name",
+  select_cols <- c("ProgramName",
                    flexfile_key_columns(),
-                   "reporting_organization_organization_name",
-                   "order_or_lot_id", "order_or_lot_name",
-                   "unit_or_sublot_id", "first_unit_number", "last_unit_number",
-                   "clin_id", "clin_name",
-                   "end_item_id", "end_item_name",
-                   "wbs_element_id", "wbs_name", "wbs_parent", "wbs_level",
-                   "account_id", "account_name",
-                   "nonrecurring_or_recurring_id",
-                   "functional_category_id", "functional_category_name",
-                   "functional_overhead_category_id", "functional_overhead_category_name",
-                   "standard_category_id",
-                   "detailed_standard_category_id",
-                   "reporting_period_id", "start_date", "end_date",
-                   "allocation_method_id",
+                   "ReportingOrganization_OrganizationName",
+                   "OrderOrLotID", "OrderOrLotName",
+                   "UnitOrSublotID", "FirstUnitNumber", "LastUnitNumber",
+                   "CLIN_ID", "CLIN_Name",
+                   "EndItemID", "EndItemName",
+                   "WBSElementID", "WBSName", "WBSParentID", "WBSLevel",
+                   "AccountID", "AccountName",
+                   "NonrecurringOrRecurringID",
+                   "FunctionalCategoryID", "FunctionalCategoryName",
+                   "FunctionalOverheadCategoryID", "FunctionalOverheadCategoryName",
+                   "StandardCategoryID",
+                   "DetailedStandardCategoryID",
+                   "ReportingPeriodID", "StartDate", "EndDate",
+                   "AllocationMethodID",
                    "atd_or_fac",
-                   "percent_value", "value_dollars", "value_hours")
+                   "PercentValue", "Value_Dollars", "Value_Hours")
 
   x %>%
     dplyr::select(select_fn(select_cols),
-                  tidyselect::starts_with("tag"),
+                  tidyselect::starts_with("Tag"),
                   tidyselect::everything()) #everything else isn't required by the data model
 
 }
@@ -267,34 +272,34 @@ flexfile_order_columns <- function(x, .all = TRUE) {
 flatten_data.quantityreport <- function(x, ...) {
 
   # single row metadata
-  meta <- x$reportmetadata %>%
-    dplyr::select(.data$program_name, .data$approved_plan_number, .data$approved_plan_revision_number,
-                  .data$submission_event_number, .data$resubmission_number, .data$reporting_organization_organization_name)
+  meta <- x$ReportMetadata %>%
+    dplyr::select(.data$ProgramName, .data$ApprovedPlanNumber, .data$ApprovedPlanRevisionNumber,
+                  .data$SubmissionEvent_Number, .data$ResubmissionNumber, .data$ReportingOrganization_OrganizationName)
 
   join_common_fields <- function(start_table) {
     start_table %>%
-      dplyr::left_join(dplyr::select(x$ordersorlots,
-                                     order_or_lot_id = .data$id,
-                                     order_or_lot_name = .data$name),
-                       by = "order_or_lot_id") %>%
-      dplyr::left_join(dplyr::select(x$wbs,
-                                     wbs_element_id = .data$id,
-                                     wbs_level = .data$level,
-                                     wbs_name = .data$name,
-                                     wbs_parent = .data$parent_id),
-                       by = "wbs_element_id")
+      dplyr::left_join(dplyr::select(x$OrdersOrLots,
+                                     OrderOrLotID = .data$ID,
+                                     OrderOrLotName = .data$Name),
+                       by = "OrderOrLotID") %>%
+      dplyr::left_join(dplyr::select(x$WBS,
+                                     WBSElementID = .data$ID,
+                                     WBSLevel = .data$Level,
+                                     WBSName = .data$Name,
+                                     WBSParentID = .data$ParentID),
+                       by = "WBSElementID")
   }
 
-  quant_to_date <- join_common_fields(x$quantitiestodate) %>%
+  quant_to_date <- join_common_fields(x$QuantitiesToDate) %>%
     tibble::add_column(atd_or_fac = "ATD")
 
-  quant_completion <- join_common_fields(x$quantitiesatcompletion) %>%
-    dplyr::left_join(dplyr::select(x$enditems,
-                                   end_item_id = .data$id,
-                                   end_item_name = .data$name),
-                     by = "end_item_id") %>%
-    dplyr::left_join(x$productionsequence,
-                     by = c("end_item_id", "order_or_lot_id")) %>%
+  quant_completion <- join_common_fields(x$QuantitiesAtCompletion) %>%
+    dplyr::left_join(dplyr::select(x$EndItems,
+                                   EndItemID = .data$ID,
+                                   EndItemName = .data$Name),
+                     by = "EndItemID") %>%
+    dplyr::left_join(x$ProductionSequence,
+                     by = c("EndItemID", "OrderOrLotID")) %>%
     tibble::add_column(atd_or_fac = "FAC")
 
   flatfile <- dplyr::bind_rows(quant_to_date, quant_completion) %>%
@@ -309,17 +314,17 @@ quantityreport_order_columns <- function(x, .all = TRUE) {
 
   select_fn <- ifelse(.all, tidyselect::all_of, tidyselect::any_of)
 
-  select_cols <- c("program_name",
+  select_cols <- c("ProgramName",
                    flexfile_key_columns(),
-                   "reporting_organization_organization_name",
-                   "order_or_lot_id", "order_or_lot_name",
-                   "end_item_id", "end_item_name",
-                   "wbs_element_id", "wbs_name", "wbs_parent", "wbs_level",
+                   "ReportingOrganization_OrganizationName",
+                   "OrderOrLotID", "OrderOrLotName",
+                   "EndItemID", "EndItemName",
+                   "WBSElementID", "WBSName", "WBSParentID", "WBSLevel",
                    "atd_or_fac",
-                   "completed_quantity_to_date", "in_process_quantity",
-                   "delivered_quantity_at_completion", "internal_quantity_at_completion",
-                   "coproduction_or_concurrent_quantity_at_completion", "gfe_quantity_at_completion",
-                   "first_unit_number", "last_unit_number", "is_internal")
+                   "CompletedQuantityToDate", "InProcessQuantity",
+                   "DeliveredQuantityAtCompletion", "InternalQuantityAtCompletion",
+                   "CoproductionOrConcurrentQuantityAtCompletion", "GFEQuantityAtCompletion",
+                   "FirstUnitNumber", "LastUnitNumber", "IsInternal")
 
   x %>%
     dplyr::select(select_fn(select_cols),
