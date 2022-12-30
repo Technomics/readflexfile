@@ -40,7 +40,15 @@ read_flexfile <- function(file,
                           .coerce_spec = TRUE,
                           .drop_optional = TRUE,
                           .warn_utf8_bom = FALSE,
-                          .data_case = c("snake", "native")) {
+                          .data_case = c("native", "snake")) {
+
+  lifecycle::deprecate_warn(
+    when = "0.5.0",
+    what = I('The default of returning tables and fields using "snake_case"'),
+    with = I('the new names in any new code and we strongly advise refactoring any existing code.
+    Note that new names align with those used in the native report.\n\nIf you must use the old naming
+    in the interim, please use the argument `.data_case = "snake"` or use `costmisc::native_to_snake_case()')
+  )
 
   # check the file type
   file_type <- check_filetype(file)
