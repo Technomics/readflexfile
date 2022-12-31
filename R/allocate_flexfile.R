@@ -6,7 +6,7 @@
 #' the Actual Cost Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
 #' Each tibble corresponds to its respective JSON table. \cr
 #' \cr
-#' Currently this is implemented for \code{allocation_method_type_id == "PERCENT"}.
+#' Currently this is implemented for \code{AllocationMethodTypeID == "PERCENT"}.
 #'
 #' @inheritParams apply_flexfile
 #'
@@ -20,10 +20,12 @@ allocate_flexfile <- function(flexfile) {
 #' @keywords internal
 allocate_flexfile_single <- function(flexfile) {
 
+  flexfile <- costmisc::assert_case(flexfile, target_case = "native")
+
   # set all percents to be 1 if no allocations
-  if (nrow(flexfile$allocationcomponents) == 0) {
-    flexfile$actualcosthourdata <- flexfile$actualcosthourdata %>%
-      dplyr::mutate(percent_value = 1)
+  if (nrow(flexfile$AllocationComponents) == 0) {
+    flexfile$ActualCostHourData <- flexfile$ActualCostHourData %>%
+      dplyr::mutate(PercentValue = 1)
 
     attr(flexfile, "allocated") <- TRUE
 
@@ -32,7 +34,7 @@ allocate_flexfile_single <- function(flexfile) {
 
   # check methods
   valid_methods <- c("PERCENT")
-  allocation_methods <- unique(flexfile$allocationmethods$allocation_method_type_id)
+  allocation_methods <- unique(flexfile$AllocationMethods$AllocationMethodTypeID)
 
   if (!(all(allocation_methods %in% valid_methods))) {
     # then some allocation method is used that we do not recognize
@@ -40,7 +42,7 @@ allocate_flexfile_single <- function(flexfile) {
             paste(allocation_methods[!(allocation_methods %in% valid_methods)], collapse = ", "))
   }
 
-  allocation_fields <- c("order_or_lot_id", "end_item_id", "wbs_element_id", "unit_or_sublot_id")
+  allocation_fields <- c("OrderOrLotID", "EndItemID", "WBSElementID", "UnitOrSublotID")
 
   coalesce_field <- function(df, field, suffix) {
     field_list <- rlang::syms(list(paste0(field, suffix), field))
@@ -49,30 +51,32 @@ allocate_flexfile_single <- function(flexfile) {
       dplyr::mutate(!!field := dplyr::coalesce(!!!field_list))
   }
 
-  new_actualcosthourdata <- flexfile$actualcosthourdata %>%
-    dplyr::left_join(flexfile$allocationcomponents,
-                     by = c("allocation_method_id"),
+  new_actualcosthourdata <- flexfile$ActualCostHourData %>%
+    dplyr::left_join(flexfile$AllocationComponents,
+                     by = c("AllocationMethodID"),
                      suffix = c("", "_allocations")) %>%
-    dplyr::left_join(dplyr::select(flexfile$allocationmethods, .data$id, .data$allocation_method_type_id),
-                     by = c(allocation_method_id = "id"))
+    dplyr::left_join(dplyr::select(flexfile$AllocationMethods, .data$ID, .data$AllocationMethodTypeID),
+                     by = c(AllocationMethodID = "ID"))
 
   # iterate over the function to apply it across all allocation fields
   # reduce will take the output from iteration i and use it as input to i + 1
-  flexfile$actualcosthourdata <- purrr::reduce(allocation_fields, coalesce_field, suffix = "_allocations", .init = new_actualcosthourdata) %>%
-    tidyr::replace_na(list(percent_value = 1)) %>%
-    dplyr::mutate_at(dplyr::vars(tidyselect::starts_with("value_")), ~ . * .data$percent_value) %>% # need to handle other methods
-    dplyr::select(-(tidyselect::ends_with("_allocations")), -.data$allocation_method_type_id)
+  flexfile$ActualCostHourData <- purrr::reduce(allocation_fields, coalesce_field, suffix = "_allocations", .init = new_actualcosthourdata) %>%
+    tidyr::replace_na(list(PercentValue = 1)) %>%
+    #dplyr::mutate_at(dplyr::vars(tidyselect::starts_with("Value_")), ~ . * .data$PercentValue) %>% # need to handle other methods
+    dplyr::mutate(Value_Dollars = Value_Dollars * .data$PercentValue,
+                  Value_Hours = Value_Hours * .data$PercentValue) %>%
+    dplyr::select(-(tidyselect::ends_with("_allocations")), -.data$AllocationMethodTypeID)
 
-  # join in the remaining 'order_or_lot_id' to fill in 'end_item_id' and 'order_or_lot_id'
-  sublot_fields <- c("order_or_lot_id", "end_item_id")
+  # join in the remaining 'UnitOrSublotID' to fill in 'EndItemID' and 'OrderOrLotID'
+  sublot_fields <- c("OrderOrLotID", "EndItemID")
 
-  new_actualcosthourdata2 <- flexfile$actualcosthourdata %>%
-    dplyr::left_join(dplyr::select(flexfile$unitsorsublots,
-                                   unit_or_sublot_id = .data$id, .data$end_item_id, .data$order_or_lot_id),
-                     by = c("unit_or_sublot_id"),
+  new_actualcosthourdata2 <- flexfile$ActualCostHourData %>%
+    dplyr::left_join(dplyr::select(flexfile$UnitsOrSublots,
+                                   UnitOrSublotID = .data$ID, .data$EndItemID, .data$OrderOrLotID),
+                     by = c("UnitOrSublotID"),
                      suffix = c("", "_unitorsublot"))
 
-  flexfile$actualcosthourdata <- purrr::reduce(sublot_fields, coalesce_field, suffix = "_unitorsublot", .init = new_actualcosthourdata2) %>%
+  flexfile$ActualCostHourData <- purrr::reduce(sublot_fields, coalesce_field, suffix = "_unitorsublot", .init = new_actualcosthourdata2) %>%
     dplyr::select(-(tidyselect::ends_with("_unitorsublot")))
 
   attr(flexfile, "allocated") <- TRUE

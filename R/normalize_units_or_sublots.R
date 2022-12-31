@@ -1,8 +1,8 @@
 
-#' Join in end_item and order_or_lot id for actuals data from the unitsorsublots table
+#' Join in EndItemID and OrderOrLotID for actuals data from the UnitsOrSublots table
 #'
-#' \code{normalize_units_or_sublots()} joins in the end_item and order_or_lot_id from
-#' the unitsorsublots table when not provided in the original data. Input should
+#' \code{normalize_units_or_sublots()} joins in the EndItemID and OrderOrLotID from
+#' the UnitsOrSublots table when not provided in the original data. Input should
 #' be one or more FlexFiles imported through the \code{read_flexfile} function.
 #'
 #' @inheritParams apply_flexfile
@@ -18,17 +18,17 @@ normalize_units_or_sublots <- function(flexfile) {
 normalize_units_or_sublots_single <- function(flexfile) {
 
   flexfile %>%
-    purrr::map_at("actualcosthourdata", ~dplyr::left_join(.x, flexfile$unitsorsublots,
-                   by = c(unit_or_sublot_id = "id"),
-                   suffix = c("", ".unitsorsublots"))) %>%
-    purrr::map_at("actualcosthourdata", ~
-                    dplyr::mutate(.x, order_or_lot_id = dplyr::coalesce(.data$order_or_lot_id,
-                                                                       .data$order_or_lot_id.unitsorsublots),
-                                  end_item_id = dplyr::coalesce(.data$end_item_id,
-                                                                .data$end_item_id.unitsorsublots))) %>%
-    purrr::map_at("actualcosthourdata", ~
-                    dplyr::select(.x, -.data$first_unit_number, -.data$last_unit_number)) %>%
-    purrr::map_at("actualcosthourdata", ~dplyr::select(.x, !tidyselect::contains(".")))
+    purrr::map_at("ActualCostHourData", ~dplyr::left_join(.x, flexfile$UnitsOrSublots,
+                                                          by = c(UnitOrSublotID = "ID"),
+                                                          suffix = c("", ".unitsorsublots"))) %>%
+    purrr::map_at("ActualCostHourData", ~
+                    dplyr::mutate(.x, OrderOrLotID = dplyr::coalesce(.data$OrderOrLotID,
+                                                                     .data$OrderOrLotID.unitsorsublots),
+                                  EndItemID = dplyr::coalesce(.data$EndItemID,
+                                                              .data$EndItemID.unitsorsublots))) %>%
+    purrr::map_at("ActualCostHourData", ~
+                    dplyr::select(.x, -.data$FirstUnitNumber, -.data$LastUnitNumber)) %>%
+    purrr::map_at("ActualCostHourData", ~dplyr::select(.x, !tidyselect::contains(".")))
 
 }
 

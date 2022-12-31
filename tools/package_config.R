@@ -43,7 +43,7 @@ usethis::use_package("zip", min_version = "2.1.1")
 usethis::use_package("jsonlite", min_version = "1.7.2")
 usethis::use_package("readr")
 
-usethis::use_package("costmisc", min_version = "0.7.0")
+usethis::use_package("costmisc", min_version = "0.7.1")
 
 # Set GitHub remote
 desc::desc_set_remotes(c("technomics/costmisc",
@@ -102,7 +102,10 @@ vignette("importing-flexfile", package = "readflexfile")
 
 # single file
 file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
-flexfile <- read_flexfile(file)
+
+flexfile <- read_flexfile(file, .data_case = "native")
+
+flatten_data(flexfile) %>% View()
 
 # multiple files
 files <- system.file("extdata", package = "flexample")

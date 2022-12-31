@@ -5,16 +5,17 @@
 #' @details
 #' The \code{flexfile} class has the following attributes.
 #' \describe{
-#'   \item{allocated}{Logical. Have the allocations been applied to the \code{actualcosthourdata}
+#'   \item{allocated}{Logical. Have the allocations been applied to the \code{ActualCostHourData}
 #'   table.}
-#'   \item{rolledup}{Logical. Has the WBS roll up been applied to the \code{actualcosthourdata}
-#'   and \code{forecastatcompletioncosthourdata} tables.}
+#'   \item{rolledup}{Logical. Has the WBS roll up been applied to the \code{ActualCostHourData}
+#'   and \code{ForecastAtCompletionCostHourData} tables.}
 #' }
 #'
 #' @name flexfile_class
 #'
 #' @param x An object to test or coerce to type 'flexfile'.
 #' @param names_case Case of the object being passed in.
+#' @param data_case Desired case of the returned object.
 #' @param allocated Logical whether the flexfile has been allocated.
 #' @param rolledup Logical whether the flexfile WBS has been rolled up.
 #' @param .show_check Logical whether or not to show results from the check against
@@ -24,11 +25,14 @@
 NULL
 
 #' @keywords internal
-new_flexfile <- function(x, fileinfo = NULL, allocated = FALSE, rolledup = FALSE) {
+new_flexfile <- function(x, fileinfo = NULL, allocated = FALSE, rolledup = FALSE, data_case = "snake") {
   if (is.null(fileinfo))
     fileinfo <- fileinfo_proto()
 
-  structure(x, fileinfo = fileinfo, allocated = allocated, rolledup = rolledup, class = "flexfile")
+  structure(x,
+            fileinfo = fileinfo, allocated = allocated, rolledup = rolledup, data_case = data_case,
+            data_spec = readflexfile::flexfile_spec,
+            class = "flexfile")
 }
 
 #' is_flexfile

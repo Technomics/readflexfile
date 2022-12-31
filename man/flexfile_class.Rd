@@ -33,6 +33,8 @@ is_flexfile_list(x)
 
 \item{.show_check}{Logical whether or not to show results from the check against
 the file specification.}
+
+\item{data_case}{Desired case of the returned object.}
 }
 \description{
 Functions to help with with the 'flexfile' class type.
@@ -47,9 +49,9 @@ the file specification.
 \details{
 The \code{flexfile} class has the following attributes.
 \describe{
-\item{allocated}{Logical. Have the allocations been applied to the \code{actualcosthourdata}
+\item{allocated}{Logical. Have the allocations been applied to the \code{ActualCostHourData}
 table.}
-\item{rolledup}{Logical. Has the WBS roll up been applied to the \code{actualcosthourdata}
-and \code{forecastatcompletioncosthourdata} tables.}
+\item{rolledup}{Logical. Has the WBS roll up been applied to the \code{ActualCostHourData}
+and \code{ForecastAtCompletionCostHourData} tables.}
 }
 }

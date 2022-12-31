@@ -2,7 +2,7 @@
 % Please edit documentation in R/normalize_units_or_sublots.R
 \name{normalize_units_or_sublots}
 \alias{normalize_units_or_sublots}
-\title{Join in end_item and order_or_lot id for actuals data from the unitsorsublots table}
+\title{Join in EndItemID and OrderOrLotID for actuals data from the UnitsOrSublots table}
 \usage{
 normalize_units_or_sublots(flexfile)
 }
@@ -10,7 +10,7 @@ normalize_units_or_sublots(flexfile)
 \item{flexfile}{A single flexfile or a list of flexfiles imported through the \code{read_flexfile} function.}
 }
 \description{
-\code{normalize_units_or_sublots()} joins in the end_item and order_or_lot_id from
-the unitsorsublots table when not provided in the original data. Input should
+\code{normalize_units_or_sublots()} joins in the EndItemID and OrderOrLotID from
+the UnitsOrSublots table when not provided in the original data. Input should
 be one or more FlexFiles imported through the \code{read_flexfile} function.
 }
