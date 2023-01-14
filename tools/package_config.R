@@ -33,6 +33,7 @@ usethis::use_package("dplyr", min_version = "0.8.3")
 usethis::use_package("tidyselect", min_version = "1.1.0")
 usethis::use_package("tidyr", min_version = "1.0.0")
 usethis::use_package("tibble", min_version = "2.0.0")
+usethis::use_package("stringr", min_version = "1.0.0")
 usethis::use_package("purrr", min_version = "0.3.3")
 usethis::use_package("rlang", min_version = "0.4.2")
 usethis::use_package("lifecycle", min_version = "1.0.0")
@@ -101,21 +102,11 @@ rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
 vignette("importing-flexfile", package = "readflexfile")
 
 # single file
-file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
+file_ff <- system.file("extdata", "cerberus", "Annual Submission 2016_flexfile.zip", package = "reviewcsdr")
+file_qdr <- system.file("extdata", "cerberus", "Annual Submission 2016_quantity.zip", package = "reviewcsdr")
 
-flexfile <- read_flexfile(file, .data_case = "native")
+flexfile <- read_flexfile(file_ff, .data_case = "native")
+quantity <- read_flexfile(file_qdr, .data_case = "native")
 
-flatten_data(flexfile) %>% View()
-
-# multiple files
-files <- system.file("extdata", package = "flexample")
-flexfiles <- read_folder(files, read_flexfile)
-
-flexfile %>%
-  normalize_functional_categories() %>%
-  flatten_data()
-
-flexfile %>%
-  snake_to_data_model(flexfile_spec) %>%
-  data_model_to_snake(flexfile_spec)
+ff_fam <- create_flexfile_family(flexfile, quantity)
 

@@ -16,6 +16,9 @@
 #' @param .coerce_spec Logical whether to coerce all column data types to those from the data models.
 #' If \code{FALSE}, the types will be as detected upon read by the JSON parser.
 #' @param .drop_optional Logical whether to drop optional columns or not.
+#' @param .data_cade Either 'native' or 'snake'. Controls if the names of the tables and columns
+#' reflect the native data model or the transformed snake_case. The default option was changed from
+#' snake to native in readflexfile v0.5.0 to simplify usage of readflexfile.
 #' @inheritParams costmisc::read_json_zip
 #'
 #' @return A list of tibbles for the \code{file}. Result will be either of class \code{flexfile} or
@@ -47,7 +50,7 @@ read_flexfile <- function(file,
     what = I('The default of returning tables and fields using "snake_case"'),
     with = I('the new names in any new code and we strongly advise refactoring any existing code.
     Note that new names align with those used in the native report.\n\nIf you must use the old naming
-    in the interim, please use the argument `.data_case = "snake"` or use `costmisc::native_to_snake_case()')
+    in the interim, please use the argument `.data_case = "snake"` or use `costmisc::native_to_snake_case()`')
   )
 
   # check the file type

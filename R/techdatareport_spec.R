@@ -1,21 +1,19 @@
-#' File specification for the FlexFile
+#' File specification for the Tech Data Report
 #'
 #' A list containing two data frames: \code{fields} and \code{tables}.
 #'
 #' @section tables:
-#' \code{tables} is a data frame with 29 rows and 7 variables:
+#' \code{tables} is a data frame with 6 rows and 5 variables:
 #' \describe{
 #'   \item{table}{The table name in the specification}
 #'   \item{entity}{The entity name in the specification}
 #'   \item{snake_table}{A snake_case version of table}
 #'   \item{type}{Either submission or enum}
 #'   \item{is_scalar}{Boolean whether the table is a list of scalars or a data table}
-#'   \item{excel_3part}{The "part" in the 3-Part Template}
-#'   \item{excel_3part_table}{The table name in the 3-Part Template}
 #' }
 #'
 #' @section fields:
-#' \code{fields} is a data frame with 171 rows and 10 variables:
+#' \code{fields} is a data frame with 58 rows and 9 variables:
 #' \describe{
 #'   \item{table}{The table name in the specification}
 #'   \item{field}{The field name in the specification}
@@ -25,10 +23,9 @@
 #'   \item{pk}{Boolean if the field is a primary key}
 #'   \item{fk_table}{Foreign key constraint table, if applicable}
 #'   \item{fk_field}{Foreign key constraint field, if applicable}
-#'   \item{optional}{Boolean if the field is optional or not}
-#'   \item{excel_3part_name}{The field name in the 3-Part Template}
+#'   \item{optional}{Boolean if field is optional or required}
 #' }
 #'
 #' @family Data Specs
 #'
-"flexfile_spec"
+"maintrepair_spec"

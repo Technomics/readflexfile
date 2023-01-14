@@ -11,7 +11,7 @@ read_flexfile(
   .coerce_spec = TRUE,
   .drop_optional = TRUE,
   .warn_utf8_bom = FALSE,
-  .data_case = c("snake", "native")
+  .data_case = c("native", "snake")
 )
 
 read_flexfile_3part(
@@ -33,6 +33,10 @@ If \code{FALSE}, the types will be as detected upon read by the JSON parser.}
 \item{.drop_optional}{Logical whether to drop optional columns or not.}
 
 \item{.warn_utf8_bom}{Logical whether to report UTF8 byte-order-mark errors.}
+
+\item{.data_cade}{Either 'native' or 'snake'. Controls if the names of the tables and columns
+reflect the native data model or the transformed snake_case. The default option was changed from
+snake to native in readflexfile v0.5.0 to simplify usage of readflexfile.}
 }
 \value{
 A list of tibbles for the \code{file}. Result will be either of class \code{flexfile} or

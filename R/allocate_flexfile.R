@@ -63,8 +63,8 @@ allocate_flexfile_single <- function(flexfile) {
   flexfile$ActualCostHourData <- purrr::reduce(allocation_fields, coalesce_field, suffix = "_allocations", .init = new_actualcosthourdata) %>%
     tidyr::replace_na(list(PercentValue = 1)) %>%
     #dplyr::mutate_at(dplyr::vars(tidyselect::starts_with("Value_")), ~ . * .data$PercentValue) %>% # need to handle other methods
-    dplyr::mutate(Value_Dollars = Value_Dollars * .data$PercentValue,
-                  Value_Hours = Value_Hours * .data$PercentValue) %>%
+    dplyr::mutate(Value_Dollars = .data$Value_Dollars * .data$PercentValue,
+                  Value_Hours = .data$Value_Hours * .data$PercentValue) %>%
     dplyr::select(-(tidyselect::ends_with("_allocations")), -.data$AllocationMethodTypeID)
 
   # join in the remaining 'UnitOrSublotID' to fill in 'EndItemID' and 'OrderOrLotID'

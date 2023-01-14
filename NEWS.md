@@ -2,6 +2,16 @@
 
 # readflexfile 0.5.0
 
+* **MAJOR CHANGE:** Changed the default case in `read_flexfile()` to match that of the data model instead of a transformed snake_case representation. Since the first release of readflexfile, all tables and fields were renamed according to a file specification. This has ultimately led to confusion since users need to know both the original nomenclature from the "native" data model and the new names for use in readflexfile.
+  * This means that `read_flexfile()` now returns different results than it has in past versions. To maintain backwards compatibility, you can use the `.data_case = "snake"` argment. This will return the old results. This can be used as a stop gap, but we *strongly recommend rewriting old code to support the new names*. We have done this on our own related toolset. While it a bit annoying, it does not take very long.
+  * The function `costmisc::native_to_snake_case()` can also be used to convert from the native case to the legacy snake_case.
+  * The 'flexfile' and 'quantitydata' classes will now store the case as an attribute.
+  * At some point, we will remove support for the snake_case names.
+* Added in support for "Flexfile Families" with the new 'flexfile_family' type. This type stores a list of related reports within the Flexfile Family of reports
+* Added in experimental functions to read in additional data formats. These read from the Excel sources rather than JSON at this point, so they may be less reliable. Each format includes it's own S3 type and is compatible for the new FlexFile Family feature.
+  * `read_maintrepair()` reads the M&R report from the Excel template into an object of class 'maintrepair'.
+  * `read_techdatareport()` reads the M&R report from the Excel template into an object of class 'techdatareport'.
+
 # readflexfile 0.4.2
 
 * Added in a new function `normalize_units_or_sublots()`. This function will add the EndItemID and OrderOrLotID fields to `actualcosthourdata` and `forecastatcompletioncosthourdata` tables when the UnitOrSublotID is provided instead. This functionality always occurred when flattening the data using `flatten_data()`, but is now exported as its own function to support other use cases.
