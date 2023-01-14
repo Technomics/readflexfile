@@ -35,7 +35,8 @@ Imports:
     readr,
     tidyselect (>= 1.1.0),
     zip (>= 2.1.1),
-    jsonlite (>= 1.7.2)
+    jsonlite (>= 1.7.2),
+    stringr (>= 1.0.0)
 RdMacros: 
     lifecycle
 Depends: 
