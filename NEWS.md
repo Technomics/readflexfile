@@ -1,5 +1,11 @@
 # readflexfile (development version)
 
+# readflexfile 0.5.0
+
+# readflexfile 0.4.2
+
+* Added in a new function `normalize_units_or_sublots()`. This function will add the EndItemID and OrderOrLotID fields to `actualcosthourdata` and `forecastatcompletioncosthourdata` tables when the UnitOrSublotID is provided instead. This functionality always occurred when flattening the data using `flatten_data()`, but is now exported as its own function to support other use cases.
+
 # readflexfile 0.4.1
 
 * Removed `add_id_col()` and `listindex_to_col()` re-exports from `costmisc` which were required for the legacy workflow.

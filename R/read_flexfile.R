@@ -35,10 +35,25 @@
 #'
 #' flexfiles <- read_folder(folder, read_flexfile)
 #'}
-read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .drop_optional = TRUE, .warn_utf8_bom = TRUE) {
+read_flexfile <- function(file,
+                          .show_check = FALSE,
+                          .coerce_spec = TRUE,
+                          .drop_optional = TRUE,
+                          .warn_utf8_bom = FALSE,
+                          .data_case = c("native", "snake")) {
+
+  lifecycle::deprecate_warn(
+    when = "0.5.0",
+    what = I('The default of returning tables and fields using "snake_case"'),
+    with = I('the new names in any new code and we strongly advise refactoring any existing code.
+    Note that new names align with those used in the native report.\n\nIf you must use the old naming
+    in the interim, please use the argument `.data_case = "snake"` or use `costmisc::native_to_snake_case()')
+  )
 
   # check the file type
   file_type <- check_filetype(file)
+
+  .data_case <- .data_case[1]
 
   # assign a file specification based on the type
   if (file_type == "FlexFile") {
@@ -53,14 +68,14 @@ read_flexfile <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .drop_
   table_list <- costmisc::read_json_zip(file, .warn_utf8_bom)
 
   # cleanup tables by checking against the file spec
-  table_list <- spec_cleanup(table_list, table_spec, file_type, .show_check, .coerce_spec, .drop_optional,
+  table_list <- spec_cleanup(table_list, table_spec, file_type, .show_check, .coerce_spec, .drop_optional, .data_case,
                              as.Date)
 
   fileinfo <- list(path = normalizePath(dirname(file), winslash = "/"),
                    name = sub(".zip$", "", basename(file)),
                    name_ext = basename(file))
 
-  set_class_function(table_list, fileinfo = fileinfo)
+  set_class_function(table_list, fileinfo = fileinfo, data_case = .data_case)
 }
 
 #' Read FlexFile 3-Part Template
@@ -151,7 +166,8 @@ read_flexfile_3part <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
 
 #' @keywords internal
 spec_cleanup <- function(table_list, table_spec, file_type,
-                         .show_check, .coerce_spec, .drop_optional, .fn_date) {
+                         .show_check, .coerce_spec, .drop_optional, .data_case,
+                         .fn_date) {
 
   # check file against the spec
   check <- costmisc::check_spec(table_list, table_spec, file_type,
@@ -165,7 +181,13 @@ spec_cleanup <- function(table_list, table_spec, file_type,
   if (.coerce_spec) table_list <- costmisc::coerce_to_spec(table_list, table_spec, .fn_date)
 
   # convert tables and fields to snake_case (done after the coercing)
-  table_list <- data_model_to_snake(table_list, table_spec)
+  if (.data_case !=  "native") {
+    # table_list <- data_model_to_snake(table_list, table_spec)
+    table_list <- costmisc::change_case_from_spec(table_list, table_spec,
+                                                  from_case = NULL, to_case = .data_case,
+                                                  add_missing = FALSE)
+  }
+
 
   # remove optional fields
   if (.drop_optional) table_list <- drop_na_optional_spec_tables(table_list, table_spec)

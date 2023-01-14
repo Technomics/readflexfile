@@ -44,7 +44,7 @@ usethis::use_package("zip", min_version = "2.1.1")
 usethis::use_package("jsonlite", min_version = "1.7.2")
 usethis::use_package("readr")
 
-usethis::use_package("costmisc", min_version = "0.7.0")
+usethis::use_package("costmisc", min_version = "0.7.1")
 
 # Set GitHub remote
 desc::desc_set_remotes(c("technomics/costmisc",
@@ -91,8 +91,8 @@ build_path <- list(bin = file.path(build_path_root, "bin", rnomics::r_version())
 
 fs::dir_create(unlist(build_path))
 
-bin_build_file <- devtools::build(binary = TRUE, path = build_path$bin)
 src_build_file <- devtools::build(path = build_path$src)
+bin_build_file <- devtools::build(src_build_file, binary = TRUE, path = build_path$bin)
 
 drat_repo <- file.path(setupr::get_dirs()$git_local, "costverse", "repo")
 rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
@@ -103,7 +103,10 @@ vignette("importing-flexfile", package = "readflexfile")
 
 # single file
 file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
-flexfile <- read_flexfile(file)
+
+flexfile <- read_flexfile(file, .data_case = "native")
+
+flatten_data(flexfile) %>% View()
 
 # multiple files
 files <- system.file("extdata", package = "flexample")
