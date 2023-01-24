@@ -28,4 +28,4 @@
 #'
 #' @family Data Specs
 #'
-"maintrepair_spec"
+"techdatareport_spec"

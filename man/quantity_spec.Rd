@@ -44,7 +44,8 @@ A list containing two data frames: \code{fields} and \code{tables}.
 \seealso{
 Other Data Specs: 
 \code{\link{flexfile_spec}},
-\code{\link{maintrepair_spec}}
+\code{\link{maintrepair_spec}},
+\code{\link{techdatareport_spec}}
 }
 \concept{Data Specs}
 \keyword{datasets}

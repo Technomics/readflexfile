@@ -1,9 +1,8 @@
-# readflexfile (development version)
 
 # readflexfile 0.5.0
 
 * **MAJOR CHANGE:** Changed the default case in `read_flexfile()` to match that of the data model instead of a transformed snake_case representation. Since the first release of readflexfile, all tables and fields were renamed according to a file specification. This has ultimately led to confusion since users need to know both the original nomenclature from the "native" data model and the new names for use in readflexfile.
-  * This means that `read_flexfile()` now returns different results than it has in past versions. To maintain backwards compatibility, you can use the `.data_case = "snake"` argment. This will return the old results. This can be used as a stop gap, but we *strongly recommend rewriting old code to support the new names*. We have done this on our own related toolset. While it a bit annoying, it does not take very long.
+  * This means that `read_flexfile()` now returns different results than it has in past versions. To maintain backwards compatibility, you can use the `.data_case = "snake"` argument. This will return the old results. This can be used as a stop gap, but we *strongly recommend rewriting old code to support the new names*. We have done this on our own related tool set. While it a bit annoying, it does not take very long.
   * The function `costmisc::native_to_snake_case()` can also be used to convert from the native case to the legacy snake_case.
   * The 'flexfile' and 'quantitydata' classes will now store the case as an attribute.
   * At some point, we will remove support for the snake_case names.

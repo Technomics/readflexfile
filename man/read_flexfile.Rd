@@ -34,7 +34,7 @@ If \code{FALSE}, the types will be as detected upon read by the JSON parser.}
 
 \item{.warn_utf8_bom}{Logical whether to report UTF8 byte-order-mark errors.}
 
-\item{.data_cade}{Either 'native' or 'snake'. Controls if the names of the tables and columns
+\item{.data_case}{Either 'native' or 'snake'. Controls if the names of the tables and columns
 reflect the native data model or the transformed snake_case. The default option was changed from
 snake to native in readflexfile v0.5.0 to simplify usage of readflexfile.}
 }

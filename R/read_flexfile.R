@@ -16,7 +16,7 @@
 #' @param .coerce_spec Logical whether to coerce all column data types to those from the data models.
 #' If \code{FALSE}, the types will be as detected upon read by the JSON parser.
 #' @param .drop_optional Logical whether to drop optional columns or not.
-#' @param .data_cade Either 'native' or 'snake'. Controls if the names of the tables and columns
+#' @param .data_case Either 'native' or 'snake'. Controls if the names of the tables and columns
 #' reflect the native data model or the transformed snake_case. The default option was changed from
 #' snake to native in readflexfile v0.5.0 to simplify usage of readflexfile.
 #' @inheritParams costmisc::read_json_zip
