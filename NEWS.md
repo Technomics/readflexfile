@@ -1,3 +1,6 @@
+# readflexfile 0.5.1
+
+* Added a `.check = TRUE` argument to `create_flexfile_family()` to skip checking if the metadata matches between the reports. Added a thin wrapper `force_flexfile_family()` which uses to `.check = FALSE`
 
 # readflexfile 0.5.0
 

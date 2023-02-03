@@ -77,11 +77,11 @@ identical_report_metadata <- function(..., report_list = NULL) {
 #' @param ... One or more reports in the FlexFile family of types.
 #' @param report_list Alternatively, a list of reports. If provided then the
 #' contents of \code{...} will be ignored.
+#' @param .check Logical whether to check if the reports have matching metadata or not.
 #'
 #' @return A list of reports of type \code{flexfile_family}.
 #' @export
-#'
-create_flexfile_family <- function(..., report_list = NULL) {
+create_flexfile_family <- function(..., report_list = NULL, .check = TRUE) {
 
   if (is.null(report_list)) report_list <- rlang::list2(...)
 
@@ -108,6 +108,19 @@ create_flexfile_family <- function(..., report_list = NULL) {
   new_flexfile_family(flexfile = report_list_typed$flexfile,
                       quantityreport = report_list_typed$quantityreport,
                       maintrepair = report_list_typed$maintrepair,
-                      techdatareport = report_list_typed$techdatareport)
+                      techdatareport = report_list_typed$techdatareport,
+                      .check = .check)
 
+}
+
+#' Force a FlexFile Family
+#'
+#' \code{force_flexfile_family()} is a thin wrapper around \code{create_flexfile_family()}
+#' where \code{.check = FALSE}.
+#'
+#' @rdname create_flexfile_family
+#'
+#' @export
+force_flexfile_family <- function(..., report_list = NULL) {
+  create_flexfile_family(..., report_list = report_list, .check = FALSE)
 }

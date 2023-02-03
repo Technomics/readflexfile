@@ -2,15 +2,20 @@
 % Please edit documentation in R/flexfile_family.R
 \name{create_flexfile_family}
 \alias{create_flexfile_family}
+\alias{force_flexfile_family}
 \title{Create a FlexFile Family}
 \usage{
-create_flexfile_family(..., report_list = NULL)
+create_flexfile_family(..., report_list = NULL, .check = TRUE)
+
+force_flexfile_family(..., report_list = NULL)
 }
 \arguments{
 \item{...}{One or more reports in the FlexFile family of types.}
 
 \item{report_list}{Alternatively, a list of reports. If provided then the
 contents of \code{...} will be ignored.}
+
+\item{.check}{Logical whether to check if the reports have matching metadata or not.}
 }
 \value{
 A list of reports of type \code{flexfile_family}.
@@ -20,4 +25,7 @@ A list of reports of type \code{flexfile_family}.
 
 \code{create_flexfile_family()} creates a list of related FlexFile Family reports. For example,
 it is used to store the matching FlexFile and Quantity Data Report together.
+
+\code{force_flexfile_family()} is a thin wrapper around \code{create_flexfile_family()}
+where \code{.check = FALSE}.
 }

@@ -102,11 +102,11 @@ rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
 vignette("importing-flexfile", package = "readflexfile")
 
 # single file
-file_ff <- system.file("extdata", "cerberus", "Annual Submission 2016_flexfile.zip", package = "reviewcsdr")
-file_qdr <- system.file("extdata", "cerberus", "Annual Submission 2016_quantity.zip", package = "reviewcsdr")
+file_ff <- system.file("extdata", "cerberus", "Annual-Submission-2016_flexfile.zip", package = "reviewcsdr")
+file_qdr <- system.file("extdata", "cerberus", "Annual-Submission-2016_quantity.zip", package = "reviewcsdr")
 
 flexfile <- read_flexfile(file_ff, .data_case = "native")
 quantity <- read_flexfile(file_qdr, .data_case = "native")
 
 ff_fam <- create_flexfile_family(flexfile, quantity)
-
+ff_fam2 <- force_flexfile_family(flexfile, quantity)
