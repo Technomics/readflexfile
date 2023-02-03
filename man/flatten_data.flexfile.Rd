@@ -16,7 +16,10 @@ cases this should be left as \code{TRUE}.}
 }
 \description{
 \code{flatten_data.flexfile()} creates a single flat file for working with FlexFile
-data. Input should be a list of one or more FlexFiles imported through the \code{read_flexfile} function.
+data. Input should be a list of one or more FlexFiles imported through the \code{read_flexfile} function.\cr
+\cr
+All fields retain their original names from the data model unless they are added in the flattening process. These
+new fields are in 'snake_case' rather than ProperCase.
 }
 \examples{
 \dontrun{

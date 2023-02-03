@@ -1,7 +1,7 @@
 Package: readflexfile
 Title: Read FlexFile data
 URL: https://github.com/Technomics/readflexfile
-Version: 0.4.2
+Version: 0.5.1
 Authors@R: 
     c(person(given = "Adam H.",
              family = "James",
@@ -20,7 +20,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Imports: 
     lifecycle (>= 1.0.0),
     magrittr,
@@ -29,13 +29,14 @@ Imports:
     tibble (>= 2.0.0),
     purrr (>= 0.3.3),
     rlang (>= 0.4.2),
-    costmisc (>= 0.7.0),
+    costmisc (>= 0.7.1),
     lubridate,
     janitor (>= 2.1.0),
     readr,
     tidyselect (>= 1.1.0),
     zip (>= 2.1.1),
-    jsonlite (>= 1.7.2)
+    jsonlite (>= 1.7.2),
+    stringr (>= 1.0.0)
 RdMacros: 
     lifecycle
 Depends: 

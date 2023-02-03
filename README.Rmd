@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![R build status](https://github.com/Technomics/readflexfile/workflows/R-CMD-check/badge.svg)](https://github.com/Technomics/readflexfile/actions)
 [![coverage: 1.5%25](https://img.shields.io/badge/coverage-1.5%25-red.svg)](https://cran.r-project.org/web/packages/covr/vignettes/how_it_works.html)
-[![version: 0.4.2](https://img.shields.io/badge/version-0.4.2-blue.svg)]()
+[![version: 0.5.1](https://img.shields.io/badge/version-0.5.1-blue.svg)]()
 <!-- badges: end -->
 
 The goal of readflexfile is to facilitate the reading of the FlexFile from the original JSON format into R. The package also includes helpful functions to flatten the schema into a single table.

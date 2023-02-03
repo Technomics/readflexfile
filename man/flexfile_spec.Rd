@@ -15,7 +15,7 @@ A list containing two data frames: \code{fields} and \code{tables}.
 }
 \section{tables}{
 
-\code{tables} is a data frame with 29 rows and 5 variables:
+\code{tables} is a data frame with 29 rows and 7 variables:
 \describe{
 \item{table}{The table name in the specification}
 \item{entity}{The entity name in the specification}
@@ -46,7 +46,9 @@ A list containing two data frames: \code{fields} and \code{tables}.
 
 \seealso{
 Other Data Specs: 
-\code{\link{quantity_spec}}
+\code{\link{maintrepair_spec}},
+\code{\link{quantity_spec}},
+\code{\link{techdatareport_spec}}
 }
 \concept{Data Specs}
 \keyword{datasets}

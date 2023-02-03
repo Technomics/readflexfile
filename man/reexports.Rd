@@ -14,6 +14,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{costmisc}{\code{\link[costmisc:change_case_from_spec]{data_model_to_snake}}, \code{\link[costmisc]{flatten_data}}, \code{\link[costmisc]{read_folder}}, \code{\link[costmisc:change_case_from_spec]{snake_to_data_model}}}
+  \item{costmisc}{\code{\link[costmisc]{data_model_to_snake}}, \code{\link[costmisc]{flatten_data}}, \code{\link[costmisc]{read_folder}}, \code{\link[costmisc]{snake_to_data_model}}}
 }}
 
