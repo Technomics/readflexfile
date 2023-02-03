@@ -3,7 +3,12 @@
 is_flexfile() checks if object is of type 'flexfile'
 as_flexfile() creates object of type 'flexfile' and checks it against
 the file specification.
-is_flexfile_list() check if the object is a list where all members are of class 'flexfile'."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+is_flexfile_list() check if the object is a list where all members are of class 'flexfile'.
+is_flexfile_family() checks if object is of type 'flexfile_family'
+one_of_flexfile_family() checks if object is of a type within the FlexFile family. This means
+is of type flexfile, quantityreport, maintrepair, or techdatareport.
+which_flexfile_family() returns which type within the family the object is. Results are
+flexfile, quantityreport, maintrepair, or techdatareport."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-180949386-1"></script><script>
@@ -27,7 +32,7 @@ is_flexfile_list() check if the object is a list where all members are of class 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.1</span>
       </span>
     </div>
 
@@ -64,7 +69,7 @@ is_flexfile_list() check if the object is a list where all members are of class 
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>flexfile class utilities</h1>
-    <small class="dont-index">Source: <a href="https://github.com/Technomics/readflexfile/blob/HEAD/R/flexfile-class.R" class="external-link"><code>R/flexfile-class.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/Technomics/readflexfile/blob/HEAD/R/flexfile-class.R" class="external-link"><code>R/flexfile-class.R</code></a>, <a href="https://github.com/Technomics/readflexfile/blob/HEAD/R/flexfile_family-class.R" class="external-link"><code>R/flexfile_family-class.R</code></a>, <a href="https://github.com/Technomics/readflexfile/blob/HEAD/R/flexfile_family.R" class="external-link"><code>R/flexfile_family.R</code></a></small>
     <div class="hidden name"><code>flexfile_class.Rd</code></div>
     </div>
 
@@ -74,6 +79,11 @@ is_flexfile_list() check if the object is a list where all members are of class 
 <p><code>as_flexfile()</code> creates object of type 'flexfile' and checks it against
 the file specification.</p>
 <p><code>is_flexfile_list()</code> check if the object is a list where all members are of class 'flexfile'.</p>
+<p><code>is_flexfile_family()</code> checks if object is of type 'flexfile_family'</p>
+<p><code>one_of_flexfile_family()</code> checks if object is of a type within the FlexFile family. This means
+is of type <code>flexfile</code>, <code>quantityreport</code>, <code>maintrepair</code>, or <code>techdatareport</code>.</p>
+<p><code>which_flexfile_family()</code> returns which type within the family the object is. Results are
+<code>flexfile</code>, <code>quantityreport</code>, <code>maintrepair</code>, or <code>techdatareport</code>.</p>
     </div>
 
     <div id="ref-usage">
@@ -88,7 +98,13 @@ the file specification.</p>
 <span>  .show_check <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">is_flexfile_list</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">is_flexfile_list</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">is_flexfile_family</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">one_of_flexfile_family</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">which_flexfile_family</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -117,16 +133,20 @@ the file specification.</p>
 <dd><p>Logical whether or not to show results from the check against
 the file specification.</p></dd>
 
+
+<dt>data_case</dt>
+<dd><p>Desired case of the returned object.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
     <p>The <code>flexfile</code> class has the following attributes.</p><dl><dt>allocated</dt>
-<dd><p>Logical. Have the allocations been applied to the <code>actualcosthourdata</code>
+<dd><p>Logical. Have the allocations been applied to the <code>ActualCostHourData</code>
 table.</p></dd>
 
 <dt>rolledup</dt>
-<dd><p>Logical. Has the WBS roll up been applied to the <code>actualcosthourdata</code>
-and <code>forecastatcompletioncosthourdata</code> tables.</p></dd>
+<dd><p>Logical. Has the WBS roll up been applied to the <code>ActualCostHourData</code>
+and <code>ForecastAtCompletionCostHourData</code> tables.</p></dd>
 
 
 </dl></div>

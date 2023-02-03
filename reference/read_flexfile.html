@@ -27,7 +27,7 @@ as from the JSON."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.1</span>
       </span>
     </div>
 
@@ -82,7 +82,8 @@ as from the JSON.</p>
 <span>  .show_check <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .coerce_spec <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  .drop_optional <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  .warn_utf8_bom <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  .warn_utf8_bom <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  .data_case <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"native"</span>, <span class="st">"snake"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">read_flexfile_3part</span><span class="op">(</span></span>
@@ -115,6 +116,12 @@ If <code>FALSE</code>, the types will be as detected upon read by the JSON parse
 
 <dt>.warn_utf8_bom</dt>
 <dd><p>Logical whether to report UTF8 byte-order-mark errors.</p></dd>
+
+
+<dt>.data_case</dt>
+<dd><p>Either 'native' or 'snake'. Controls if the names of the tables and columns
+reflect the native data model or the transformed snake_case. The default option was changed from
+snake to native in readflexfile v0.5.0 to simplify usage of readflexfile.</p></dd>
 
 </dl></div>
     <div id="value">

@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.1</span>
       </span>
     </div>
 
@@ -64,13 +64,35 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="0.5.1" id="readflexfile-051">readflexfile 0.5.1<a class="anchor" aria-label="anchor" href="#readflexfile-051"></a></h2>
+<ul><li>Added a <code>.check = TRUE</code> argument to <code><a href="../reference/create_flexfile_family.html">create_flexfile_family()</a></code> to skip checking if the metadata matches between the reports. Added a thin wrapper <code><a href="../reference/create_flexfile_family.html">force_flexfile_family()</a></code> which uses to <code>.check = FALSE</code>
+</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.5.0" id="readflexfile-050">readflexfile 0.5.0<a class="anchor" aria-label="anchor" href="#readflexfile-050"></a></h2>
+<ul><li>
+<strong>MAJOR CHANGE:</strong> Changed the default case in <code><a href="../reference/read_flexfile.html">read_flexfile()</a></code> to match that of the data model instead of a transformed snake_case representation. Since the first release of readflexfile, all tables and fields were renamed according to a file specification. This has ultimately led to confusion since users need to know both the original nomenclature from the “native” data model and the new names for use in readflexfile.
+<ul><li>This means that <code><a href="../reference/read_flexfile.html">read_flexfile()</a></code> now returns different results than it has in past versions. To maintain backwards compatibility, you can use the <code>.data_case = "snake"</code> argument. This will return the old results. This can be used as a stop gap, but we <em>strongly recommend rewriting old code to support the new names</em>. We have done this on our own related tool set. While it a bit annoying, it does not take very long.</li>
+<li>The function <code><a href="https://rdrr.io/pkg/costmisc/man/change_case_from_spec.html" class="external-link">costmisc::native_to_snake_case()</a></code> can also be used to convert from the native case to the legacy snake_case.</li>
+<li>The ‘flexfile’ and ‘quantitydata’ classes will now store the case as an attribute.</li>
+<li>At some point, we will remove support for the snake_case names.</li>
+</ul></li>
+<li>Added in support for “Flexfile Families” with the new ‘flexfile_family’ type. This type stores a list of related reports within the Flexfile Family of reports</li>
+<li>Added in experimental functions to read in additional data formats. These read from the Excel sources rather than JSON at this point, so they may be less reliable. Each format includes it’s own S3 type and is compatible for the new FlexFile Family feature.
+<ul><li>
+<code><a href="../reference/read_maintrepair.html">read_maintrepair()</a></code> reads the M&amp;R report from the Excel template into an object of class ‘maintrepair’.</li>
+<li>
+<code><a href="../reference/read_techdatareport.html">read_techdatareport()</a></code> reads the M&amp;R report from the Excel template into an object of class ‘techdatareport’.</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.2" id="readflexfile-042">readflexfile 0.4.2<a class="anchor" aria-label="anchor" href="#readflexfile-042"></a></h2>
 <ul><li>Added in a new function <code><a href="../reference/normalize_units_or_sublots.html">normalize_units_or_sublots()</a></code>. This function will add the EndItemID and OrderOrLotID fields to <code>actualcosthourdata</code> and <code>forecastatcompletioncosthourdata</code> tables when the UnitOrSublotID is provided instead. This functionality always occurred when flattening the data using <code><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html" class="external-link">flatten_data()</a></code>, but is now exported as its own function to support other use cases.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.1" id="readflexfile-041">readflexfile 0.4.1<a class="anchor" aria-label="anchor" href="#readflexfile-041"></a></h2>
 <ul><li>Removed <code>add_id_col()</code> and <code>listindex_to_col()</code> re-exports from <code>costmisc</code> which were required for the legacy workflow.</li>
-<li>Moved <code><a href="https://rdrr.io/pkg/costmisc/man/change_case_from_spec.html" class="external-link">data_model_to_snake()</a></code> and <code><a href="https://rdrr.io/pkg/costmisc/man/change_case_from_spec.html" class="external-link">snake_to_data_model()</a></code> to <code>costmisc</code> and re-exported. Added a more general <code>change_case_from_spec()</code> to costmisc as well, also re-exported in <code>readflexfile</code>.</li>
+<li>Moved <code><a href="https://rdrr.io/pkg/costmisc/man/data_model_to_snake.html" class="external-link">data_model_to_snake()</a></code> and <code><a href="https://rdrr.io/pkg/costmisc/man/snake_to_data_model.html" class="external-link">snake_to_data_model()</a></code> to <code>costmisc</code> and re-exported. Added a more general <code>change_case_from_spec()</code> to costmisc as well, also re-exported in <code>readflexfile</code>.</li>
 <li>Added functionality to read data from the 3-Part Template using <code><a href="../reference/read_flexfile.html">read_flexfile_3part()</a></code>.</li>
 </ul></div>
     <div class="section level2">
@@ -78,7 +100,7 @@
 <ul><li>Added in a new function <code><a href="../reference/normalize_functional_categories.html">normalize_functional_categories()</a></code>. This function will add the standard functional categories to the <code>actualcosthourdata</code> and <code>forecastatcompletioncosthourdata</code> tables when the detailed functional categories are provided. This functionality always occurred when flattening the data using <code><a href="https://rdrr.io/pkg/costmisc/man/flatten_data.html" class="external-link">flatten_data()</a></code>, but is now exported as its own function to support other use cases.</li>
 <li>Added in a new function <code><a href="../reference/apply_flexfile.html">apply_flexfile()</a></code>. This function allows you to apply a function over a single or a list of flexfiles. This provides a convenient way to apply a function without knowing in advance whether the input is a single object of type ‘flexfile’ or a list of objects. The function is used internally with functions such as <code><a href="../reference/allocate_flexfile.html">allocate_flexfile()</a></code> but is now exported to the user.</li>
 <li>Added in a new function <code><a href="../reference/write_flexfile.html">write_flexfile()</a></code>. This function will write an object of class ‘flexfile’ or ‘quantityreport’ into the zipped collected of JSON files.</li>
-<li>Added in two new functions (<code><a href="https://rdrr.io/pkg/costmisc/man/change_case_from_spec.html" class="external-link">data_model_to_snake()</a></code> and <code><a href="https://rdrr.io/pkg/costmisc/man/change_case_from_spec.html" class="external-link">snake_to_data_model()</a></code>) to interchange between naming conventions (native data model notation and snake_case). Note that the formal S3 object at this time must still remain in snake_case or else the downstream functions will not know what to do. Future iterations may support either case.</li>
+<li>Added in two new functions (<code><a href="https://rdrr.io/pkg/costmisc/man/data_model_to_snake.html" class="external-link">data_model_to_snake()</a></code> and <code><a href="https://rdrr.io/pkg/costmisc/man/snake_to_data_model.html" class="external-link">snake_to_data_model()</a></code>) to interchange between naming conventions (native data model notation and snake_case). Note that the formal S3 object at this time must still remain in snake_case or else the downstream functions will not know what to do. Future iterations may support either case.</li>
 <li>Updated the <code>as_*()</code> functions so that missing fields and tables are added into the model during the coercion.</li>
 <li>Optional fields (i.e., the Tags) will not be included in the data model if they are empty (<a href="https://github.com/Technomics/readflexfile/issues/31" class="external-link">#31</a>). This is controlled using the <code>.drop_optional = TRUE</code> default in <code><a href="../reference/read_flexfile.html">read_flexfile()</a></code> and the <code>as_*()</code> functions.</li>
 </ul></div>

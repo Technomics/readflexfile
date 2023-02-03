@@ -28,6 +28,9 @@
     <loc>/reference/apply_flexfile.html</loc>
   </url>
   <url>
+    <loc>/reference/create_flexfile_family.html</loc>
+  </url>
+  <url>
     <loc>/reference/duplicated_report.html</loc>
   </url>
   <url>
@@ -58,7 +61,16 @@
     <loc>/reference/flexfile_spec.html</loc>
   </url>
   <url>
+    <loc>/reference/identical_report_metadata.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/maintrepair_class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/maintrepair_spec.html</loc>
   </url>
   <url>
     <loc>/reference/normalize_functional_categories.html</loc>
@@ -82,6 +94,12 @@
     <loc>/reference/read_flexfile.html</loc>
   </url>
   <url>
+    <loc>/reference/read_maintrepair.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_techdatareport.html</loc>
+  </url>
+  <url>
     <loc>/reference/readflexfile-package.html</loc>
   </url>
   <url>
@@ -92,6 +110,12 @@
   </url>
   <url>
     <loc>/reference/stack_ff.html</loc>
+  </url>
+  <url>
+    <loc>/reference/techdatareport_class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/techdatareport_spec.html</loc>
   </url>
   <url>
     <loc>/reference/write_flexfile.html</loc>
