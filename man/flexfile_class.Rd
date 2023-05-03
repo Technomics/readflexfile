@@ -43,8 +43,6 @@ which_flexfile_family(x)
 
 \item{.show_check}{Logical whether or not to show results from the check against
 the file specification.}
-
-\item{data_case}{Desired case of the returned object.}
 }
 \description{
 Functions to help with with the 'flexfile' class type.
