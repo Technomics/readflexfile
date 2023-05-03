@@ -18,17 +18,19 @@ normalize_units_or_sublots <- function(flexfile) {
 normalize_units_or_sublots_single <- function(flexfile) {
 
   flexfile %>%
-    purrr::map_at("ActualCostHourData", ~dplyr::left_join(.x, flexfile$UnitsOrSublots,
-                                                          by = c(UnitOrSublotID = "ID"),
-                                                          suffix = c("", ".unitsorsublots"))) %>%
-    purrr::map_at("ActualCostHourData", ~
-                    dplyr::mutate(.x, OrderOrLotID = dplyr::coalesce(.data$OrderOrLotID,
-                                                                     .data$OrderOrLotID.unitsorsublots),
-                                  EndItemID = dplyr::coalesce(.data$EndItemID,
-                                                              .data$EndItemID.unitsorsublots))) %>%
-    purrr::map_at("ActualCostHourData", ~
-                    dplyr::select(.x, -.data$FirstUnitNumber, -.data$LastUnitNumber)) %>%
-    purrr::map_at("ActualCostHourData", ~dplyr::select(.x, !tidyselect::contains(".")))
+    purrr::modify_at("ActualCostHourData",
+                     ~ dplyr::left_join(.x, flexfile$UnitsOrSublots,
+                                        by = c(UnitOrSublotID = "ID"),
+                                        suffix = c("", ".unitsorsublots"))) %>%
+    purrr::modify_at("ActualCostHourData",
+                     ~ dplyr::mutate(.x, OrderOrLotID = dplyr::coalesce(.data$OrderOrLotID,
+                                                                        .data$OrderOrLotID.unitsorsublots),
+                                     EndItemID = dplyr::coalesce(.data$EndItemID,
+                                                                 .data$EndItemID.unitsorsublots))) %>%
+    purrr::modify_at("ActualCostHourData",
+                     ~ dplyr::select(.x, -"FirstUnitNumber", -"LastUnitNumber")) %>%
+    purrr::modify_at("ActualCostHourData",
+                     ~ dplyr::select(.x, !tidyselect::contains(".")))
 
 }
 
