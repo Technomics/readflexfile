@@ -23,6 +23,8 @@
 #'
 read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE){
 
+  costmisc::check_pkg_suggests("readxl")
+
   table_spec <- readflexfile::techdatareport_spec
   file_type <- "TDR Report"
 

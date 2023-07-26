@@ -23,6 +23,8 @@
 #'
 read_maintrepair <- function(file, .show_check = FALSE, .coerce_spec = TRUE){
 
+  costmisc::check_pkg_suggests("readxl")
+
   table_spec <- readflexfile::maintrepair_spec
   file_type <- "M&R Report"
 
