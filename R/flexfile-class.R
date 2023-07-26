@@ -5,10 +5,10 @@
 #' @details
 #' The \code{flexfile} class has the following attributes.
 #' \describe{
-#'   \item{allocated}{Logical. Have the allocations been applied to the \code{ActualCostHourData}
+#'   \item{allocated}{Logical. Have the allocations been applied to the \code{actualcosthourdata}
 #'   table.}
-#'   \item{rolledup}{Logical. Has the WBS roll up been applied to the \code{ActualCostHourData}
-#'   and \code{ForecastAtCompletionCostHourData} tables.}
+#'   \item{rolledup}{Logical. Has the WBS roll up been applied to the \code{actualcosthourdata}
+#'   and \code{forecastatcompletioncosthourdata} tables.}
 #' }
 #'
 #' @name flexfile_class
@@ -24,14 +24,11 @@
 NULL
 
 #' @keywords internal
-new_flexfile <- function(x, fileinfo = NULL, allocated = FALSE, rolledup = FALSE, data_case = "snake") {
+new_flexfile <- function(x, fileinfo = NULL, allocated = FALSE, rolledup = FALSE) {
   if (is.null(fileinfo))
     fileinfo <- fileinfo_proto()
 
-  structure(x,
-            fileinfo = fileinfo, allocated = allocated, rolledup = rolledup, data_case = data_case,
-            data_spec = readflexfile::flexfile_spec,
-            class = "flexfile")
+  structure(x, fileinfo = fileinfo, allocated = allocated, rolledup = rolledup, class = "flexfile")
 }
 
 #' is_flexfile
@@ -64,7 +61,7 @@ as_flexfile <- function(x, names_case = c("snake_case", "data_model"),
 
   if (names_case == "data_model") {
     x <- x %>%
-      costmisc::coerce_to_spec(table_spec) %>%
+      coerce_to_spec(table_spec) %>%
       data_model_to_snake(table_spec)
   }
 
@@ -76,14 +73,12 @@ as_flexfile <- function(x, names_case = c("snake_case", "data_model"),
   table_spec_mod$tables <- table_spec$tables %>%
     dplyr::mutate(table = .data$snake_table)
 
-  check <- costmisc::check_spec(x, table_spec_mod, file_type,
-                                .silent = isFALSE(.show_check),
-                                .include_table_type = "submission")
+  check <- check_spec(x, table_spec_mod, file_type, .silent = isFALSE(.show_check))
 
   # add missing tables and columns and create flexfile object
   x <- x %>%
-    costmisc::add_missing_spec_tables(table_spec_mod, check) %>%
-    costmisc::add_missing_spec_cols(table_spec_mod, new_name = "field")
+    add_missing_spec_tables(table_spec_mod, check) %>%
+    add_missing_spec_cols(table_spec_mod, new_name = "field")
 
   if (.drop_optional) x <- drop_na_optional_spec_tables(x, table_spec)
 

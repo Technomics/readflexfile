@@ -15,21 +15,19 @@ A list containing two data frames: \code{fields} and \code{tables}.
 }
 \section{tables}{
 
-\code{tables} is a data frame with 29 rows and 7 variables:
+\code{tables} is a data frame with 29 rows and 5 variables:
 \describe{
 \item{table}{The table name in the specification}
 \item{entity}{The entity name in the specification}
 \item{snake_table}{A snake_case version of table}
-\item{type}{Either submission or enum}
+\item{type}{Either submission or enumeration}
 \item{is_scalar}{Boolean whether the table is a list of scalars or a data table}
-\item{excel_3part}{The "part" in the 3-Part Template}
-\item{excel_3part_table}{The table name in the 3-Part Template}
 }
 }
 
 \section{fields}{
 
-\code{fields} is a data frame with 171 rows and 10 variables:
+\code{fields} is a data frame with 171 rows and 9 variables:
 \describe{
 \item{table}{The table name in the specification}
 \item{field}{The field name in the specification}
@@ -40,15 +38,7 @@ A list containing two data frames: \code{fields} and \code{tables}.
 \item{fk_table}{Foreign key constraint table, if applicable}
 \item{fk_field}{Foreign key constraint field, if applicable}
 \item{optional}{Boolean if the field is optional or not}
-\item{excel_3part_name}{The field name in the 3-Part Template}
 }
 }
 
-\seealso{
-Other Data Specs: 
-\code{\link{maintrepair_spec}},
-\code{\link{quantity_spec}},
-\code{\link{techdatareport_spec}}
-}
-\concept{Data Specs}
 \keyword{datasets}

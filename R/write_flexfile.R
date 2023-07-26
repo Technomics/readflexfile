@@ -27,7 +27,7 @@ write_flexfile <- function(x, file) {
   # convert dates to strings
   # remove empty tables
   data_model_pruned <- data_model %>%
-    #costmisc::add_missing_spec_cols(table_spec, new_name = "field") %>%
+    #add_missing_spec_cols(table_spec, new_name = "field") %>%
     purrr::modify(purrr::modify_if, lubridate::is.Date, as.character) %>%
     #purrr::map(~ purrr::discard(.x, ~ all(is.na(.x)))) %>%
     purrr::discard(~ nrow(.) == 0)

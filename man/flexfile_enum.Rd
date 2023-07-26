@@ -11,9 +11,9 @@ An object of class \code{list} of length 9.
 flexfile_enum
 }
 \description{
-A list containing nine data frames: \code{PhaseOrMilestoneEnum}, \code{ContractTypeEnum},
-\code{AppropriationTypeEnum}, \code{ReportCycleEnum}, \code{NonrecurringOrRecurringEnum},
-\code{StandardCategoryEnum}, \code{DetailedStandardCategoryEnum}, \code{AllocationMethodTypeEnum}, and
-\code{CostHourTagEnum}.
+A list containing nine data frames: \code{phaseormilestoneenum}, \code{contracttypeenum},
+\code{appropriationtypeenum}, \code{reportcycleenum}, \code{nonrecurringorrecurringenum},
+\code{standardcategoryenum}, \code{detailedstandardcategoryenum}, \code{allocationmethodtypeenum}, and
+\code{costhourtagenum}.
 }
 \keyword{datasets}

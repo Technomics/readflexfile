@@ -16,7 +16,7 @@ status](https://github.com/Technomics/readflexfile/workflows/R-CMD-check/badge.s
 [![coverage:
 1.5%25](https://img.shields.io/badge/coverage-1.5%25-red.svg)](https://cran.r-project.org/web/packages/covr/vignettes/how_it_works.html)
 [![version:
-0.5.2](https://img.shields.io/badge/version-0.5.2-blue.svg)]()
+0.4.0](https://img.shields.io/badge/version-0.4.0-blue.svg)]()
 <!-- badges: end -->
 
 The goal of readflexfile is to facilitate the reading of the FlexFile
@@ -47,8 +47,9 @@ to use them under the
 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html) - all that we ask
 is to please cite us as the authors.
 
-- [costmisc](https://github.com/Technomics/costmisc/)
-- [readflexfile](https://github.com/Technomics/readflexfile/)
+-   [costmisc](https://github.com/Technomics/costmisc/)
+-   [readflexfile](https://github.com/Technomics/readflexfile/)
+-   [flexample](https://github.com/Technomics/flexample/)
 
 Do not hesitate to contact us if you have questions about what else is
 in the works!
