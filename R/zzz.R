@@ -1,4 +1,5 @@
 
+
 .onAttach <- function(libname, pkgname) {
   start_msg <- paste0("costverse::", pkgname, ". Copyright \U00A9 2022 by Technomics, Inc. Licensed under GPLv3.",
                      "\n\n",
