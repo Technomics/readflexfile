@@ -1,7 +1,7 @@
 Package: readflexfile
 Title: Read FlexFile data
 URL: https://github.com/Technomics/readflexfile
-Version: 0.5.2
+Version: 0.4.0
 Authors@R: 
     c(person(given = "Adam H.",
              family = "James",
@@ -9,10 +9,12 @@ Authors@R:
              email = "ajames@technomics.net"),
       person(given = "Ben",
              family = "Berkman",
-             role = "aut"),
+             role = "aut",
+             email = "bberkman@technomics.net"),
       person(given = "Justin",
              family = "Cooper",
-             role = "aut"),
+             role = "aut",
+             email = "jcooper@technomics.net"),
       person(given = "Technomics, Inc",
              role = "cph"))
 Description: Read the FlexFile data from the JSON specification into R. This includes simply reading the FlexFile into a list, and joining the individual tables together into a single flat file. These functions can also handle nuances of the FlexFile, such as allocations and optional fields.
@@ -20,7 +22,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.1.1
 Imports: 
     lifecycle (>= 1.0.0),
     magrittr,
@@ -29,14 +31,17 @@ Imports:
     tibble (>= 2.0.0),
     purrr (>= 0.3.3),
     rlang (>= 0.4.2),
-    costmisc (>= 0.7.3),
+    costmisc (>= 0.6.4),
+    stringr (>= 1.4.0),
     lubridate,
+    glue (>= 1.4.1),
+    cli (>= 2.0.2),
     janitor (>= 2.1.0),
     readr,
+    stats,
     tidyselect (>= 1.1.0),
     zip (>= 2.1.1),
-    jsonlite (>= 1.7.2),
-    stringr (>= 1.0.0)
+    jsonlite (>= 1.7.2)
 RdMacros: 
     lifecycle
 Depends: 
@@ -48,8 +53,7 @@ Suggests:
     kableExtra (>= 1.1.0),
     scales (>= 1.1.0),
     flexample (>= 1.1.1),
-    markdown (>= 1.1),
-    readxl (>= 1.4.0)
+    markdown (>= 1.1)
 VignetteBuilder: knitr
 Remotes: 
     technomics/costmisc,

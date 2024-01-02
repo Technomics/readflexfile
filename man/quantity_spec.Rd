@@ -20,7 +20,7 @@ A list containing two data frames: \code{fields} and \code{tables}.
 \item{table}{The table name in the specification}
 \item{entity}{The entity name in the specification}
 \item{snake_table}{A snake_case version of table}
-\item{type}{Either submission or enum}
+\item{type}{Either submission or enumeration}
 \item{is_scalar}{Boolean whether the table is a list of scalars or a data table}
 }
 }
@@ -41,11 +41,4 @@ A list containing two data frames: \code{fields} and \code{tables}.
 }
 }
 
-\seealso{
-Other Data Specs: 
-\code{\link{flexfile_spec}},
-\code{\link{maintrepair_spec}},
-\code{\link{techdatareport_spec}}
-}
-\concept{Data Specs}
 \keyword{datasets}

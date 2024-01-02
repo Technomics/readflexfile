@@ -1,6 +1,5 @@
 ## usethis namespace: start
 #' @importFrom lifecycle deprecate_soft
-#' @importFrom lifecycle deprecated
 #' @importFrom rlang := .data
 ## usethis namespace: end
 NULL

@@ -21,8 +21,8 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Ben Berkman
-  \item Justin Cooper
+  \item Ben Berkman \email{bberkman@technomics.net}
+  \item Justin Cooper \email{jcooper@technomics.net}
 }
 
 Other contributors:
