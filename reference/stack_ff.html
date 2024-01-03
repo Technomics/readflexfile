@@ -30,7 +30,7 @@ This is a thin wrapper around unnest_df().'><!-- mathjax --><script src="https:/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readflexfile</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.2</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@ This is a thin wrapper around unnest_df().'><!-- mathjax --><script src="https:/
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Stack list of FlexFiles or Quantity Reports into one list</h1>
-    <small class="dont-index">Source: <a href="https://github.com/Technomics/readflexfile/blob/HEAD/R/read_flexfile.R" class="external-link"><code>R/read_flexfile.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/Technomics/readflexfile/blob/HEAD/R/deprecated.R" class="external-link"><code>R/deprecated.R</code></a></small>
     <div class="hidden name"><code>stack_ff.Rd</code></div>
     </div>
 
@@ -105,7 +105,7 @@ it should contain all FlexFiles or all Quantity Reports).</p>
 <span class="r-in"><span><span class="va">folder</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"flexample"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">flexfiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/read_folder.html" class="external-link">read_folder</a></span><span class="op">(</span><span class="va">folder</span>, <span class="va">read_flexfile</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/costmisc/man/add_id_col.html" class="external-link">listindex_to_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">listindex_to_col</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">stack_ff</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
