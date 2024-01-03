@@ -36,7 +36,6 @@ jobs:
           - {os: windows-latest, r: '4.0'}
           - {os: ubuntu-20.04, r: '4.0'}
           - {os: windows-latest, r: '3.6'}
-          - {os: windows-latest, r: '3.5'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
