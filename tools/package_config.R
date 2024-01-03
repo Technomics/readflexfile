@@ -1,4 +1,3 @@
-
 ## ===== Project Setup ====
 
 # Data folders
