@@ -96,6 +96,19 @@ bin_build_file <- devtools::build(src_build_file, binary = TRUE, path = build_pa
 drat_repo <- file.path(setupr::get_dirs()$git_local, "costverse", "repo")
 rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
 
+## If Pull and Push not working with git2r, pull run below, then push manually
+pkg_files <- c(bin_build_file, src_build_file)
+invisible(lapply(pkg_files,
+                 drat::insertPackage, repodir = file.path(drat_repo, "docs")))
+drat::archivePackages(file.path(drat_repo, "docs"))
+git2r::add(drat_repo, path = paste0(drat_repo, "/*"))
+git_status <- git2r::status(drat_repo)
+commit_msg <- paste0("Added packages to drat\n\n",
+                     paste(paste(" - ",
+                                 c(paste("R version", rnomics::r_version()), basename(pkg_files))),
+                           collapse = "\n"))
+git2r::commit(drat_repo, message = commit_msg)
+
 ## ===== Scratch Work =====
 
 vignette("importing-flexfile", package = "readflexfile")
