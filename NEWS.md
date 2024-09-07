@@ -1,3 +1,7 @@
+# readflexfile 0.5.3
+
+* Improved error handling when attempting to read an invalid file. Removes confusing warnings and instead returns a clear error that the attempted file is not a valid flexfile or quantity report.
+
 # readflexfile 0.5.2
 
 * Bug fix and some minor code re-factoring. (#55)

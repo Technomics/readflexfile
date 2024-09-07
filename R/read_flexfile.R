@@ -237,7 +237,11 @@ convert_scalar_tables <- function(table_list, table_spec) {
 #' @keywords internal
 check_filetype <- function(file) {
   # read the FileType.txt without loading the entire file
-  file_type <- readr::read_file(unz(file, "FileType.txt"))
+  file_type <- tryCatch(
+    readr::read_file(unz(file, "FileType.txt")),
+    error = function(x) NULL,
+    warning = function(x) NULL
+  )
 
   valid_files <- c(FlexFile = "CSDR_COST_HOUR_REPORT/1.0",
                    Quantity = "CSDR_QUANTITY_REPORT/1.0")
