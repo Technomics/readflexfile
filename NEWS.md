@@ -1,3 +1,7 @@
+# readflexfile 0.5.4
+
+* Minor bug fix with quantity reports. Added spec file into the S3 object as an attribute.
+
 # readflexfile 0.5.3
 
 * Improved error handling when attempting to read an invalid file. Removes confusing warnings and instead returns a clear error that the attempted file is not a valid flexfile or quantity report.

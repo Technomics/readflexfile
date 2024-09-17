@@ -16,6 +16,7 @@ new_quantityreport <- function(x, fileinfo = NULL, data_case = data_case) {
 
   structure(x,
             fileinfo = fileinfo, data_case = data_case,
+            data_spec = readflexfile::quantity_spec,
             class = "quantityreport")
 }
 
