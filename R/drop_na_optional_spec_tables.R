@@ -1,7 +1,6 @@
 
 #' @keywords internal
-drop_na_optional_spec_tables <- function(table_list, table_spec, .data_case) {
-
+drop_na_optional_spec_tables <- function(table_list, table_spec, .data_case = "snake") {
   if(.data_case == "snake"){
     na_fields <- purrr::map(table_list, ~ purrr::map_lgl(.x, ~ all(is.na(.x))))
 
@@ -46,5 +45,8 @@ drop_na_optional_spec_tables <- function(table_list, table_spec, .data_case) {
   }
 
   table_list
+
 }
+
+
 
