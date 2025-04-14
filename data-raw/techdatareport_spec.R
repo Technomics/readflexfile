@@ -1,4 +1,4 @@
-# FlexFile Data Spec for building database
+# TechDataReport Data Spec for building database
 
 library(magrittr)
 

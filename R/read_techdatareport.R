@@ -21,11 +21,12 @@
 #'
 #' @seealso [techdatareport_class]
 #'
-read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE){
+read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .data_case = "native", .drop_optional = FALSE){
 
   costmisc::check_pkg_suggests("readxl")
 
   table_spec <- readflexfile::techdatareport_spec
+
   file_type <- "TDR Report"
 
   tables_to_read <- table_spec$tables$table
@@ -39,26 +40,34 @@ read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE){
     purrr::map(~ readxl::read_xlsx(file, sheet = .x, trim_ws = TRUE, col_names = TRUE, skip = 1,
                                    col_types = "text")) %>%
     purrr::map_at(scalar_tables, ~ tibble::as_tibble(t(tibble::deframe(.x)))) %>%
-    purrr::map(~ .remove_space(.x))
+    purrr::map(~ .remove_space_slash(.x))
+
 
   # cleanup tables by checking against the file spec
   fn_date <- function(x) janitor::excel_numeric_to_date(as.numeric(x))
 
-  table_list <- spec_cleanup(table_list, table_spec, file_type, .show_check, .coerce_spec, .drop_optional = FALSE,
-                             fn_date)
+  table_list <- spec_cleanup(table_list = table_list, table_spec = table_spec, file_type = file_type, .show_check = .show_check, .coerce_spec = .coerce_spec,
+                             .drop_optional = .drop_optional, .data_case = .data_case, .fn_date = fn_date)
+
+
+  # update names of list to remove spaces post-processing (relevant for 'native' data case)
+  table_list = table_list %>% rlang::set_names(stringr::str_replace_all(names(.), "\\s+", ""))
 
   fileinfo <- list(path = normalizePath(dirname(file), winslash = "/"),
                    name = sub(".xlsx$", "", basename(file)),
                    name_ext = basename(file))
+
+
 
   new_techdatareport(table_list, fileinfo = fileinfo)
 
 }
 
 #' @keywords internal
-.remove_space <- function(df){
+.remove_space_slash <- function(df){
   df %>%
-    dplyr::rename_with(~ stringr::str_replace_all(.x, "[\\r\\n]", " ") %>%
+    dplyr::rename_with(~ stringr::str_replace_all(.x, "[\\r\\n/]", " ") %>%
                          stringr::str_replace_all(" ", ""))
 
 }
+

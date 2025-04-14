@@ -193,7 +193,7 @@ spec_cleanup <- function(table_list, table_spec, file_type,
 
 
   # remove optional fields
-  if (.drop_optional) table_list <- drop_na_optional_spec_tables(table_list, table_spec)
+  if (.drop_optional) table_list <- drop_na_optional_spec_tables(table_list, table_spec, .data_case)
 
   table_list
 
