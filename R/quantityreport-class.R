@@ -10,7 +10,7 @@
 NULL
 
 #' @keywords internal
-new_quantityreport <- function(x, fileinfo = NULL, data_case = data_case) {
+new_quantityreport <- function(x, fileinfo = NULL, data_case = "snake") {
   if (is.null(fileinfo))
     fileinfo <- fileinfo_proto()
 
@@ -41,7 +41,8 @@ is_quantityreport <- function(x) {
 #' @export
 as_quantityreport <- function(x, names_case = c("snake_case", "data_model"),
                               .drop_optional = TRUE, .show_check = TRUE) {
-
+  #################################################### MODIFIED
+  names_case <- names_case[1]
   file_type = "Quantity"
   table_spec <- readflexfile::quantity_spec
   table_spec_mod <- table_spec
