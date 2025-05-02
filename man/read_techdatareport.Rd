@@ -4,7 +4,12 @@
 \alias{read_techdatareport}
 \title{Read Technical Data report}
 \usage{
-read_techdatareport(file, .show_check = FALSE, .coerce_spec = TRUE)
+read_techdatareport(
+  file,
+  .show_check = FALSE,
+  .coerce_spec = TRUE,
+  .drop_optional = FALSE
+)
 }
 \arguments{
 \item{file}{Path to a Technical Data report Excel file.}

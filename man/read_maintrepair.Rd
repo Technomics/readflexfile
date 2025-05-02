@@ -4,7 +4,12 @@
 \alias{read_maintrepair}
 \title{Read Maintenance & Repair Parts report}
 \usage{
-read_maintrepair(file, .show_check = FALSE, .coerce_spec = TRUE)
+read_maintrepair(
+  file,
+  .show_check = FALSE,
+  .coerce_spec = TRUE,
+  .drop_optional = FALSE
+)
 }
 \arguments{
 \item{file}{Path to a Maintenance & Repair Part report Excel file.}

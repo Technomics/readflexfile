@@ -9,7 +9,7 @@ maintrepair_tables <- readxl::read_excel("data-raw/maintrepair-tables.xlsx",
 maintrepair_fields <- readxl::read_excel("data-raw/maintrepair-tables.xlsx",
                                          sheet = "fields",
                                          col_types = c(rep("text", 5), "logical", rep("text", 2), "logical")) %>%
-  dplyr::mutate(safe_name = dplyr::coalesce(safe_name, snake_name))
+  dplyr::mutate(safe_name = dplyr::coalesce(safe_name, pascal_name))
 
 maintrepair_spec <- list(tables = maintrepair_tables,
                          fields = maintrepair_fields)

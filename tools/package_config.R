@@ -42,6 +42,7 @@ usethis::use_package("janitor", min_version = "2.1.0")
 usethis::use_package("zip", min_version = "2.1.1")
 usethis::use_package("jsonlite", min_version = "1.7.2")
 usethis::use_package("readr")
+usethis::use_package("readxl", min_version = "1.0.0")
 
 usethis::use_package("costmisc", min_version = "0.7.3")
 
@@ -54,7 +55,6 @@ usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("markdown", min_version = "1.1", type = "Suggests")
 usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("flexample", min_version = "1.1.1", type = "Suggests")
-usethis::use_package("readxl", min_version = "1.4.0", type = "Suggests")
 
 ## ===== README & NEWS =====
 

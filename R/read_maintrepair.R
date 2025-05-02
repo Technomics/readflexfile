@@ -17,13 +17,11 @@
 #' @param .coerce_spec Logical whether to coerce all column data types to those from the data models.
 #' If \code{FALSE}, the types will be as detected upon read by the Excel reader.
 #'
-#' @return A list of tibbles for the \code{file}. Result will be either of class \code{maintrepair}.
+#' @return A list of tibbles for the \code{file}. Result will be of class \code{maintrepair}.
 #'
 #' @seealso [maintrepair_class]
 #'
-read_maintrepair <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .data_case = "native", .drop_optional = FALSE){
-
-  costmisc::check_pkg_suggests("readxl")
+read_maintrepair <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .drop_optional = FALSE){
 
   ##################### MODIFIED -- temporarily using local spec variable for debugging
   #table_spec <- readflexfile::maintrepair_spec
@@ -37,7 +35,7 @@ read_maintrepair <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .da
 
   table_list <- tables_to_read %>%
     rlang::set_names() %>%
-    # skip 8 for header metadata from CADE
+    # skip 1 for 2 row headings
     purrr::map(~ readxl::read_xlsx(file, sheet = .x, trim_ws = TRUE, col_names = TRUE, skip = 1,
                                    col_types = "text")) %>%
     purrr::map_at(scalar_tables, ~ tibble::as_tibble(t(tibble::deframe(.x)))) %>%
@@ -48,7 +46,7 @@ read_maintrepair <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .da
 
   #################################################### MODIFIED
   table_list <- spec_cleanup(table_list = table_list, table_spec = table_spec, file_type = file_type, .show_check = .show_check, .coerce_spec = .coerce_spec,
-                             .drop_optional = .drop_optional, .data_case = .data_case, .fn_date = fn_date)
+                             .drop_optional = .drop_optional, .data_case = "pascal", .fn_date = fn_date)
 
   ## NOTE: if data case is set to 'snake', the costmisc::change_case_from_spec function in spec_cleanup automatically handles the following two steps
   ## 1. remove whitespace from table names, 2. remove special characters from field names
@@ -57,9 +55,9 @@ read_maintrepair <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .da
   ## Previously, I had some regular expressions here to handle the cleanup, but I thought it was elegant to leverage the spec file.
   ## If this costmisc function is updated for spec fields named "clean_table" etc, then maybe we can just use it directly.
 
-  table_list <- costmisc::change_case_from_spec(table_list, table_spec,
-                                                from_case = NULL, to_case = "snake",
-                                                add_missing = FALSE)
+  # table_list <- costmisc::change_case_from_spec(table_list, table_spec,
+  #                                               from_case = NULL, to_case = "clean",
+  #                                               add_missing = FALSE)
 
   fileinfo <- list(path = normalizePath(dirname(file), winslash = "/"),
                    name = sub(".xlsx$", "", basename(file)),
@@ -71,11 +69,11 @@ read_maintrepair <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .da
 
 #################################################### MODIFIED
 
-#' @keywords internal
-.remove_space <- function(df){
-  df %>%
-    dplyr::rename_with(~ stringr::str_replace_all(.x, "[\\r\\n]", " ") %>%
-                         stringr::str_replace_all(" ", ""))
-
-}
+#' #' @keywords internal
+#' .remove_space <- function(df){
+#'   df %>%
+#'     dplyr::rename_with(~ stringr::str_replace_all(.x, "[\\r\\n]", " ") %>%
+#'                          stringr::str_replace_all(" ", ""))
+#'
+#' }
 

@@ -17,13 +17,11 @@
 #' @param .coerce_spec Logical whether to coerce all column data types to those from the data models.
 #' If \code{FALSE}, the types will be as detected upon read by the Excel reader.
 #'
-#' @return A list of tibbles for the \code{file}. Result will be either of class \code{techdatareport}.
+#' @return A list of tibbles for the \code{file}. Result will be of class \code{techdatareport}.
 #'
 #' @seealso [techdatareport_class]
 #'
-read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .data_case = "native", .drop_optional = FALSE){
-
-  costmisc::check_pkg_suggests("readxl")
+read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .drop_optional = FALSE){
 
   ##################### MODIFIED -- temporarily using local spec variable for debugging
   #table_spec <- readflexfile::techdatareport_spec
@@ -37,7 +35,7 @@ read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
 
   table_list <- tables_to_read %>%
     rlang::set_names() %>%
-    # skip 8 for header metadata from CADE
+    # skip 1 for 2 row headings
     purrr::map(~ readxl::read_xlsx(file, sheet = .x, trim_ws = TRUE, col_names = TRUE, skip = 1,
                                    col_types = "text")) %>%
     purrr::map_at(scalar_tables, ~ tibble::as_tibble(t(tibble::deframe(.x)))) %>%
@@ -48,7 +46,7 @@ read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
   fn_date <- function(x) janitor::excel_numeric_to_date(as.numeric(x))
   #################################################### MODIFIED
   table_list <- spec_cleanup(table_list = table_list, table_spec = table_spec, file_type = file_type, .show_check = .show_check, .coerce_spec = .coerce_spec,
-                             .drop_optional = .drop_optional, .data_case = .data_case, .fn_date = fn_date)
+                             .drop_optional = .drop_optional, .data_case = "pascal", .fn_date = fn_date)
 
 
   ## NOTE: if data case is set to 'snake', the costmisc::change_case_from_spec function in spec_cleanup automatically handles the following two steps
@@ -57,9 +55,9 @@ read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
   ## and likewise the "snake_name" in spec/fields is the cleaned up name for the data fields
   ## Previously, I had some regular expressions here to handle the cleanup, but I thought it was elegant to leverage the spec file.
 
-  table_list <- costmisc::change_case_from_spec(table_list, table_spec,
-                                                from_case = NULL, to_case = "snake",
-                                                add_missing = FALSE)
+  # table_list <- costmisc::change_case_from_spec(table_list, table_spec,
+  #                                               from_case = NULL, to_case = "snake",
+  #                                               add_missing = FALSE)
 
 
   fileinfo <- list(path = normalizePath(dirname(file), winslash = "/"),
