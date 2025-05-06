@@ -44,3 +44,4 @@ fileinfo_proto <- function() {
        name = character(),
        name_ext = character())
 }
+

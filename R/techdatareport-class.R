@@ -91,3 +91,4 @@ is_techdatareport <- function(x) {
 is_techdatareport_list <- function(x) {
   all(vapply(x, is_techdatareport, logical(1)))
 }
+

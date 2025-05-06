@@ -1,6 +1,4 @@
 
-#################################################### MODIFIED
-
 #' @keywords internal
 drop_na_optional_spec_tables <- function(table_list, table_spec, .data_case = "snake") {
   if(.data_case == "snake"){

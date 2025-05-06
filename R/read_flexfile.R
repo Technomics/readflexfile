@@ -167,8 +167,6 @@ read_flexfile_3part <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
 
 }
 
-#################################################### MODIFIED
-
 #' @keywords internal
 spec_cleanup <- function(table_list, table_spec, file_type,
                          .show_check, .coerce_spec, .drop_optional, .data_case = "native",

@@ -1,3 +1,10 @@
+# readflexfile 0.5.5
+
+* Adjusted table specifications for Technical Data Reports and Maintenance and Repair Parts Reports
+* Created a function `read_excel_template()` to read in data from Technical Data Report and/or Maintenance and Repair Parts Report Excel Templates
+* Updated `read_maintrepair()` and `read_techdatareport()` to call upon `read_excel_template`
+* Minor bug fixes to `read_flexfile_3part()`,  `new_quantity_report()`, and `as_quantity_report()`
+
 # readflexfile 0.5.4
 
 * Minor bug fix with quantity reports. Added spec file into the S3 object as an attribute.
