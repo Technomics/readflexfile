@@ -64,7 +64,6 @@ allocate_flexfile_single <- function(flexfile) {
   # reduce will take the output from iteration i and use it as input to i + 1
   flexfile$ActualCostHourData <- purrr::reduce(allocation_fields, coalesce_field, suffix = "_allocations", .init = new_actualcosthourdata) %>%
     tidyr::replace_na(list(PercentValue = 1)) %>%
-    #dplyr::mutate_at(dplyr::vars(tidyselect::starts_with("Value_")), ~ . * .data$PercentValue) %>% # need to handle other methods
     dplyr::mutate(Value_Dollars = .data$Value_Dollars * .data$PercentValue,
                   Value_Hours = .data$Value_Hours * .data$PercentValue) %>%
     dplyr::select(-(tidyselect::ends_with("_allocations")), -"AllocationMethodTypeID")

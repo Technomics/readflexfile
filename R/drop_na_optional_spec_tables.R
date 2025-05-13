@@ -33,6 +33,3 @@ drop_na_optional_spec_tables <- function(table_list, table_spec, .data_case = NU
   .table_list
 
 }
-
-
-
