@@ -9,7 +9,7 @@ read_flexfile(
   file,
   .show_check = FALSE,
   .coerce_spec = TRUE,
-  .drop_optional = TRUE,
+  .drop_optional = FALSE,
   .warn_utf8_bom = FALSE,
   .data_case = c("native", "snake")
 )
@@ -28,9 +28,10 @@ a character vector of the three Excel files to read.}
 \item{.show_check}{Logical whether to print information about the file check to the console or not.}
 
 \item{.coerce_spec}{Logical whether to coerce all column data types to those from the data models.
-If \code{FALSE}, the types will be as detected upon read by the JSON parser.}
+If \code{FALSE}, the types will be as detected upon read by the parser.}
 
-\item{.drop_optional}{Logical whether to drop optional columns or not.}
+\item{.drop_optional}{Logical whether to drop optional columns or not. Not recommended for use because
+it can result in downstream data inconsistencies.}
 
 \item{.warn_utf8_bom}{Logical whether to report UTF8 byte-order-mark errors.}
 

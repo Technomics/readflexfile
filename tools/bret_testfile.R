@@ -23,7 +23,7 @@ testl = read_techdatareport(file = TDR_folder_path, .coerce_spec = FALSE ,.show_
 # readflexfile::techdatareport_spec$fields
 
 
-MNR_folder_path <- file.path(normalizePath(Sys.getenv("ONEDRIVE"), winslash = "/"), "/Task 0003 - Stryker CSDR and Contracts CY21-25/Technical/Validation/Stryker 30 MM ECP_NGC_CY24_M&R (70318)/V1_Raw Files/A005 Maintenance Repair Data Model_NGC_30mm Gun - 2.14.25-Submission.xlsx")
+MNR_folder_path <- file.path(normalizePath(Sys.getenv("ONEDRIVE"), winslash = "/"), "Task 0003 - Stryker CSDR and Contracts CY21-25/Technical/Validation/Stryker 30 MM ECP_NGC_CY24_M&R (70318)/V1_Raw Files/A005 Maintenance Repair Data Model_NGC_30mm Gun - 2.14.25-Submission.xlsx")
 debug(read_maintrepair)
 testmnr = read_maintrepair(file = MNR_folder_path, .show_check = TRUE, .coerce_spec = TRUE)
 #testmnr2 = read_maintrepair(file = MNR_folder_path, .show_check = TRUE, .coerce_spec = TRUE, .data_case = "snake", .drop_optional = TRUE)

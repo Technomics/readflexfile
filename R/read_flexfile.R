@@ -14,8 +14,9 @@
 #' a character vector of the three Excel files to read.
 #' @param .show_check Logical whether to print information about the file check to the console or not.
 #' @param .coerce_spec Logical whether to coerce all column data types to those from the data models.
-#' If \code{FALSE}, the types will be as detected upon read by the JSON parser.
-#' @param .drop_optional Logical whether to drop optional columns or not.
+#' If \code{FALSE}, the types will be as detected upon read by the parser.
+#' @param .drop_optional Logical whether to drop optional columns or not. Not recommended for use because
+#' it can result in downstream data inconsistencies.
 #' @param .data_case Either 'native' or 'snake'. Controls if the names of the tables and columns
 #' reflect the native data model or the transformed snake_case. The default option was changed from
 #' snake to native in readflexfile v0.5.0 to simplify usage of readflexfile.
@@ -41,7 +42,7 @@
 read_flexfile <- function(file,
                           .show_check = FALSE,
                           .coerce_spec = TRUE,
-                          .drop_optional = TRUE,
+                          .drop_optional = FALSE,
                           .warn_utf8_bom = FALSE,
                           .data_case = c("native", "snake")) {
 
@@ -129,7 +130,7 @@ read_flexfile_3part <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
 
   tables_to_read <- table_spec$tables %>%
     dplyr::filter(!is.na(.data$excel_3part)) %>%
-    dplyr::select(.data$table, .data$excel_3part, .data$excel_3part_table) %>%
+    dplyr::select("table", "excel_3part", "excel_3part_table") %>%
     dplyr::group_split(.data$excel_3part) %>%
     purrr::map(~ rlang::set_names(.x$excel_3part_table))
 

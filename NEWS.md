@@ -1,9 +1,8 @@
-# readflexfile 0.5.5
+# readflexfile 0.6.0
 
-* Adjusted table specifications for Technical Data Reports and Maintenance and Repair Parts Reports
-* Created a function `read_excel_template()` to read in data from Technical Data Report and/or Maintenance and Repair Parts Report Excel Templates
-* Updated `read_maintrepair()` and `read_techdatareport()` to call upon `read_excel_template`
-* Minor bug fixes to `read_flexfile_3part()`,  `new_quantity_report()`, and `as_quantity_report()`
+* Updated `read_maintrepair()` and `read_techdatareport()` to work off of the latest template. Aligned names with existing FlexFile and Quantity Data Report tables where possible.
+* Minor bug fixes to `read_flexfile_3part()`, `new_quantity_report()`, and `as_quantity_report()`.
+* Updated refault behavior in `read_flexfile()` with now `.drop_optional = FALSE`. This setting is highly recommended to avoid downstream data inconsistencies.
 
 # readflexfile 0.5.4
 
@@ -11,7 +10,7 @@
 
 # readflexfile 0.5.3
 
-* Improved error handling when attempting to read an invalid file. Removes confusing warnings and instead returns a clear error that the attempted file is not a valid flexfile or quantity report.
+* Improved error handling when attempting to read an invalid file. Removes confusing warnings and instead returns a clear error that the attempted file is not a valid FlexFile or Quantity Data Report.
 
 # readflexfile 0.5.2
 
@@ -28,7 +27,7 @@
   * The function `costmisc::native_to_snake_case()` can also be used to convert from the native case to the legacy snake_case.
   * The 'flexfile' and 'quantitydata' classes will now store the case as an attribute.
   * At some point, we will remove support for the snake_case names.
-* Added in support for "Flexfile Families" with the new 'flexfile_family' type. This type stores a list of related reports within the Flexfile Family of reports
+* Added in support for "FlexFile Families" with the new 'flexfile_family' type. This type stores a list of related reports within the FlexFile Family of reports
 * Added in experimental functions to read in additional data formats. These read from the Excel sources rather than JSON at this point, so they may be less reliable. Each format includes it's own S3 type and is compatible for the new FlexFile Family feature.
   * `read_maintrepair()` reads the M&R report from the Excel template into an object of class 'maintrepair'.
   * `read_techdatareport()` reads the M&R report from the Excel template into an object of class 'techdatareport'.
@@ -63,11 +62,11 @@
 
 # readflexfile 0.3.0
 
-* Added in S3 class for a FlexFile and Quantity Report to track the imported dataset.
+* Added in S3 class for a FlexFile and Quantity Data Report to track the imported dataset.
 * Modified the workflow to flatten and combine data. The function `flatten_ff()` is now deprecated and has been replaced with the generic function `flatten_data()`. See the updated vignettes in `browseVignettes(package = "readflexfile")` (#15). The generic may be relocated to another package in the costverse later, but there should not be a change to the user (#16).
 * The `read_ff()` function has been superseded by `read_flexfile()` to be less ambiguous in name.
 * Tables missing from the input JSON file will now be added in by `read_flexfile()` with zero rows of data. This ensures that a consistent result is returned (#17).
-* Tweaked the FlexFile and Quantity Data Report flatfiles to be more consistent and concise.
+* Tweaked the FlexFile and Quantity Data Report flat files to be more consistent and concise.
 
 # readflexfile 0.2.1
 

@@ -52,7 +52,7 @@ To import multiple FlexFiles, point `read_folder` to a folder of FlexFile submis
 folder <- system.file("extdata", package = "flexample")
 
 raw_ffs <- read_folder(folder, 
-                        read_function = read_ff)
+                       read_function = read_ff)
 ```
 
 Just like the single case, use `flatten_data` to create the flat file for each FlexFile in the list. The function will now return a list of flat files.

@@ -17,9 +17,15 @@
 #' @return A list of tibbles for the \code{file}. Result will be of class \code{techdatareport}.
 #'
 #' @seealso [techdatareport_class]
-#' @seealso [read_excel_template()]
-
 read_techdatareport <- function(file, .show_check = FALSE, .coerce_spec = TRUE){
-  read_excel_template(file = file, table_spec = techdatareport_spec, file_type = "TDR Report", constructor = new_techdatareport,
-                      .show_check = .show_check, .coerce_spec = .coerce_spec)
+
+  table_list <- read_excel_template(file = file, table_spec = readflexfile::techdatareport_spec,
+                                    file_type = "TDR Report",
+                                    .show_check = .show_check, .coerce_spec = .coerce_spec)
+
+  fileinfo <- list(path = normalizePath(dirname(file), winslash = "/"),
+                   name = sub(".xlsx$", "", basename(file)),
+                   name_ext = basename(file))
+
+  new_techdatareport(table_list, fileinfo = fileinfo)
 }

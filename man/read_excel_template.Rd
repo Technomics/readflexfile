@@ -8,24 +8,21 @@ read_excel_template(
   file,
   table_spec,
   file_type,
-  constructor,
   .show_check = FALSE,
   .coerce_spec = TRUE
 )
 }
 \arguments{
-\item{file}{Path to a Maintenance & Repair Part Report or Technical Data Report Excel file.}
+\item{file}{Path to the Excel template file to read.}
 
 \item{table_spec}{List containing data specifications for both tables, and fields within the tables}
 
-\item{file_type}{Type of excel template used (e.g. "M&R Report", "TDR Report"). Used to inform check_spec function.}
-
-\item{constructor}{Constructor to create object of the class pertaining to the file type (e.g. new_maintrepair, new_techdatareport)}
+\item{file_type}{Type of Excel template used. Used only for status messages.}
 
 \item{.show_check}{Logical whether to print information about the file check to the console or not.}
 
 \item{.coerce_spec}{Logical whether to coerce all column data types to those from the data models.
-If \code{FALSE}, the types will be as detected upon read by the Excel reader.}
+If \code{FALSE}, the types will be as detected upon read by the parser.}
 }
 \value{
 A list of tibbles for the \code{file}. Result will be of class \code{maintrepair} or \code{techdatareport}.
@@ -33,14 +30,13 @@ A list of tibbles for the \code{file}. Result will be of class \code{maintrepair
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-\code{read_excel_template()} returns a list of tibbles from an Excel template. Templates currently supported include
-the Maintenance and Repair Parts Report (MNR), and the Technical Data Report (TDR). Each tibble corresponds to one Excel sheet.\cr
+\code{read_excel_template()} is generally called through another function, such as \code{\link{read_techdatareport}()}
+or \code{\link{read_maintrepair}()}. Returns a list of tibbles from an Excel template structure. Each tibble
+corresponds to one Excel sheet.\cr
 \cr
-This function is currently experimental because it reads from the Excel template, which
+This function is currently experimental because it facilitates reading from the Excel templates, which
 may not be stable.
 }
 \seealso{
-\link{maintrepair_class}
-
-\link{techdatareport_class}
+\link{maintrepair_class} \link{techdatareport_class}
 }

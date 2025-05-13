@@ -39,7 +39,8 @@ which_flexfile_family(x)
 
 \item{rolledup}{Logical whether the flexfile WBS has been rolled up.}
 
-\item{.drop_optional}{Logical whether to drop optional columns or not.}
+\item{.drop_optional}{Logical whether to drop optional columns or not. Not recommended for use because
+it can result in downstream data inconsistencies.}
 
 \item{.show_check}{Logical whether or not to show results from the check against
 the file specification.}

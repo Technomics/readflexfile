@@ -54,7 +54,10 @@ as_quantityreport <- function(x, names_case = c("snake_case", "data_model"),
   }
 
   table_spec_mod$fields <- table_spec$fields %>%
-    dplyr::left_join(dplyr::select(table_spec$tables, .data$table, .data$snake_table), by = "table") %>%
+    dplyr::left_join(
+      dplyr::select(table_spec$tables, "table", "snake_table"),
+      by = "table"
+    ) %>%
     dplyr::mutate(table = .data$snake_table,
                   field = .data$snake_name)
 
@@ -70,7 +73,7 @@ as_quantityreport <- function(x, names_case = c("snake_case", "data_model"),
     costmisc::add_missing_spec_tables(table_spec_mod, check) %>%
     costmisc::add_missing_spec_cols(table_spec_mod, new_name = "field")
 
-  if (.drop_optional) x <- drop_na_optional_spec_tables(x, table_spec)
+  if (.drop_optional) x <- drop_na_optional_spec_tables(x, table_spec, .data_case = names_case)
 
   new_quantityreport(x)
 }

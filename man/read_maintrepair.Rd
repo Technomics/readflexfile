@@ -7,12 +7,12 @@
 read_maintrepair(file, .show_check = FALSE, .coerce_spec = TRUE)
 }
 \arguments{
-\item{file}{Path to a Maintenance & Repair Part Report or Technical Data Report Excel file.}
+\item{file}{Path to the Excel template file to read.}
 
 \item{.show_check}{Logical whether to print information about the file check to the console or not.}
 
 \item{.coerce_spec}{Logical whether to coerce all column data types to those from the data models.
-If \code{FALSE}, the types will be as detected upon read by the Excel reader.}
+If \code{FALSE}, the types will be as detected upon read by the parser.}
 }
 \value{
 A list of tibbles for the \code{file}. Result will be of class \code{maintrepair}.
@@ -28,6 +28,4 @@ may not be stable.
 }
 \seealso{
 \link{maintrepair_class}
-
-\code{\link[=read_excel_template]{read_excel_template()}}
 }

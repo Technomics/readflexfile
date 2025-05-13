@@ -28,12 +28,12 @@ desc::desc_set(Description = "Read the FlexFile data from the JSON specification
 
 # Package dependencies
 usethis::use_pipe()
-usethis::use_package("dplyr", min_version = "0.8.3")
+usethis::use_package("dplyr", min_version = "1.0.0")
 usethis::use_package("tidyselect", min_version = "1.1.0")
 usethis::use_package("tidyr", min_version = "1.0.0")
 usethis::use_package("tibble", min_version = "2.0.0")
 usethis::use_package("stringr", min_version = "1.0.0")
-usethis::use_package("purrr", min_version = "0.3.3")
+usethis::use_package("purrr", min_version = "1.0.0")
 usethis::use_package("rlang", min_version = "0.4.2")
 usethis::use_package("lifecycle", min_version = "1.0.0")
 usethis::use_package("magrittr")
@@ -71,6 +71,7 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
+devtools::check()
 devtools::check(vignettes = FALSE)
 
 usethis::use_version()
