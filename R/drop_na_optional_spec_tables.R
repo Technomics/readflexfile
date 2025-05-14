@@ -5,7 +5,7 @@ drop_na_optional_spec_tables <- function(table_list, table_spec, .data_case = NU
   if (!is.null(.data_case)) attr(table_list, "data_case") <- .data_case
 
   # force into native case if it wasn't already
-  .table_list <- costmisc::assert_case(table_list, target_case = "native", .table_spec = "table_spec")
+  .table_list <- costmisc::assert_case(table_list, target_case = "native", .table_spec = table_spec)
 
   na_fields <- purrr::map(.table_list, ~ purrr::map_lgl(.x, ~ all(is.na(.x))))
 

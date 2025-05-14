@@ -2,7 +2,7 @@
 
 * Updated `read_maintrepair()` and `read_techdatareport()` to work off of the latest template. Aligned names with existing FlexFile and Quantity Data Report tables where possible.
 * Minor bug fixes to `read_flexfile_3part()`, `new_quantity_report()`, and `as_quantity_report()`.
-* Updated refault behavior in `read_flexfile()` with now `.drop_optional = FALSE`. This setting is highly recommended to avoid downstream data inconsistencies.
+* Updated default behavior in `read_flexfile()` with now `.drop_optional = FALSE`. This setting is highly recommended to avoid downstream data inconsistencies.
 
 # readflexfile 0.5.4
 
