@@ -13,10 +13,10 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![R build
 status](https://github.com/Technomics/readflexfile/workflows/R-CMD-check/badge.svg)](https://github.com/Technomics/readflexfile/actions)
-[![coverage:
-1.5%25](https://img.shields.io/badge/coverage-1.5%25-red.svg)](https://cran.r-project.org/web/packages/covr/vignettes/how_it_works.html)
 [![version:
-0.5.4](https://img.shields.io/badge/version-0.5.4-blue.svg)]()
+0.6.0](https://img.shields.io/badge/version-0.6.0-blue.svg)]()
+[![coverage:
+0.7%25](https://img.shields.io/badge/coverage-0.7%25-red.svg)](https://cran.r-project.org/web/packages/covr/vignettes/how_it_works.html)
 <!-- badges: end -->
 
 The goal of readflexfile is to facilitate the reading of the FlexFile
