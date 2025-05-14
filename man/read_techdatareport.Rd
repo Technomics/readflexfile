@@ -7,15 +7,15 @@
 read_techdatareport(file, .show_check = FALSE, .coerce_spec = TRUE)
 }
 \arguments{
-\item{file}{Path to a Technical Data report Excel file.}
+\item{file}{Path to the Excel template file to read.}
 
 \item{.show_check}{Logical whether to print information about the file check to the console or not.}
 
 \item{.coerce_spec}{Logical whether to coerce all column data types to those from the data models.
-If \code{FALSE}, the types will be as detected upon read by the Excel reader.}
+If \code{FALSE}, the types will be as detected upon read by the parser.}
 }
 \value{
-A list of tibbles for the \code{file}. Result will be either of class \code{techdatareport}.
+A list of tibbles for the \code{file}. Result will be of class \code{techdatareport}.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
@@ -23,7 +23,7 @@ A list of tibbles for the \code{file}. Result will be either of class \code{tech
 \code{read_techdatareport()} returns a list of tibbles from an Excel submission of the Technical
 Data Report. Each tibble corresponds to its Excel sheet.\cr
 \cr
-This function is currently experimental because it reads from the Excel template, which is
+This function is currently experimental because it reads from the Excel template, which
 may not be stable.
 }
 \seealso{

@@ -29,7 +29,7 @@ This vignette demonstrates how to import the FlexFile using `readflexfile`.
 
 ## Importing one FlexFile
 
-To import one FlexFile, first point `read_ff` to a .zip of JSON tables of a FlexFile.
+To import one FlexFile, first point `read_flexfile` to a .zip of JSON tables of a FlexFile.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
 file <- system.file("extdata", "Sample_FlexFile_A.zip", package = "flexample")
@@ -46,13 +46,13 @@ flexfile <- raw_ff %>%
 
 ## Importing multiple FlexFiles
 
-To import multiple FlexFiles, point `read_folder` to a folder of FlexFile submissions. `read_function = read_ff` applies the `read_ff` function to each FlexFile in the folder.
+To import multiple FlexFiles, point `read_folder` to a folder of FlexFile submissions. `read_function = read_flexfile` applies the `read_flexfile` function to each FlexFile in the folder.
 
 ```{r echo = TRUE, warning=FALSE, messages=FALSE, eval = TRUE}
 folder <- system.file("extdata", package = "flexample")
 
 raw_ffs <- read_folder(folder, 
-                        read_function = read_ff)
+                       read_function = read_flexfile)
 ```
 
 Just like the single case, use `flatten_data` to create the flat file for each FlexFile in the list. The function will now return a list of flat files.

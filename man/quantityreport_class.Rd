@@ -23,7 +23,8 @@ is_quantityreport_list(x)
 
 \item{names_case}{Case of the object being passed in.}
 
-\item{.drop_optional}{Logical whether to drop optional columns or not.}
+\item{.drop_optional}{Logical whether to drop optional columns or not. Not recommended for use because
+it can result in downstream data inconsistencies.}
 
 \item{.show_check}{Logical whether or not to show results from the check against
 the file specification.}

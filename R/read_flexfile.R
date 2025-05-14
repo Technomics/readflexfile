@@ -14,8 +14,9 @@
 #' a character vector of the three Excel files to read.
 #' @param .show_check Logical whether to print information about the file check to the console or not.
 #' @param .coerce_spec Logical whether to coerce all column data types to those from the data models.
-#' If \code{FALSE}, the types will be as detected upon read by the JSON parser.
-#' @param .drop_optional Logical whether to drop optional columns or not.
+#' If \code{FALSE}, the types will be as detected upon read by the parser.
+#' @param .drop_optional Logical whether to drop optional columns or not. Not recommended for use because
+#' it can result in downstream data inconsistencies.
 #' @param .data_case Either 'native' or 'snake'. Controls if the names of the tables and columns
 #' reflect the native data model or the transformed snake_case. The default option was changed from
 #' snake to native in readflexfile v0.5.0 to simplify usage of readflexfile.
@@ -41,17 +42,17 @@
 read_flexfile <- function(file,
                           .show_check = FALSE,
                           .coerce_spec = TRUE,
-                          .drop_optional = TRUE,
+                          .drop_optional = FALSE,
                           .warn_utf8_bom = FALSE,
                           .data_case = c("native", "snake")) {
 
-  lifecycle::deprecate_warn(
-    when = "0.5.0",
-    what = I('The default of returning tables and fields using "snake_case"'),
-    with = I('the new names in any new code and we strongly advise refactoring any existing code.
-    Note that new names align with those used in the native report.\n\nIf you must use the old naming
-    in the interim, please use the argument `.data_case = "snake"` or use `costmisc::native_to_snake_case()`')
-  )
+  # lifecycle::deprecate_warn(
+  #   when = "0.5.0",
+  #   what = I('The default of returning tables and fields using "snake_case"'),
+  #   with = I('the new names in any new code and we strongly advise refactoring any existing code.
+  #   Note that new names align with those used in the native report.\n\nIf you must use the old naming
+  #   in the interim, please use the argument `.data_case = "snake"` or use `costmisc::native_to_snake_case()`')
+  # )
 
   # check the file type
   file_type <- check_filetype(file)
@@ -129,7 +130,7 @@ read_flexfile_3part <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
 
   tables_to_read <- table_spec$tables %>%
     dplyr::filter(!is.na(.data$excel_3part)) %>%
-    dplyr::select(.data$table, .data$excel_3part, .data$excel_3part_table) %>%
+    dplyr::select("table", "excel_3part", "excel_3part_table") %>%
     dplyr::group_split(.data$excel_3part) %>%
     purrr::map(~ rlang::set_names(.x$excel_3part_table))
 
@@ -169,7 +170,7 @@ read_flexfile_3part <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
 
 #' @keywords internal
 spec_cleanup <- function(table_list, table_spec, file_type,
-                         .show_check, .coerce_spec, .drop_optional, .data_case,
+                         .show_check, .coerce_spec, .drop_optional, .data_case = "native",
                          .fn_date) {
 
   # check file against the spec
@@ -193,7 +194,7 @@ spec_cleanup <- function(table_list, table_spec, file_type,
 
 
   # remove optional fields
-  if (.drop_optional) table_list <- drop_na_optional_spec_tables(table_list, table_spec)
+  if (.drop_optional) table_list <- drop_na_optional_spec_tables(table_list, table_spec, .data_case)
 
   table_list
 
@@ -237,7 +238,11 @@ convert_scalar_tables <- function(table_list, table_spec) {
 #' @keywords internal
 check_filetype <- function(file) {
   # read the FileType.txt without loading the entire file
-  file_type <- readr::read_file(unz(file, "FileType.txt"))
+  file_type <- tryCatch(
+    readr::read_file(unz(file, "FileType.txt")),
+    error = function(x) NULL,
+    warning = function(x) NULL
+  )
 
   valid_files <- c(FlexFile = "CSDR_COST_HOUR_REPORT/1.0",
                    Quantity = "CSDR_QUANTITY_REPORT/1.0")

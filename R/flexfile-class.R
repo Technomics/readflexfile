@@ -85,7 +85,7 @@ as_flexfile <- function(x, names_case = c("snake_case", "data_model"),
     costmisc::add_missing_spec_tables(table_spec_mod, check) %>%
     costmisc::add_missing_spec_cols(table_spec_mod, new_name = "field")
 
-  if (.drop_optional) x <- drop_na_optional_spec_tables(x, table_spec)
+  if (.drop_optional) x <- drop_na_optional_spec_tables(x, table_spec, .data_case = names_case)
 
   new_flexfile(x, allocated = allocated, rolledup = rolledup)
 }
@@ -107,3 +107,4 @@ fileinfo_proto <- function() {
        name = character(),
        name_ext = character())
 }
+

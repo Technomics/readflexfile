@@ -55,26 +55,28 @@ allocate_flexfile_single <- function(flexfile) {
     dplyr::left_join(flexfile$AllocationComponents,
                      by = c("AllocationMethodID"),
                      suffix = c("", "_allocations")) %>%
-    dplyr::left_join(dplyr::select(flexfile$AllocationMethods, .data$ID, .data$AllocationMethodTypeID),
-                     by = c(AllocationMethodID = "ID"))
+    dplyr::left_join(
+      dplyr::select(flexfile$AllocationMethods, "ID", "AllocationMethodTypeID"),
+      by = c(AllocationMethodID = "ID")
+    )
 
   # iterate over the function to apply it across all allocation fields
   # reduce will take the output from iteration i and use it as input to i + 1
   flexfile$ActualCostHourData <- purrr::reduce(allocation_fields, coalesce_field, suffix = "_allocations", .init = new_actualcosthourdata) %>%
     tidyr::replace_na(list(PercentValue = 1)) %>%
-    #dplyr::mutate_at(dplyr::vars(tidyselect::starts_with("Value_")), ~ . * .data$PercentValue) %>% # need to handle other methods
     dplyr::mutate(Value_Dollars = .data$Value_Dollars * .data$PercentValue,
                   Value_Hours = .data$Value_Hours * .data$PercentValue) %>%
-    dplyr::select(-(tidyselect::ends_with("_allocations")), -.data$AllocationMethodTypeID)
+    dplyr::select(-(tidyselect::ends_with("_allocations")), -"AllocationMethodTypeID")
 
   # join in the remaining 'UnitOrSublotID' to fill in 'EndItemID' and 'OrderOrLotID'
   sublot_fields <- c("OrderOrLotID", "EndItemID")
 
   new_actualcosthourdata2 <- flexfile$ActualCostHourData %>%
-    dplyr::left_join(dplyr::select(flexfile$UnitsOrSublots,
-                                   UnitOrSublotID = .data$ID, .data$EndItemID, .data$OrderOrLotID),
-                     by = c("UnitOrSublotID"),
-                     suffix = c("", "_unitorsublot"))
+    dplyr::left_join(
+      dplyr::select(flexfile$UnitsOrSublots,
+                    UnitOrSublotID = "ID", "EndItemID", "OrderOrLotID"),
+      by = c("UnitOrSublotID"),
+      suffix = c("", "_unitorsublot"))
 
   flexfile$ActualCostHourData <- purrr::reduce(sublot_fields, coalesce_field, suffix = "_unitorsublot", .init = new_actualcosthourdata2) %>%
     dplyr::select(-(tidyselect::ends_with("_unitorsublot")))

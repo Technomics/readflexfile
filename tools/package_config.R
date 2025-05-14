@@ -28,12 +28,12 @@ desc::desc_set(Description = "Read the FlexFile data from the JSON specification
 
 # Package dependencies
 usethis::use_pipe()
-usethis::use_package("dplyr", min_version = "0.8.3")
+usethis::use_package("dplyr", min_version = "1.0.0")
 usethis::use_package("tidyselect", min_version = "1.1.0")
 usethis::use_package("tidyr", min_version = "1.0.0")
 usethis::use_package("tibble", min_version = "2.0.0")
 usethis::use_package("stringr", min_version = "1.0.0")
-usethis::use_package("purrr", min_version = "0.3.3")
+usethis::use_package("purrr", min_version = "1.0.0")
 usethis::use_package("rlang", min_version = "0.4.2")
 usethis::use_package("lifecycle", min_version = "1.0.0")
 usethis::use_package("magrittr")
@@ -42,6 +42,7 @@ usethis::use_package("janitor", min_version = "2.1.0")
 usethis::use_package("zip", min_version = "2.1.1")
 usethis::use_package("jsonlite", min_version = "1.7.2")
 usethis::use_package("readr")
+usethis::use_package("readxl", min_version = "1.0.0")
 
 usethis::use_package("costmisc", min_version = "0.7.3")
 
@@ -54,7 +55,6 @@ usethis::use_package("kableExtra", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("markdown", min_version = "1.1", type = "Suggests")
 usethis::use_package("scales", min_version = "1.1.0", type = "Suggests")
 usethis::use_package("flexample", min_version = "1.1.1", type = "Suggests")
-usethis::use_package("readxl", min_version = "1.4.0", type = "Suggests")
 
 ## ===== README & NEWS =====
 
@@ -71,6 +71,7 @@ devtools::build_site()
 devtools::document()
 
 devtools::spell_check()
+devtools::check()
 devtools::check(vignettes = FALSE)
 
 usethis::use_version()
@@ -95,6 +96,19 @@ bin_build_file <- devtools::build(src_build_file, binary = TRUE, path = build_pa
 
 drat_repo <- file.path(setupr::get_dirs()$git_local, "costverse", "repo")
 rnomics::add_to_drat(c(bin_build_file, src_build_file), drat_repo)
+
+## If Pull and Push not working with git2r, pull run below, then push manually
+pkg_files <- c(bin_build_file, src_build_file)
+invisible(lapply(pkg_files,
+                 drat::insertPackage, repodir = file.path(drat_repo, "docs")))
+drat::archivePackages(file.path(drat_repo, "docs"))
+git2r::add(drat_repo, path = paste0(drat_repo, "/*"))
+git_status <- git2r::status(drat_repo)
+commit_msg <- paste0("Added packages to drat\n\n",
+                     paste(paste(" - ",
+                                 c(paste("R version", rnomics::r_version()), basename(pkg_files))),
+                           collapse = "\n"))
+git2r::commit(drat_repo, message = commit_msg)
 
 ## ===== Scratch Work =====
 

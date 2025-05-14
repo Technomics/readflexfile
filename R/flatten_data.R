@@ -135,7 +135,7 @@ flatten_actuals <- function(x)  {
   x$ActualCostHourData %>%
     tibble::add_column(!!!meta, .before = 1) %>%
     dplyr::left_join(dplyr::select(x$Accounts,
-                                   .data$ID, .data$Name),
+                                   "ID", "Name"),
                      by = c(AccountID = "ID"),
                      suffix = c("", ".accounts")) %>%
     dplyr::left_join(x$UnitsOrSublots,
@@ -144,45 +144,45 @@ flatten_actuals <- function(x)  {
     dplyr::mutate(OrderOrLotID = dplyr::coalesce(.data$OrderOrLotID, .data$OrderOrLotID.unitsorsublots),
                   EndItemID = dplyr::coalesce(.data$EndItemID, .data$EndItemID.unitsorsublots)) %>%
     dplyr::left_join(dplyr::select(x$EndItems,
-                                   .data$ID, .data$Name),
+                                   "ID", "Name"),
                      by = c(EndItemID = "ID"),
                      suffix = c("", ".enditems")) %>%
     dplyr::left_join(dplyr::select(x$OrdersOrLots,
-                                   .data$ID, .data$Name),
+                                   "ID", "Name"),
                      by = c(OrderOrLotID = "ID"),
                      suffix = c("", ".ordersorlots")) %>%
     dplyr::left_join(dplyr::select(x$CLINs,
-                                   .data$ID, .data$Name),
+                                   "ID", "Name"),
                      by = c(CLIN_ID = "ID"),
                      suffix = c("", ".clins")) %>%
     dplyr::left_join(dplyr::select(x$WBS,
-                                   .data$Level, .data$ID, .data$Name, .data$ParentID),
+                                   "Level", "ID", "Name", "ParentID"),
                      by = c(WBSElementID = "ID"),
                      suffix = c("", ".wbs")) %>%
     dplyr::left_join(dplyr::select(x$FunctionalCategories,
-                                   .data$ID, .data$Name),
+                                   "ID", "Name"),
                      by = c(FunctionalCategoryID = "ID"),
                      suffix = c("", ".functionalcategories")) %>%
     dplyr::left_join(dplyr::select(x$FunctionalOverheadCategories,
-                                   .data$ID, .data$Name),
+                                   "ID", "Name"),
                      by = c(FunctionalOverheadCategoryID = "ID"),
                      suffix = c("", ".overheadcategories")) %>%
     dplyr::left_join(dplyr::select(x$ReportingCalendar,
-                                   .data$ID, .data$StartDate, .data$EndDate),
+                                   "ID", "StartDate", "EndDate"),
                      by = c(ReportingPeriodID = "ID"),
                      suffix = c("", ".reportingcalendar")) %>%
     dplyr::mutate(StartDate = lubridate::ymd(.data$StartDate),
                   EndDate = lubridate::ymd(.data$EndDate),
                   atd_or_fac = "ATD") %>%
-    dplyr::rename(AccountName = .data$Name,
-                  CLIN_Name = .data$Name.clins,
-                  WBSParentID = .data$ParentID,
-                  WBSName = .data$Name.wbs,
-                  WBSLevel = .data$Level,
-                  EndItemName = .data$Name.enditems,
-                  OrderOrLotName = .data$Name.ordersorlots,
-                  FunctionalCategoryName = .data$Name.functionalcategories,
-                  FunctionalOverheadCategoryName = .data$Name.overheadcategories) %>%
+    dplyr::rename(AccountName = "Name",
+                  CLIN_Name = "Name.clins",
+                  WBSParentID = "ParentID",
+                  WBSName = "Name.wbs",
+                  WBSLevel = "Level",
+                  EndItemName = "Name.enditems",
+                  OrderOrLotName = "Name.ordersorlots",
+                  FunctionalCategoryName = "Name.functionalcategories",
+                  FunctionalOverheadCategoryName = "Name.overheadcategories") %>%
     costmisc::add_missing_column(FirstUnitNumber = NA_integer_, LastUnitNumber = NA_integer_) %>%
     dplyr::select(!tidyselect::contains("."))
 
@@ -199,14 +199,14 @@ flatten_forecasts <- function(x) {
     x$ForecastAtCompletionCostHourData %>%
       tibble::add_column(!!!meta, .before = 1) %>%
       dplyr::left_join(dplyr::select(x$OrdersOrLots,
-                                     OrderOrLotID = .data$ID,
-                                     OrderOrLotName = .data$Name),
+                                     OrderOrLotID = "ID",
+                                     OrderOrLotName = "Name"),
                        by = "OrderOrLotID") %>%
       dplyr::left_join(dplyr::select(x$WBS,
-                                     WBSElementID = .data$ID,
-                                     WBSLevel = .data$Level,
-                                     WBSName = .data$Name,
-                                     WBSParentID = .data$ParentID),
+                                     WBSElementID = "ID",
+                                     WBSLevel = "Level",
+                                     WBSName = "Name",
+                                     WBSParentID = "ParentID"),
                        by = "WBSElementID") %>%
       tibble::add_column(atd_or_fac = "FAC")
 
@@ -273,20 +273,20 @@ flatten_data.quantityreport <- function(x, ...) {
 
   # single row metadata
   meta <- x$ReportMetadata %>%
-    dplyr::select(.data$ProgramName, .data$ApprovedPlanNumber, .data$ApprovedPlanRevisionNumber,
-                  .data$SubmissionEvent_Number, .data$ResubmissionNumber, .data$ReportingOrganization_OrganizationName)
+    dplyr::select("ProgramName", "ApprovedPlanNumber", "ApprovedPlanRevisionNumber",
+                  "SubmissionEvent_Number", "ResubmissionNumber", "ReportingOrganization_OrganizationName")
 
   join_common_fields <- function(start_table) {
     start_table %>%
       dplyr::left_join(dplyr::select(x$OrdersOrLots,
-                                     OrderOrLotID = .data$ID,
-                                     OrderOrLotName = .data$Name),
+                                     OrderOrLotID = "ID",
+                                     OrderOrLotName = "Name"),
                        by = "OrderOrLotID") %>%
       dplyr::left_join(dplyr::select(x$WBS,
-                                     WBSElementID = .data$ID,
-                                     WBSLevel = .data$Level,
-                                     WBSName = .data$Name,
-                                     WBSParentID = .data$ParentID),
+                                     WBSElementID = "ID",
+                                     WBSLevel = "Level",
+                                     WBSName = "Name",
+                                     WBSParentID = "ParentID"),
                        by = "WBSElementID")
   }
 
@@ -295,8 +295,8 @@ flatten_data.quantityreport <- function(x, ...) {
 
   quant_completion <- join_common_fields(x$QuantitiesAtCompletion) %>%
     dplyr::left_join(dplyr::select(x$EndItems,
-                                   EndItemID = .data$ID,
-                                   EndItemName = .data$Name),
+                                   EndItemID = "ID",
+                                   EndItemName = "Name"),
                      by = "EndItemID") %>%
     dplyr::left_join(x$ProductionSequence,
                      by = c("EndItemID", "OrderOrLotID")) %>%
