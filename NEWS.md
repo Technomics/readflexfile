@@ -1,3 +1,7 @@
+# readflexfile 0.6.1
+
+* Minor updates to the `read_techdatareport()` spec file. Included additional fields to more closely resemble the FlexFile spec where possible.
+
 # readflexfile 0.6.0
 
 * Updated `read_maintrepair()` and `read_techdatareport()` to work off of the latest template. Aligned names with existing FlexFile and Quantity Data Report tables where possible.

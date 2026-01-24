@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![R build status](https://github.com/Technomics/readflexfile/workflows/R-CMD-check/badge.svg)](https://github.com/Technomics/readflexfile/actions)
-[![version: 0.6.0](https://img.shields.io/badge/version-0.6.0-blue.svg)]()
+[![version: 0.6.1](https://img.shields.io/badge/version-0.6.1-blue.svg)]()
 [![coverage: 0.7%25](https://img.shields.io/badge/coverage-0.7%25-red.svg)](https://cran.r-project.org/web/packages/covr/vignettes/how_it_works.html)
 <!-- badges: end -->
 
