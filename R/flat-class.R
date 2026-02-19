@@ -1,6 +1,6 @@
 #' *_flat class utilities
 #'
-#' Functions to help with with the 'flexfile_flat' and 'quantityreport_flat' class type.
+#' Functions to help with the 'flexfile_flat' and 'quantityreport_flat' classes.
 #'
 #' @name flat_class
 #'
@@ -15,7 +15,7 @@ new_flexfile_flat <- function(x) {
 
 #' is_flexfile_flat
 #'
-#' \code{is_flexfile_flat()} checks if object is of type 'flexfile_flat'
+#' \code{is_flexfile_flat()} checks whether an object is of type 'flexfile_flat'.
 #'
 #' @rdname flat_class
 #'
@@ -31,7 +31,7 @@ new_quantityreport_flat <- function(x) {
 
 #' is_quantityreport_flat
 #'
-#' \code{is_quantityreport_flat()} checks if object is of type 'quantityreport_flat'
+#' \code{is_quantityreport_flat()} checks whether an object is of type 'quantityreport_flat'.
 #'
 #' @rdname flat_class
 #'

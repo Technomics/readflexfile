@@ -1,11 +1,11 @@
 
-#' Read Maintenance & Repair Parts report
+#' Read Maintenance & Repair Parts Report
 #'
 #' @description
 #' `r lifecycle::badge('experimental')`
 #'
 #' \code{read_maintrepair()} returns a list of tibbles from an Excel submission of the Maintenance
-#' and Repair Parts report. Each tibble corresponds to its Excel sheet.\cr
+#' and Repair Parts Report. Each tibble corresponds to its Excel sheet.\cr
 #' \cr
 #' This function is currently experimental because it reads from the Excel template, which
 #' may not be stable.

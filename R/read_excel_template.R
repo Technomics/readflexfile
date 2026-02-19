@@ -1,25 +1,29 @@
-#' Read Maintenance & Repair Parts report
+#' Read Maintenance & Repair Parts or Technical Data Report template
 #'
 #' @description
 #' `r lifecycle::badge('experimental')`
 #'
-#' \code{read_excel_template()} is generally called through another function, such as \code{\link{read_techdatareport}()}
-#' or \code{\link{read_maintrepair}()}. Returns a list of tibbles from an Excel template structure. Each tibble
-#' corresponds to one Excel sheet.\cr
-#' \cr
-#' This function is currently experimental because it facilitates reading from the Excel templates, which
-#' may not be stable.
+#' \code{read_excel_template()} is generally called by higher-level functions,
+#' such as \code{\link{read_techdatareport}()} or
+#' \code{\link{read_maintrepair}()}. It returns a list of tibbles from an Excel
+#' template structure, with one tibble per sheet.
+#'
+#' This function is currently experimental because Excel templates may not be
+#' stable.
 #'
 #' @export
 #'
 #' @param file Path to the Excel template file to read.
-#' @param table_spec List containing data specifications for both tables, and fields within the tables
-#' @param file_type Type of Excel template used. Used only for status messages.
+#' @param table_spec List containing data specifications for both tables and
+#' fields.
+#' @param file_type Type of Excel template used. This is used only for status
+#' messages.
 #' @inheritParams read_flexfile
 #'
-#' @return A list of tibbles for the \code{file}. Result will be of class \code{maintrepair} or \code{techdatareport}.
+#' @return A list of tibbles for \code{file}. Result will be of class
+#' \code{maintrepair} or \code{techdatareport}.
 #'
-#' @seealso [maintrepair_class] [techdatareport_class]
+#' @seealso [maintrepair_class], [techdatareport_class]
 #'
 read_excel_template <- function(file, table_spec, file_type, .show_check = FALSE, .coerce_spec = TRUE){
 

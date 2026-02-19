@@ -1,6 +1,6 @@
 #' maintrepair class utilities
 #'
-#' Functions to help with with the 'maintrepair' class type.
+#' Functions to help with the 'maintrepair' class.
 #'
 #' @name maintrepair_class
 #'
@@ -18,7 +18,7 @@ new_maintrepair <- function(x, fileinfo = NULL) {
 
 #' is_maintrepair
 #'
-#' \code{is_maintrepair()} checks if object is of type 'maintrepair'
+#' \code{is_maintrepair()} checks whether an object is of type 'maintrepair'.
 #'
 #' @rdname maintrepair_class
 #'
@@ -29,7 +29,7 @@ is_maintrepair <- function(x) {
 
 #' is_maintrepair_list
 #'
-#' \code{is_maintrepair_list()} check if the object is a list where all members are of class 'maintrepair'.
+#' \code{is_maintrepair_list()} checks whether the object is a list where all members are of class 'maintrepair'.
 #'
 #' @rdname maintrepair_class
 #'

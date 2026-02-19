@@ -1,6 +1,6 @@
 #' quantityreport class utilities
 #'
-#' Functions to help with with the 'quantityreport' class type.
+#' Functions to help with the 'quantityreport' class.
 #'
 #' @name quantityreport_class
 #'
@@ -33,7 +33,7 @@ is_quantityreport <- function(x) {
 
 #' as_quantityreport
 #'
-#' \code{as_quantityreport()} creates object of type 'quantityreport' and checks it against
+#' \code{as_quantityreport()} creates an object of type 'quantityreport' and checks it against
 #' the file specification.
 #'
 #' @rdname quantityreport_class
@@ -80,7 +80,7 @@ as_quantityreport <- function(x, names_case = c("snake_case", "data_model"),
 
 #' is_quantityreport_list
 #'
-#' \code{is_quantityreport_list()} check if the object is a list where all members are of class 'quantityreport'.
+#' \code{is_quantityreport_list()} checks whether the object is a list where all members are of class 'quantityreport'.
 #'
 #' @rdname quantityreport_class
 #'

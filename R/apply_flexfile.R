@@ -1,15 +1,16 @@
 
-#' Apply a function over a list of flexfiles
+#' Apply a function over flexfile objects
 #'
-#' \code{apply_flexfile()} is used to apply a function over each element of a list of
-#' objects of type 'flexfile'. If the input is a single 'flexfile' is (i.e., not a list),
-#' then the function will be applied only to that item.\cr
-#' \cr
-#' Therefore, use \code{apply_flexfile} when you wish to apply a function and are unsure
-#' if the input is a list of flexfiles or a single flexfile.
+#' \code{apply_flexfile()} applies a function to each element of a list of
+#' objects of type 'flexfile'. If the input is a single 'flexfile' (that is,
+#' not a list), the function is applied to that object only.
 #'
-#' @param flexfile A single flexfile or a list of flexfiles imported through the \code{read_flexfile} function.
-#' @param fun  The function to be applied.
+#' Use \code{apply_flexfile()} when you want one interface that accepts either
+#' a single flexfile or a list of flexfiles.
+#'
+#' @param flexfile A single flexfile or a list of flexfiles imported with
+#' \code{read_flexfile()}.
+#' @param fun Function to apply.
 #' @param ... Additional arguments passed to \code{fun}.
 #'
 #' @return The original structure with the function applied.

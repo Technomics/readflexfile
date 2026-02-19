@@ -1,6 +1,6 @@
 #' flexfile class utilities
 #'
-#' Functions to help with with the 'flexfile' class type.
+#' Functions to help with the 'flexfile' class.
 #'
 #' @details
 #' The \code{flexfile} class has the following attributes.
@@ -14,11 +14,11 @@
 #' @name flexfile_class
 #'
 #' @param x An object to test or coerce to type 'flexfile'.
-#' @param names_case Case of the object being passed in.
-#' @param allocated Logical whether the flexfile has been allocated.
-#' @param rolledup Logical whether the flexfile WBS has been rolled up.
-#' @param .show_check Logical whether or not to show results from the check against
-#' the file specification.
+#' @param names_case Naming convention of the object being passed in.
+#' @param allocated Logical; whether allocations have been applied to the flexfile.
+#' @param rolledup Logical; whether WBS roll-up has been applied to the flexfile.
+#' @param .show_check Logical; whether to show results from the check against the
+#' file specification.
 #' @inheritParams read_flexfile
 #'
 NULL
@@ -36,7 +36,7 @@ new_flexfile <- function(x, fileinfo = NULL, allocated = FALSE, rolledup = FALSE
 
 #' is_flexfile
 #'
-#' \code{is_flexfile()} checks if object is of type 'flexfile'
+#' \code{is_flexfile()} checks whether an object is of type 'flexfile'.
 #'
 #' @rdname flexfile_class
 #'
@@ -47,7 +47,7 @@ is_flexfile <- function(x) {
 
 #' as_flexfile
 #'
-#' \code{as_flexfile()} creates object of type 'flexfile' and checks it against
+#' \code{as_flexfile()} creates an object of type 'flexfile' and checks it against
 #' the file specification.
 #'
 #' @rdname flexfile_class
@@ -92,7 +92,7 @@ as_flexfile <- function(x, names_case = c("snake_case", "data_model"),
 
 #' is_flexfile_list
 #'
-#' \code{is_flexfile_list()} check if the object is a list where all members are of class 'flexfile'.
+#' \code{is_flexfile_list()} checks whether the object is a list where all members are of class 'flexfile'.
 #'
 #' @rdname flexfile_class
 #'

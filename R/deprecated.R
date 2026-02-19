@@ -1,5 +1,5 @@
 
-#' Read FlexFile or Quantity report
+#' Read FlexFile or Quantity Report
 #'
 #' @description
 #' `r lifecycle::badge("deprecated")`
@@ -21,7 +21,7 @@ read_ff <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf8_b
 #' @description
 #' `r lifecycle::badge('deprecated')`
 #'
-#' This function is depreciated because stacking individual JSON tables is no longer
+#' This function is deprecated because stacking individual JSON tables is no longer
 #' recommended. See \code{vignette("importing-flexfile")} for the preferred workflow.
 #' If the functionality is still required, use \code{\link[costmisc]{unnest_df}()} instead.
 #'

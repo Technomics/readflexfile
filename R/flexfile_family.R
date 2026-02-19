@@ -4,8 +4,9 @@
 
 #' One of FlexFile Family
 #'
-#' \code{one_of_flexfile_family()} checks if object is of a type within the FlexFile family. This means
-#' is of type \code{flexfile}, \code{quantityreport}, \code{maintrepair}, or \code{techdatareport}.
+#' \code{one_of_flexfile_family()} checks whether an object is of a type within
+#' the FlexFile family: \code{flexfile}, \code{quantityreport},
+#' \code{maintrepair}, or \code{techdatareport}.
 #'
 #' @rdname flexfile_class
 #'
@@ -19,7 +20,8 @@ one_of_flexfile_family <- function(x) {
 
 #' Which of FlexFile Family
 #'
-#' \code{which_flexfile_family()} returns which type within the family the object is. Results are
+#' \code{which_flexfile_family()} returns which type within the family an object
+#' is. Results are
 #' \code{flexfile}, \code{quantityreport}, \code{maintrepair}, or \code{techdatareport}.
 #'
 #' @rdname flexfile_class
@@ -35,15 +37,16 @@ which_flexfile_family <- function(x) {
 
 #' Check if Reports have Identical Metadata
 #'
-#' \code{identical_report_metadata()} checks a collection reports to see if they have identical metadata.
+#' \code{identical_report_metadata()} checks a collection of reports to see if
+#' they have identical metadata.
 #' This check will exclude the "PointOfContact" fields.
 #'
 #' @param ... Two or more reports from the FlexFile Family to check.
 #' @param report_list Alternatively a list of reports to check. If specified, then
 #' \code{...} will be ignored.
 #'
-#' @return Logical whether all of the reports are from the FlexFile family and with identical
-#' Metadata tables.
+#' @return Logical; whether all reports are from the FlexFile family and have
+#' identical Metadata tables.
 #' @export
 #'
 identical_report_metadata <- function(..., report_list = NULL) {
@@ -77,7 +80,7 @@ identical_report_metadata <- function(..., report_list = NULL) {
 #' @param ... One or more reports in the FlexFile family of types.
 #' @param report_list Alternatively, a list of reports. If provided then the
 #' contents of \code{...} will be ignored.
-#' @param .check Logical whether to check if the reports have matching metadata or not.
+#' @param .check Logical; whether to check if reports have matching metadata.
 #'
 #' @return A list of reports of type \code{flexfile_family}.
 #' @export

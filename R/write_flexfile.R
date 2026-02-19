@@ -1,9 +1,9 @@
 
-#' Read FlexFile or Quantity report
+#' Write a FlexFile or Quantity Report
 #'
-#' \code{write_flexfile()} writes a list of tibbles into a zip folder of JSON files.
-#' Each tibble corresponds to its respective JSON table. This function can write both a FlexFile
-#' and a Quantity report.
+#' \code{write_flexfile()} writes a list of tibbles to a \code{.zip} archive of
+#' JSON files, one per table. It supports both FlexFile and Quantity Report
+#' outputs.
 #'
 #' @param x An object of class \link{flexfile_class} or \link{quantityreport_class}.
 #' @inheritParams read_flexfile

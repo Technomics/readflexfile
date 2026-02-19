@@ -13,7 +13,7 @@ flatten_data.list <- function(x, ...) {
   if (all_class_equal) lapply(x, flatten_data) else x
 }
 
-## ===== Flatten FlexFile ----
+## ===== Flatten FlexFile =====
 
 #' Create a cost and hour dataframe from a FlexFile
 #'
@@ -80,22 +80,6 @@ flexfile_key_columns <- function() {
     "SubmissionEvent_Number", "ResubmissionNumber")
 }
 
-# find_duplicates <- function(x) {
-#
-#   dups <- duplicated_report(x)
-#
-#   stacked_metadata <- x %>%
-#     costmisc::listindex_to_col("list_index") %>%
-#     purrr::map_dfr("ReportMetadata", .id = "doc_id") %>%
-#     dplyr::filter(dups) %>%
-#     dplyr::select(.data$list_index, .data$doc_id, tidyselect::all_of(flexfile_key_columns()),
-#                   .data$ProgramName, .data$ReportingOrganization_OrganizationName,
-#                   .data$report_as_of, .data$date_prepared)
-#
-#   message(paste(flexfile_key_columns(), collapse = ", "))
-#
-# }
-
 #' Check for duplication in the metadata
 #'
 #' @param x A flexfile or quantityreport
@@ -104,7 +88,8 @@ flexfile_key_columns <- function() {
 duplicated_report <- function(x) {
 
   stacked_metadata <- x %>%
-    purrr::map_dfr("ReportMetadata")
+    purrr::map("ReportMetadata") %>%
+    purrr::list_rbind()
 
   stacked_metadata %>%
     dplyr::group_by(dplyr::across(tidyselect::all_of(flexfile_key_columns()))) %>%
@@ -249,7 +234,7 @@ flexfile_order_columns <- function(x, .all = TRUE) {
 
 
 
-## ===== Flatten Quantity Data Report ----
+## ===== Flatten Quantity Data Report =====
 
 #' Create a cost and hour dataframe from a Quantity Data Report
 #'
@@ -332,7 +317,7 @@ quantityreport_order_columns <- function(x, .all = TRUE) {
 
 }
 
-## ===== Depreciated =====
+## ===== Deprecated =====
 
 #' Flatten a FlexFile report
 #'
@@ -348,3 +333,4 @@ flatten_ff <- function(file, .show_check = FALSE, .coerce_spec = TRUE, .warn_utf
   lifecycle::deprecate_stop(when = "0.3.0", what = "flatten_ff()", with = "flatten_data()")
 
 }
+

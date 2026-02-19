@@ -1,29 +1,32 @@
 ## ===== Read FlexFiles =====
 
-#' Read FlexFile or Quantity report
+#' Read a FlexFile or Quantity Report
 #'
-#' \code{read_flexfile()} returns a list of tibbles from a zip folder submission of the FlexFiles.
-#' Each tibble corresponds to its respective JSON table. This function can read both a FlexFile
-#' and a Quantity report.
+#' \code{read_flexfile()} reads a FlexFile submission archive and returns a list
+#' of tibbles, one per JSON table. It supports both FlexFile and Quantity
+#' Report \code{.zip} inputs.
 #'
-#' Can be used with \code{\link[costmisc:read_folder]{read_folder}} as in example.
+#' Can be used with \code{\link[costmisc:read_folder]{read_folder}}, as shown in
+#' the example.
 #'
 #' @export
 #'
-#' @param file Path to a FlexFile or Quantity Report .zip archive. For the 3-Part Template,
-#' a character vector of the three Excel files to read.
-#' @param .show_check Logical whether to print information about the file check to the console or not.
-#' @param .coerce_spec Logical whether to coerce all column data types to those from the data models.
-#' If \code{FALSE}, the types will be as detected upon read by the parser.
-#' @param .drop_optional Logical whether to drop optional columns or not. Not recommended for use because
-#' it can result in downstream data inconsistencies.
-#' @param .data_case Either 'native' or 'snake'. Controls if the names of the tables and columns
-#' reflect the native data model or the transformed snake_case. The default option was changed from
-#' snake to native in readflexfile v0.5.0 to simplify usage of readflexfile.
+#' @param file Path to a FlexFile or Quantity Report \code{.zip} archive. For
+#' the 3-Part Template, provide a character vector of the three Excel files.
+#' @param .show_check Logical; whether to print file-check information to the
+#' console.
+#' @param .coerce_spec Logical; whether to coerce column data types to the data
+#' model specification. If \code{FALSE}, types are left as parsed.
+#' @param .drop_optional Logical; whether to drop optional columns. This is
+#' generally not recommended because it can introduce downstream
+#' inconsistencies.
+#' @param .data_case Either `"native"` or `"snake"`. Controls whether table and column
+#' names use native model naming or transformed `snake_case`. The default changed
+#' from `"snake"` to `"native"` in readflexfile v0.5.0.
 #' @inheritParams costmisc::read_json_zip
 #'
-#' @return A list of tibbles for the \code{file}. Result will be either of class \code{flexfile} or
-#' of class \code{quantityreport}.
+#' @return A list of tibbles for \code{file}. Result will be of class
+#' \code{flexfile} or \code{quantityreport}.
 #'
 #' @seealso [flexfile_class], [quantityreport_class]
 #'
@@ -84,8 +87,8 @@ read_flexfile <- function(file,
 
 #' Read FlexFile 3-Part Template
 #'
-#' \code{read_flexfile_3part()} reads the Excel 3-Part Template into the same structure
-#' as from the JSON.
+#' \code{read_flexfile_3part()} reads the Excel 3-Part Template into the same
+#' structure produced by JSON input.
 #'
 #' @rdname read_flexfile
 #'
@@ -104,7 +107,8 @@ read_flexfile_3part <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
                            col_names = "Header")
 
   file_types <- file_heads %>%
-    purrr::map_dfr(dplyr::slice, 1) %>%
+    purrr::map(dplyr::slice, 1) %>%
+    purrr::list_rbind() %>%
     dplyr::pull(.data$Header)
 
   req_file_type <- "CSDR Cost and Hour Report (Flex File) Multi-Part Template"
@@ -113,7 +117,8 @@ read_flexfile_3part <- function(file, .show_check = FALSE, .coerce_spec = TRUE, 
 
   # check if the files are parts 1, 2, and 3. each only occuring once
   file_parts <- file_heads %>%
-    purrr::map_dfr(dplyr::slice, 2) %>%
+    purrr::map(dplyr::slice, 2) %>%
+    purrr::list_rbind() %>%
     dplyr::pull(.data$Header)
 
   req_file_parts <- c("Part 1 - Metadata and Structures", "Part 2 - Actual Cost-Hour Data", "Part 3 - Supplemental Data")
@@ -253,5 +258,4 @@ check_filetype <- function(file) {
 
   names(the_type)
 }
-
 

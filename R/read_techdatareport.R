@@ -1,5 +1,5 @@
 
-#' Read Technical Data report
+#' Read Technical Data Report
 #'
 #' @description
 #' `r lifecycle::badge('experimental')`

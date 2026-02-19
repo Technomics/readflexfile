@@ -23,7 +23,7 @@ new_flexfile_family <- function(flexfile = NULL,
 
 #' is_flexfile_family
 #'
-#' \code{is_flexfile_family()} checks if object is of type 'flexfile_family'
+#' \code{is_flexfile_family()} checks whether an object is of type 'flexfile_family'.
 #'
 #' @rdname flexfile_class
 #'

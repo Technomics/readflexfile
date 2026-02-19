@@ -13,7 +13,7 @@
 #'
 #' @name techdatareport_class
 #'
-#' @param x An object to test or coerce to type 'quantityreport'.
+#' @param x An object to test or coerce to type 'techdatareport'.
 #'
 NULL
 
@@ -27,7 +27,7 @@ new_techdatareport <- function(x, fileinfo = NULL) {
 
 #' is_techdatareport
 #'
-#' \code{is_techdatareport()} checks if object is of type 'techdatareport'
+#' \code{is_techdatareport()} checks whether an object is of type 'techdatareport'.
 #'
 #' @rdname techdatareport_class
 #'
@@ -38,7 +38,7 @@ is_techdatareport <- function(x) {
 
 #' is_techdatareport_list
 #'
-#' \code{is_techdatareport_list()} check if the object is a list where all members are of class 'techdatareport'.
+#' \code{is_techdatareport_list()} checks whether the object is a list where all members are of class 'techdatareport'.
 #'
 #' @rdname techdatareport_class
 #'

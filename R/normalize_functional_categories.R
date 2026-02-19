@@ -6,7 +6,7 @@
 #' should be one or more FlexFiles imported through the \code{read_flexfile} function.
 #'
 #' @inheritParams apply_flexfile
-#' @param direct_or_oh_mapping Logical whether not not to join in the direct or overhead.
+#' @param direct_or_oh_mapping Logical; whether to also join direct/overhead
 #' attributes.
 #'
 #' @export
