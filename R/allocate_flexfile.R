@@ -43,36 +43,17 @@ allocate_flexfile_single <- function(flexfile) {
   }
 
   #load in labor bucket mapping table as a dataframe
-  prorate_bucket_lookup <- tibble::tribble(
-    ~join_category, ~ProrateBucket,
-    "DIRECT_ENGINEERING_LABOR", "Labor",
-    "ENGINEERING_LABOR_OVERHEAD", "Labor",
-    "DIRECT_MANUFACTURING_TOUCH_LABOR", "Labor",
-    "DIRECT_MANUFACTURING_OTHER_LABOR", "Labor",
-    "DIRECT_MANUFACTURING_TOOLING_LABOR", "Labor",
-    "DIRECT_MANUFACTURING_SUPPORT_LABOR", "Labor",
-    "MANUFACTURING_OPERATIONS_LABOR_OVERHEAD", "Labor",
-    "DIRECT_MAINTENANCE_OTHER_LABOR", "Labor",
-    "DIRECT_MAINTENANCE_SUPPORT_LABOR", "Labor",
-    "DIRECT_MAINTENANCE_TOUCH_LABOR", "Labor",
-    "MAINTENANCE_OPERATIONS_LABOR_OVERHEAD", "Labor",
-    "OTHER_DIRECT_COSTS", "Other",
-    "DIRECT_PROGRAM_MANAGEMENT_LABOR", "Other",
-    "DIRECT_OTHER_LABOR", "Other",
-    "DIRECT_SERVICES", "Other",
-    "OTHER_DIRECT_NON_LABOR", "Other",
-    "OTHER_OVERHEAD", "Other",
-    "DIRECT_MATERIALS", "Material",
-    "DIRECT_REPORTING_SUBCONTRACTOR", "Material",
-    "INTERCOMPANY_WORK_ORDERS", "Material",
-    "PURCHASED_PARTS", "Material",
-    "PURCHASED_EQUIPMENT", "Material",
-    "RAW_MATERIALS", "Material",
-    "DIRECT_TOOLING_AND_EQUIPMENT", "Material",
-    "OTHER_MATERIAL", "Material",
-    "MATERIAL_OVERHEAD", "Material",
-    "GENERAL_AND_ADMINISTRATIVE", "GA",
-    "FACILITIES_CAPITAL_COST_OF_MONEY", "FCCM")
+  prorate_bucket_lookup <- readxl::read_xlsx("data-raw/standard-category-mapping.xlsx") %>%
+    dplyr::mutate(ProrateBucket = dplyr::case_when(functional_category %in% c(
+          "Engineering","Maintenance","Manufacturing") ~ "Labor",
+        functional_category == "Materials" ~ "Material",
+        functional_category == "FCCM" ~ "FCCM",
+        functional_category == "GA" ~ "GA",
+        functional_category == "Other" ~ "Other",
+        TRUE ~ NA_character_)) %>%
+    dplyr::select("join_category" = "DetailedStandardCategoryID","ProrateBucket") %>%
+    dplyr::bind_rows(tibble::tibble(join_category = c("OTHER_DIRECT_COSTS","DIRECT_MATERIALS"),
+        ProrateBucket = c("Other","Material")))
 
 
   #isolate percent allocation components
