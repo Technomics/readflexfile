@@ -6,7 +6,7 @@
 #' the Actual Cost Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
 #' Each tibble corresponds to its respective JSON table. \cr
 #' \cr
-#' Currently this is implemented for \code{AllocationMethodTypeID == "PERCENT"}.
+#' Currently this is implemented for \code{AllocationMethodTypeID == "PERCENT"} and \code{AllocationMethodTypeID == "PRORATE"}.
 #'
 #' @inheritParams apply_flexfile
 #'
