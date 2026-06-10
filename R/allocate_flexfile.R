@@ -42,8 +42,8 @@ allocate_flexfile_single <- function(flexfile) {
       dplyr::mutate(!!field := dplyr::coalesce(!!!field_list))
   }
 
-#create prorate bucket mapping table from the standard category mapping table to calculate percent allocations by labor category
-  prorate_bucket_lookup <- readxl::read_xlsx("data-raw/standard-category-mapping.xlsx") %>%
+ # create prorate bucket mapping table from the standard category mapping table to calculate percent allocations by labor category
+  prorate_bucket_mapping <- readxl::read_xlsx("data-raw/standard-category-mapping.xlsx") %>%
     dplyr::mutate(ProrateBucket = dplyr::case_when(functional_category %in% c(
           "Engineering","Maintenance","Manufacturing") ~ "Labor",
         functional_category == "Materials" ~ "Material",
@@ -55,7 +55,7 @@ allocate_flexfile_single <- function(flexfile) {
     dplyr::bind_rows(tibble::tibble(join_category = c("OTHER_DIRECT_COSTS","DIRECT_MATERIALS"),
         ProrateBucket = c("Other","Material")))
 
-  #isolate percent allocation components
+  # isolate percent allocation components
   percent_allocation_components <- flexfile$AllocationComponents %>%
     dplyr::left_join(flexfile$AllocationMethods %>% dplyr::select("ID", "AllocationMethodTypeID"),
       by = c("AllocationMethodID" = "ID")) %>%
@@ -63,7 +63,7 @@ allocate_flexfile_single <- function(flexfile) {
     dplyr::mutate(DollarPercentValue = PercentValue, HourPercentValue = PercentValue) %>%
     dplyr::select(-"AllocationMethodTypeID", -"PercentValue")
 
-  #isolate prorated allocation components
+  # isolate prorated allocation components
   prorate_allocation_components <- flexfile$AllocationComponents %>%
     dplyr::left_join(flexfile$AllocationMethods %>% dplyr::select("ID", "AllocationMethodTypeID"), by = c("AllocationMethodID" = "ID")) %>%
     dplyr::filter(AllocationMethodTypeID == "PRORATE") %>%
@@ -71,7 +71,7 @@ allocate_flexfile_single <- function(flexfile) {
     dplyr::mutate(OrderOrLotID = dplyr::coalesce(OrderOrLotID.x, OrderOrLotID.y), EndItemID = dplyr::coalesce(EndItemID.x, EndItemID.y)) %>%
     dplyr::select("AllocationMethodID", "OrderOrLotID", "EndItemID", "WBSElementID", "UnitOrSublotID", "PercentValue")
 
-  #Join in EndItemID and OrderOrLotID for actuals data from the UnitsOrSublots table
+  # join in EndItemID and OrderOrLotID to the Actual Cost-Hour Data table from the Units or Sublots table
 
   flexfile$ActualCostHourData <- flexfile$ActualCostHourData %>%
     dplyr::left_join(flexfile$UnitsOrSublots %>% dplyr::select("ID", "OrderOrLotID", "EndItemID"), by = c("UnitOrSublotID" = "ID")) %>%
@@ -82,14 +82,14 @@ allocate_flexfile_single <- function(flexfile) {
     dplyr::select(-"OrderOrLotID.x", -"OrderOrLotID.y", -"EndItemID.x", -"EndItemID.y")
 
 
-  #create atd table with prorate bucket column to use multiple times later
+  # create Actual Cost-Hour Data table with prorate bucket column to reference later
   atd_table_with_proratebucket <- flexfile$ActualCostHourData %>%
     dplyr::mutate(join_category = dplyr::coalesce(.data$DetailedStandardCategoryID, .data$StandardCategoryID)) %>%
-    dplyr::left_join(prorate_bucket_lookup,by = "join_category") %>%
+    dplyr::left_join(prorate_bucket_mapping,by = "join_category") %>%
     dplyr::select(-"join_category")
 
 
- #create dataframe with prorated allocation lookup rows grouped
+  # create lookup dataframe with prorated allocation rows grouped
   prorate_allocation_lookup_rows <- atd_table_with_proratebucket %>%
     dplyr::filter(.data$AllocationMethodID %in%prorate_allocation_components$AllocationMethodID) %>%
     dplyr::select("OrderOrLotID","EndItemID","WBSElementID","UnitOrSublotID","ReportingPeriodID","AllocationMethodID","ProrateBucket") %>%
@@ -103,7 +103,7 @@ allocate_flexfile_single <- function(flexfile) {
     dplyr::distinct(OrderOrLotID,EndItemID,WBSElementID,UnitOrSublotID,ReportingPeriodID,ProrateBucket, AllocationMethodID) %>%
     dplyr::mutate(allocation_group = dplyr::dense_rank(paste(AllocationMethodID,ReportingPeriodID,ProrateBucket,sep = "_")))
 
- #calculate even split percentage allocations for rows that must be prorated but do not already exist in the data
+ # calculate even split percentage allocations for rows that must be prorated but do not already exist in the data
   prorate_split_percentage_components <- prorate_allocation_lookup_rows %>%
     dplyr::group_by(allocation_group) %>%
     dplyr::mutate(n_group = dplyr::n()) %>%
@@ -121,7 +121,7 @@ allocate_flexfile_single <- function(flexfile) {
     dplyr::select(-"n_group", -"AllocationMethodID", -"allocation_group")
 
 
-  #calculate allocation percentages for prorate records down to the reporting period level by labor category
+  # calculate allocation percentages for prorate records down to the reporting period level by labor category
   prorate_allocation_percentages <- atd_table_with_proratebucket %>%
     dplyr::semi_join(
       prorate_allocation_components %>% dplyr::select("OrderOrLotID", "EndItemID", "WBSElementID"),
@@ -142,7 +142,7 @@ allocate_flexfile_single <- function(flexfile) {
     dplyr::bind_rows(prorate_split_percentage_components)
 
 
-  #stack prorate and percentage allocation components
+  # stack prorate and percentage allocation components
   combined_allocation_components <- prorate_allocation_percentages %>%
     dplyr::left_join(
       prorate_allocation_components %>% dplyr::select(-"PercentValue"),
@@ -150,20 +150,20 @@ allocate_flexfile_single <- function(flexfile) {
     dplyr::bind_rows(percent_allocation_components) %>%
     dplyr::mutate( ProrateBucket = dplyr::if_else(is.na(ProrateBucket), "PERCENT", ProrateBucket)
     )
-
-  prorate_only <- combined_allocation_components %>%
+  # temporarily split out prorate allocations
+  temporary_prorate_only <- combined_allocation_components %>%
     dplyr::filter(ProrateBucket != "PERCENT")
 
-  #expand percent components to all reporting periods
-  percent_expanded <- combined_allocation_components %>%
+  # expand percent components to all reporting periods since percent components are reporting id agnostic
+  temporary_percent_expanded <- combined_allocation_components %>%
     dplyr::filter(ProrateBucket == "PERCENT") %>%
     dplyr::mutate(ReportingPeriodID = NULL) %>%
     tidyr::crossing(ReportingPeriodID = unique(flexfile$ActualCostHourData$ReportingPeriodID))
 
-  #stack final result to be able to join on reporting period ID for both allocation methods
-  combined_allocation_components_expanded <- dplyr::bind_rows(prorate_only, percent_expanded)
+  # stack final result to be able to join on reporting period ID for both allocation methods
+  combined_allocation_components_expanded <- dplyr::bind_rows(temporary_prorate_only, temporary_percent_expanded)
 
-  #join the allocation component percentages to the actual cost hour data table
+  # join the allocation component percentages and allocation method id to the actual cost hour data table
   new_actualcosthourdata <- atd_table_with_proratebucket %>%
     dplyr::mutate(
       ProrateBucket = dplyr::if_else(AllocationMethodID %in% percent_allocation_components$AllocationMethodID,
@@ -178,6 +178,7 @@ allocate_flexfile_single <- function(flexfile) {
         dplyr::select("ID", "AllocationMethodTypeID"),
       by = c("AllocationMethodID" = "ID"))
 
+  # perform the allocations
   # iterate over the function to apply it across all allocation fields
   # reduce will take the output from iteration i and use it as input to i + 1
   flexfile$ActualCostHourData <- purrr::reduce(
