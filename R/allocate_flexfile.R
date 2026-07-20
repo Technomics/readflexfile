@@ -106,7 +106,10 @@ allocate_flexfile_single <- function(flexfile) {
   # create lookup dataframe with prorated allocation rows grouped
   prorate_allocation_lookup_rows <- atd_table_with_proratebucket %>%
     dplyr::filter(.data$AllocationMethodID %in% prorate_allocation_components$AllocationMethodID) %>%
-    dplyr::select("OrderOrLotID","EndItemID","WBSElementID","UnitOrSublotID","ReportingPeriodID","AllocationMethodID","ProrateBucket") %>%
+    dplyr::select(
+      "OrderOrLotID", "EndItemID", "WBSElementID", "UnitOrSublotID",
+      "ReportingPeriodID", "AllocationMethodID", "ProrateBucket"
+    ) %>%
     dplyr::left_join(prorate_allocation_components, by = "AllocationMethodID") %>%
     dplyr::mutate(
       OrderOrLotID = dplyr::coalesce(OrderOrLotID.x, OrderOrLotID.y),
@@ -114,8 +117,10 @@ allocate_flexfile_single <- function(flexfile) {
       WBSElementID = dplyr::coalesce(WBSElementID.x, WBSElementID.y),
       UnitOrSublotID = dplyr::coalesce(UnitOrSublotID.x, UnitOrSublotID.y)
     ) %>%
-    dplyr::select(-"OrderOrLotID.x", -"OrderOrLotID.y", -"EndItemID.x", -"EndItemID.y",
-                  -"WBSElementID.x", -"WBSElementID.y", -"UnitOrSublotID.x", -"UnitOrSublotID.y", -"PercentValue") %>%
+    dplyr::select(
+      -"OrderOrLotID.x", -"OrderOrLotID.y", -"EndItemID.x", -"EndItemID.y",
+      -"WBSElementID.x", -"WBSElementID.y", -"UnitOrSublotID.x", -"UnitOrSublotID.y", -"PercentValue"
+    ) %>%
     dplyr::distinct(OrderOrLotID,EndItemID,WBSElementID,UnitOrSublotID,ReportingPeriodID,ProrateBucket, AllocationMethodID) %>%
     dplyr::mutate(
       allocation_group = dplyr::dense_rank(paste(AllocationMethodID, ReportingPeriodID, ProrateBucket, sep = "_"))
