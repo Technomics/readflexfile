@@ -2,7 +2,7 @@
 % Please edit documentation in R/allocate_flexfile.R
 \name{allocate_flexfile}
 \alias{allocate_flexfile}
-\title{Apply allocation methodologies provided}
+\title{Apply allocation methodologies}
 \usage{
 allocate_flexfile(flexfile)
 }
@@ -10,9 +10,20 @@ allocate_flexfile(flexfile)
 \item{flexfile}{A single flexfile or a list of flexfiles imported through the \code{read_flexfile} function.}
 }
 \description{
-\code{allocate_flexfile()} applies the allocations provided in the Allocation Methodology table to
-the Actual Cost Hour Data table. Returns a list of tibbles from a zip folder submission of the FlexFiles.
-Each tibble corresponds to its respective JSON table. \cr
-\cr
-Currently this is implemented for \code{AllocationMethodTypeID == "PERCENT"}.
+\code{allocate_flexfile()} applies the allocation methods defined in the
+AllocationMethods and AllocationComponents tables to ActualCostHourData.
+}
+\details{
+Allocation expands an ActualCostHourData record into one or more destination
+records and scales the record's dollars and hours by the percentage assigned
+to each destination.
+
+Two allocation methodologies are currently supported:
+
+\itemize{
+\item \code{PERCENT}: Use the submitted allocation percentages directly.
+\item \code{PRORATE}: Derive percentages from the distribution of reported
+actual dollars and hours. When no historical basis exists, split the
+record evenly among the eligible destinations.
+}
 }

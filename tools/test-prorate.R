@@ -15,13 +15,4 @@ flexfile_allo$ActualCostHourData %>%
 
 nrow(flexfile_allo$ActualCostHourData)
 
-flexfile_allo$ActualCostHourData %>%
-  dplyr::count(AllocationMethodID)
-
-
-flexfile_allo$ActualCostHourData %>%
-  dplyr::filter(
-    ReportingPeriodID == 12,
-    AllocationMethodID == "Test_Prorate_Unit1"
-  ) %>%
-  View()
+View(flexfile_allo$ActualCostHourData)
