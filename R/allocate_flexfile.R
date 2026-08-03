@@ -139,7 +139,7 @@ allocate_flexfile_single <- function(flexfile) {
   # latter case, retrieve the unit's parent OrderOrLotID and EndItemID from
   # UnitsOrSublots.
   prorate_allocation_components <- combined_allocation_table %>%
-    dplyr::filter(AllocationMethodTypeID == "PRORATE") %>%
+    dplyr::filter(.data$AllocationMethodTypeID == "PRORATE") %>%
     # bring in OrderOrLotID and EndItemID where there are UnitsofSublots
     dplyr::left_join(
       dplyr::select(

@@ -7,3 +7,4 @@ NULL
 
 # global data
 #utils::globalVariables(c("flexfile_spec", "quantity_spec"))
+utils::globalVariables("sfc_mapping")
